@@ -86,13 +86,13 @@ int main(int argc, char const *argv[])
         showHand(f1);
         cardToPlay = askCardWantToPlay(f1);
         pos = getCenterOfBoard(b);
-        putDownCard(cardToPlay,pos,f1); //the first card is placed in the center of board
+        putDownCard(&b,cardToPlay,f1,pos); //the first card is placed in the center of board
 
         showHand(f2);
         cardToPlay = askCardWantToPlay(f2);
         showBoard(b);
         pos = askWhereWantToPlaceCard();
-        putDownCard(cardToPlay,pos,f2);
+        putDownCard(&b,cardToPlay,f2,pos);
 
         for (int i = 0; i < 7; i++)
         {
@@ -100,13 +100,13 @@ int main(int argc, char const *argv[])
             askCardWantToPlay(f1);
             showBoard(b);
             pos = askWhereWantToPlaceCard();
-            putDownCard(cardToPlay,pos,f1);
+            putDownCard(&b,cardToPlay,f1,pos);
 
             showHand(f2);
             cardToPlay = askCardWantToPlay(f2);
             showBoard(b);
             pos = askWhereWantToPlaceCard();
-            putDownCard(cardToPlay,pos,f2);
+            putDownCard(&b,cardToPlay,f2,pos);
         }
         
 
