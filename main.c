@@ -79,7 +79,7 @@ int main(int argc, char const *argv[])
         showHand(f1);
         cardToPlay = askCardWantToPlay(f1);
         pos = getCenterOfBoard(b);
-        putDownCard(cardToPlay,pos,f1) //the first card is placed in the center of board
+        putDownCard(cardToPlay,pos,f1); //the first card is placed in the center of board
 
         showHand(f2);
         cardToPlay = askCardWantToPlay(f2);
@@ -93,7 +93,7 @@ int main(int argc, char const *argv[])
             askCardWantToPlay(f1);
             showBoard(b);
             pos = askWhereWantToPlaceCard();
-            putDownCard(cardToPlay,pos,f1)
+            putDownCard(cardToPlay,pos,f1);
 
             showHand(f2);
             cardToPlay = askCardWantToPlay(f2);
