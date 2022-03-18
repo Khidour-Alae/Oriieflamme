@@ -4,7 +4,7 @@
 typedef struct impl_faction *faction;
 
 
-int hasTheDeckBeenShuffled(faction *faction);
+int hasTheDeckBeenShuffled(faction faction);
 
 void reshuffleDeck(faction *faction);
 
