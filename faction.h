@@ -1,18 +1,18 @@
 #ifndef _FACTIONS_H  /* to avoid multiple inclusions */
 #define _FACTIONS_H
 
-typedef struct impl_Faction *Faction;
+typedef struct impl_faction *faction;
 
 
-int hasTheDeckBeenShuffled(Faction *faction);
+int hasTheDeckBeenShuffled(faction faction);
 
-void reshuffleDeck(Faction *faction);
+void reshuffleDeck(faction *faction);
 
-void discardHand(Faction *faction);
+void discardHand(faction *faction);
 
-void shuffleDeck(Faction *faction);
+void shuffleDeck(faction *faction);
 
-void drawCard(Faction *faction);
+void drawCard(faction *faction);
 
 #endif
 
