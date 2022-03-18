@@ -1,8 +1,10 @@
 // #include <stdio.h>
-// #include "board.h"
-// #include "cards.h"
-// #include "faction.h"
-// #include "interface.h"
+#include "board.h"
+#include "cards.h"
+#include "faction.h"
+#include "interface.h"
+
+#include <stdlib.h> //for rand()
 
 
 //pas oublie les ifdef def endif dans les .h
@@ -10,127 +12,115 @@
 
 int main(int argc, char const *argv[])
 {
-    /* 
-    plateau.h
-    Fonction créer plateau createBoard
-    Fonction libérer plateau freeBoard
-    Fonction nouvelle manche newRound
-    Fonction liste des factions listFactions
-    Fonction poser carte putDownCard
-    Fonction retourner carte flipCard
-    
-    carte.h et faction.h
-    Fonction remélangeage utilisé hasTheDeckBeenShuffled
-    Fonction remélanger reshuffleDeck
-    Fonction vider sa main discardHand
-    Fonction mélanger pioche shuffleDeck
-    Fonction piocher drawCard
-
-    interface.h
-    Fonction afficher plateau showBoard
-    Fonction afficher main showHand
-    Fonction demander remélanger askReshuffle
-    Fonction demander carte askCardWantToPlay
-    Fonction demander position askWhereWantToPlaceCard
-    Fonction afficher effet showCardEffect
-    Fonction afficher vainqueur showWinner
-
-     */
-
     //init
-    Fonction créer plateau
+    srand(time(NULL));
 
-    conterMancheNumber = 0;
+    board b; faction* f;
+    faction f1; faction f2;
+    b = createBoard();
+    f = listFactions(b);
+    f1 = f[0]; f2 = f[1];
+
+    roundCounter = 0;
     while (1)
     {
-        if (!(Fonction nouvelle manche)) //le jeu est fini
+        if (!(newRound(roundCounter,f1,f2))) //if game finished we leave the wile loop
         {
-            break; //on sort du while
+            break;
         }
-        else conterMancheNumber++;
+        else roundCounter++;
 
-        switch (conterMancheNumber)
+        switch (roundCounter)
         {
         case 1:
-            fonction de main.c pour choisir quel faction est la premiere avec un rand (on utilise Fonction liste des factions)
-            Fonction mélanger pioche pour faction1
-            Fonction mélanger pioche pour faction2
+            if (rand() % 2)
+            {
+                faction tmp = f1;
+                f1 = f2;
+                f2 = tmp;
+            }
+            shuffleDeck(f1);
+            shuffleDeck(f2);
             break;
         case 3:
-            fonction de main.c pour choisir quel faction est la premiere avec un rand (on utilise Fonction liste des factions)
+            if (rand() % 2)
+            {
+                faction tmp = f1;
+                f1 = f2;
+                f2 = tmp;
+            }
             break;
         default:
-            inverser premiere faction et deuxieme faction //attention quand on va dire qui sera le vainqueur a pas se tromper 
+            faction tmp = f1;
+            f1 = f2;
+            f2 = tmp;
             break;
         }
 
         //phase 1
 
         //drawphase
-        Fonction piocher premiere faction
-        Fonction afficher main premiere faction
-        if (!(Fonction remélangeage utilisé premiere faction) && (Fonction demander remélanger premiere faction))
+        drawCard(f1);
+        showHand(f1);
+        if (!(hasTheDeckBeenShuffled(f1)) && (askReshuffle(f1)))
         {
-            Fonction vider sa main premiere faction
-            Fonction remélanger
-            Fonction piocher premiere faction
+            discardHand(f1);
+            reshuffleDeck(f1);
+            drawCard(f1);
         }
 
-        Fonction piocher deuxieme faction
-        Fonction afficher main deuxieme faction
-        if (!(Fonction remélangeage utilisé deuxieme faction) && (Fonction demander remélanger deuxieme faction))
+        drawCard(f2);
+        showHand(f2);
+        if (!(hasTheDeckBeenShuffled(f1)) && (askReshuffle(f2)))
         {
-            Fonction vider sa main premiere faction
-            Fonction remélanger deuxieme faction
-            Fonction piocher deuxieme faction
+            discardHand(f2);
+            reshuffleDeck(f2);
+            drawCard(f2);
         }
         
         //placing cards
-        Fonction afficher main faction1
-        Fonction demander carte faction1
-        Fonction poser carte faction1 au centre
-        //on affiche pas plateau pour faction1 car ca carte sera forcement au centre
+        int pos; card cardToPlay;
 
-        Fonction afficher main faction2
-        Fonction demander carte faction2
-        Fonction afficher plateau
-        Fonction demander position
-        Fonction poser carte faction2
+        showHand(f1);
+        cardToPlay = askCardWantToPlay(f1);
+        pos = getCenterOfBoard(b);
+        putDownCard(cardToPlay,pos,f1) //the first card is placed in the center of board
+
+        showHand(f2);
+        cardToPlay = askCardWantToPlay(f2);
+        showBoard(b);
+        pos = askWhereWantToPlaceCard();
+        putDownCard(cardToPlay,pos,f2);
 
         for (int i = 0; i < 7; i++)
         {
-            Fonction afficher main faction1
-            Fonction demander carte faction1
-            Fonction afficher plateau
-            Fonction demander position
-            Fonction poser carte faction1
+            showHand(f1);
+            askCardWantToPlay(f1);
+            showBoard(b);
+            pos = askWhereWantToPlaceCard();
+            putDownCard(cardToPlay,pos,f1)
 
-            Fonction afficher main faction2
-            Fonction demander carte faction2
-            Fonction afficher plateau
-            Fonction demander position
-            Fonction poser carte faction2
+            showHand(f2);
+            cardToPlay = askCardWantToPlay(f2);
+            showBoard(b);
+            pos = askWhereWantToPlaceCard();
+            putDownCard(cardToPlay,pos,f2)
         }
         
 
         //reveal
-        Fonction afficher plateau
-        while (Fonction retourner carte(pointeurDescriptionEffect))
+        showBoard(b);
+        card cardFlipped;
+        while (flipCard(&cardFlipped))
         {
-            Fonction afficher plateau
-            Fonction afficher effet pointeurDescriptionEffect
+            showBoard(b);
+            showCardEffect(cardFlipped);
         }
-        
-
-        //qui a gagne la manche
-
-
     }
-    //afficher vainqueur
-    Fonction afficher vainqueur
+    
+    showWinner(f1,f2);
 
-    //end
-    Fonction libérer plateau
+    freeBoard(b);
 
     return 0;
 }
