@@ -3,16 +3,16 @@
 
 typedef struct board board;
 
-int createBoard();
+void createBoard(board *b, faction *f1, faction *f2);
 
 void freeBoard(board b);
 
-int newRound(int counterRoundNumber, faction f, faction f);
+int newRound(int counterRoundNumber, faction f1, faction f2);
 
 int listFactions();
 
 void putDownCard(board b, card c, faction f);
 
-void flipCard(card c);
+int flipCard(card *c);
 
 #endif 
