@@ -1,3 +1,10 @@
+/**
+ * \file main.c
+ * 
+ * This file is our main file, it makes the game work as it is described in the subject : http://projet-info.pedago.ensiie.fr/subject
+ * 
+ * */
+
 #include "board.h"
 #include "cards.h"
 #include "faction.h"
