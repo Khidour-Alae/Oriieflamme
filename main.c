@@ -1,14 +1,9 @@
-// #include <stdio.h>
 #include "board.h"
 #include "cards.h"
 #include "faction.h"
 #include "interface.h"
 
 #include <stdlib.h> //for rand()
-
-
-//pas oublie les ifdef def endif dans les .h
-//et code entierement en anglais
 
 int main(int argc, char const *argv[])
 {
@@ -21,7 +16,7 @@ int main(int argc, char const *argv[])
     f = listFactions(b);
     f1 = f[0]; f2 = f[1];
 
-    roundCounter = 0;
+    int roundCounter = 0;
     while (1)
     {
         if (!(newRound(roundCounter,f1,f2))) //if game finished we leave the wile loop
