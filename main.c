@@ -99,7 +99,7 @@ int main(int argc, char const *argv[])
             cardToPlay = askCardWantToPlay(f2);
             showBoard(b);
             pos = askWhereWantToPlaceCard();
-            putDownCard(cardToPlay,pos,f2)
+            putDownCard(cardToPlay,pos,f2);
         }
         
 
