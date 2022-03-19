@@ -41,8 +41,8 @@ int main(int argc, char const *argv[])
                 f1 = f2;
                 f2 = tmp;
             }
-            shuffleDeck(f1);
-            shuffleDeck(f2);
+            shuffleDeck(&f1);
+            shuffleDeck(&f2);
             break;
         case 3:
             if (rand() % 2)
@@ -62,22 +62,22 @@ int main(int argc, char const *argv[])
         //phase 1
 
         //drawphase
-        drawCard(f1);
+        drawCard(&f1);
         showHand(f1);
         if (!(hasTheDeckBeenShuffled(f1)) && (askReshuffle(f1)))
         {
-            discardHand(f1);
-            reshuffleDeck(f1);
-            drawCard(f1);
+            discardHand(&f1);
+            reshuffleDeck(&f1);
+            drawCard(&f1);
         }
 
-        drawCard(f2);
+        drawCard(&f2);
         showHand(f2);
-        if (!(hasTheDeckBeenShuffled(f1)) && (askReshuffle(f2)))
+        if (!(hasTheDeckBeenShuffled(f2)) && (askReshuffle(f2)))
         {
-            discardHand(f2);
-            reshuffleDeck(f2);
-            drawCard(f2);
+            discardHand(&f2);
+            reshuffleDeck(&f2);
+            drawCard(&f2);
         }
         
         //placing cards
@@ -122,7 +122,7 @@ int main(int argc, char const *argv[])
     
     showWinner(f1,f2);
 
-    freeBoard(b);
+    freeBoard(&b);
 
     return 0;
 }
