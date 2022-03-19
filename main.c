@@ -13,7 +13,7 @@
 #include <stdlib.h> //for rand()
 #include <time.h> //for time()
 
-int main(int argc, char const *argv[])
+int main()
 {
     //init
     srand(time(NULL));
@@ -102,7 +102,7 @@ int main(int argc, char const *argv[])
         for (int i = 0; i < 7; i++)
         {
             showHand(f1);
-            askCardWantToPlay(f1);
+            cardToPlay = askCardWantToPlay(f1);
             showBoard(b);
             pos = askWhereWantToPlaceCard();
             putDownCard(&b,cardToPlay,f1,pos);
