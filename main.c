@@ -11,6 +11,7 @@
 #include "interface.h"
 
 #include <stdlib.h> //for rand()
+#include <time.h> //for time()
 
 int main(int argc, char const *argv[])
 {
