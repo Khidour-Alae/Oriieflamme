@@ -14,12 +14,12 @@
 
 */
 
-#ifdef _INTERFACE_H
+#ifndef _INTERFACE_H
 #define _INTERFACE_H
 
-#include <board.h>
-#include <card.h>
-#include <faction.h>
+#include "board.h"
+#include "cards.h"
+#include "faction.h"
 
 
 /**
@@ -27,7 +27,7 @@
 * \param b A board
 * \return nothing
 */ 
-void showBoard(board b) {} 
+void showBoard(board b);
 
 
 /**
@@ -35,15 +35,15 @@ void showBoard(board b) {}
 * \param f A faction
 * \return nothing
 */
-void showHand(faction f) {}
+void showHand(faction f);
 
 
 /**
 * \brief asks the faction \a f if they want change their hand.
 * \param f A faction.
-* \return The answer of the faction, a card.
+* \return The answer of the faction, 0 if they don't want to reshuffle, 1 if they do.
 */
-int askReshuffle(faction f) {}
+int askReshuffle(faction f);
 
 
 /**
@@ -51,7 +51,7 @@ int askReshuffle(faction f) {}
 * \param f A faction.
 * \return The answer of the faction, a card.
 */
-card askCardWantToPlay(faction f) {}
+card askCardWantToPlay(faction f);
 
 
 /**
@@ -59,7 +59,7 @@ card askCardWantToPlay(faction f) {}
 * \param c A card.
 * \return The answer of the faction, an int.
 */
-int askWhereWantToPlaceCard(card c) {}
+int askWhereWantToPlaceCard(card c);
 
 
 /**
@@ -67,7 +67,7 @@ int askWhereWantToPlaceCard(card c) {}
 * \param c A card.
 * \return nothing.
 */
-void showCardEffect(card c) {}
+void showCardEffect(card c);
 
 
 /**
@@ -75,7 +75,7 @@ void showCardEffect(card c) {}
 * \param f A faction.
 * \return nothing.
 */
-void showWinner(faction f) {}
+void showWinner(faction f1, faction f2);
 
 #endif
 
