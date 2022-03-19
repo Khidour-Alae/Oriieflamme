@@ -37,7 +37,8 @@ int main(int argc, char const *argv[])
         case 1:
             if (rand() % 2)
             {
-                faction tmp = f1;
+                faction tmp;
+                tmp = f1;
                 f1 = f2;
                 f2 = tmp;
             }
@@ -47,13 +48,16 @@ int main(int argc, char const *argv[])
         case 3:
             if (rand() % 2)
             {
-                faction tmp = f1;
+                faction tmp;
+                tmp = f1;
                 f1 = f2;
                 f2 = tmp;
             }
             break;
         default:
-            faction tmp = f1;
+            ; // a declaration can't follow "default" in the c99 standart, only statement : ";" is an empty statement 
+            faction tmp;
+            tmp = f1;
             f1 = f2;
             f2 = tmp;
             break;
