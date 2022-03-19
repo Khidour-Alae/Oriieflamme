@@ -1,6 +1,7 @@
-#include "faction.h"
 #ifndef _BOARD_H
 #define _BOARD_H
+#include "faction.h"
+#include "cards.h
 
 typedef struct board_base * board;
 
