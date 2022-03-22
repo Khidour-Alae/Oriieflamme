@@ -49,7 +49,7 @@ void putDownCard(board *b, card c, faction f, int p);
 * \return 1 as long as the board contains a flipable card, 0 otherwise
 * \attention the pointer must be valid
 **/
-int flipCard(card *c);
+int flipCard(board *b, card *c);
 
 /**
 * \brief Get the center of the board
