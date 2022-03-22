@@ -1,5 +1,3 @@
-#include "board.h"
-#include "faction.h"
-#include "cards.h"
+#include "../headers/board.h"
 #include <stdio.h>
 #include <stdlib.h>
