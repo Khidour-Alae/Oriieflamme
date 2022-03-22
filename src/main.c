@@ -5,10 +5,10 @@
  * 
  * */
 
-#include "board.h"
-#include "cards.h"
-#include "faction.h"
-#include "interface.h"
+#include "../headers/board.h"
+#include "../headers/cards.h"
+#include "../headers/faction.h"
+#include "../headers/interface.h"
 
 #include <stdlib.h> //for rand()
 #include <time.h> //for time()
