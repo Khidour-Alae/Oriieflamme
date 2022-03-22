@@ -4,7 +4,9 @@
 #include "cards.h"
 #include "faction.h"
 
-
+#define NB_CARDS_IN_DECK 44
+#define NB_CARDS_IN_HAND 8
+#define SIZE_2DBOARD 1089
 
 
 
