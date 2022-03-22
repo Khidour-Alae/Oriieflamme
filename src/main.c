@@ -118,7 +118,7 @@ int main()
         //reveal
         showBoard(b);
         card cardFlipped;
-        while (flipCard(&cardFlipped))
+        while (flipCard(&b, &cardFlipped))
         {
             showBoard(b);
             showCardEffect(cardFlipped);
