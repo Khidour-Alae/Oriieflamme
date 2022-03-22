@@ -13,9 +13,9 @@ enum cardName {
 
 
 struct impl_card{
-    char name[SIZE_NAME]; 
-    cardName cnale;
-    char effectDescription[EFFECT_DESCRIPTION];
+    char c_name[SIZE_NAME]; 
+    cardName c_enumName;
+    char c_effectDescription[EFFECT_DESCRIPTION];
     int numberOfOccurrence;
     int cardStatus; // 0 if Face Down, 1 if Face Up
 };
