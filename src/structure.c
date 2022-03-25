@@ -117,10 +117,6 @@ void delete_hand(hand *h) {
 
 
 //board2D structure
-void resize_board2D(board2D *b2D) {
-
-}
-
 void init_board2D(board2D *b2D) {
     b2D->sizeBoard2D = SIZE_2DBOARD;
     b2D->c = malloc(sizeof(card)*b2D->sizeBoard2D);
@@ -146,7 +142,7 @@ int isEmpty_board2D(board2D b2D) {
 }
 
 int getCenter_board2D(board2D *b2D) {
-
+    return getPositionFromCoordinates_board2D(b2D,0,0);
 }
 
 card getCard_board2D(board2D *b2D, int p) {
@@ -155,6 +151,29 @@ card getCard_board2D(board2D *b2D, int p) {
 
 faction getFaction_board2D(board2D *b2D, int p) {
     return b2D->f[p];
+}
+
+void resize_board2D(board2D *b2D) {
+    b2D->sideLength += 2;
+    b2D->sizeBoard2D = b2D->sideLength * b2D->sideLength;
+    card *newc = malloc(sizeof(card)*b2D->sizeBoard2D);
+    faction *newf = malloc(sizeof(card)*b2D->sizeBoard2D);
+    
+    for (int i = 0; i < b2D->sideLength-2; i++)
+    {
+        for (int j = 0; j < b2D->sideLength-2; j++)
+        {
+            newc[(i+1)*b2D->sideLength + (j+1)] = b2D->c[i*b2D->sideLength + j];
+            newc[(i+1)*b2D->sideLength + (j+1)] = b2D->f[i*b2D->sideLength + j];
+        }
+    }
+
+    free(b2D->c); free(b2D->f);
+    b2D->c = newc; b2D->f = newf;
+}
+
+void addCard_board2D(board2D *b2D, card c, faction f, int pos) {
+    
 }
 
 void reset_board2D(board2D *b2D) {
@@ -166,4 +185,25 @@ void reset_board2D(board2D *b2D) {
 void delete_board2D(board2D *b2D) {
     free(b2D->c);
     free(b2D->f);
+}
+
+int getPositionFromCoordinates_board2D(board2D *b2D, int x, int y) {
+    int xcenter = b2D->sideLength / 2;
+    int ycenter = b2D->sideLength / 2;
+    int xshifted = xcenter + x;
+    int yshifted = ycenter + y;
+
+    return b2D->sideLength * yshifted + xshifted;
+}
+
+int getXFromPosition_board2D(board2D *b2D, int p) {
+    int xcenter = b2D->sideLength / 2;
+    int xshifted = p % b2D->sideLength;
+    return xshifted - xcenter;
+}
+
+int getYFromPosition_board2D(board2D *b2D, int p) {
+    int ycenter = b2D->sideLength / 2;
+    int yshifted = (p - (p % b2D->sideLength))/b2D->sideLength;
+    return yshifted - ycenter;
 }

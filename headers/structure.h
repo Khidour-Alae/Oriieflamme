@@ -58,6 +58,7 @@ int isEmpty_board2D(board2D b2D);
 int getCenter_board2D(board2D *b2D);
 card getCard_board2D(board2D *b2D, int p);
 faction getFaction_board2D(board2D *b2D, int p);
+void addCard_board2D(board2D *b2D, card c, faction f, int pos);
 void reset_board2D(board2D *b2D);
 void delete_board2D(board2D *b2D);
 
