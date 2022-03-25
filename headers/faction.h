@@ -4,6 +4,7 @@
 #ifndef _FACTIONS_H  
 #define _FACTIONS_H
 
+
 typedef struct impl_faction *faction;
 
 /**
@@ -43,7 +44,7 @@ void shuffleDeck(faction *faction);
 * \brief Draws 8 cards from the deck to the hand
 * \param faction Valid faction
 */
-void drawCard(faction *faction);
+void drawCards(faction *faction);
 
 #endif
 
