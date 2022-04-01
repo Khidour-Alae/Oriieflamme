@@ -38,3 +38,23 @@ void drawCards(faction *faction){
         push_hand(pop_deck(&((*faction)->f_deck)),&((*faction)->f_hand));
     }
 }
+
+char getFactionName(faction faction){
+    return faction->f_name;
+}
+
+int getFactionDdrsPoints(faction faction){
+    return faction->f_ddrsPoints;
+}
+
+hand getHand(faction faction){
+    return faction->f_hand;
+}
+
+deck getDeck(faction faction){
+    return faction->f_deck;
+}
+
+int getNbRoundWin(faction faction){
+    return faction->nbRoundWin;
+}

@@ -50,3 +50,18 @@ struct impl_card{
     int cardStatus; // 0 if Face Down, 1 if Face Up
 };
 
+char getCardName(card card){
+    return card->c_name;
+}
+
+char getCardEffectDescription(card card){
+    return card->c_effectDescription;
+}
+
+int getNumberOfOccurrence(card card){
+    return card->numberOfOccurrence;
+}
+
+int getCardStatus(card card){
+    return card->cardStatus;
+}
