@@ -58,11 +58,13 @@ typedef struct {
 void init_board2D(board2D *b2D);
 int isEmpty_board2D(board2D b2D);
 int getCenter_board2D(board2D *b2D);
-card getCard_board2D(board2D *b2D, int p);
-faction getFaction_board2D(board2D *b2D, int p);
+card getCard_board2D(board2D *b2D, int p); //return NULL if no card;
+faction getFaction_board2D(board2D *b2D, int p); //return NULL if no faction associated to the spot (i.e. there is no card);
 void addCard_board2D(board2D *b2D, card c, faction f, int pos);
 void reset_board2D(board2D *b2D);
 void delete_board2D(board2D *b2D);
+
+void getBoundingBox(board2D *b2D, int *xmin, int *ymin, int *xmax, int *ymax);
 
 
 //we need the board2D argument as the board can be dynamically extended
