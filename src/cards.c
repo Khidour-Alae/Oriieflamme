@@ -9,7 +9,7 @@ typedef enum cardName cardName;
 enum cardName {
     Julien_Forest,
     Alae_Khigour
-}
+};
 
 
 struct impl_card{
@@ -18,5 +18,5 @@ struct impl_card{
     char c_effectDescription[EFFECT_DESCRIPTION];
     int numberOfOccurrence;
     int cardStatus; // 0 if Face Down, 1 if Face Up
-}
+};
 
