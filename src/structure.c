@@ -270,6 +270,13 @@ void delete_board2D(board2D *b2D) {
     free(b2D->f);
 }
 
+void getBoundingBox(board2D *b2D, int *xmin, int *ymin, int *xmax, int *ymax) {
+    (*xmin) = getXFromPosition_board2D(b2D, b2D->box.pmin);
+    (*ymin) = getXFromPosition_board2D(b2D, b2D->box.pmin);
+    (*xmax) = getXFromPosition_board2D(b2D, b2D->box.pmax);
+    (*ymax) = getYFromPosition_board2D(b2D, b2D->box.pmax);
+}
+
 int getPositionFromCoordinates_board2D(board2D *b2D, int x, int y) {
     int xcenter = b2D->sideLength / 2;
     int ycenter = b2D->sideLength / 2;
