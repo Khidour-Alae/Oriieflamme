@@ -95,11 +95,45 @@ card popNthCard_hand(hand *h, int n) {
     }
     if (!isEmpty_hand(*h))
     {
-        pop_hand(h);
+        card nthCard = pop_hand(h);
         while (!isEmpty_hand(tmp))
         {
             push_hand(pop_hand(&tmp),h);
         }
+        return nthCard;
+    }
+    else
+    {
+        //raise exception
+    }
+}
+
+card getTopCard_hand(hand *h) {
+    return h->c[h->top];
+}
+
+card getNthCard_hand(hand *h, int n) {
+    hand tmp;
+    for (int i = 0; i < n - 1; i++)
+    {
+        if (!isEmpty_hand(*h))
+        {
+            push_hand(pop_hand(h),&tmp);
+        }
+        else
+        {
+            //raise exception
+        }
+    }
+    if (!isEmpty_hand(*h))
+    {
+        card nthCard = pop_hand(h);
+        push_hand(nthCard,h);
+        while (!isEmpty_hand(tmp))
+        {
+            push_hand(pop_hand(&tmp),h);
+        }
+        return nthCard;
     }
     else
     {

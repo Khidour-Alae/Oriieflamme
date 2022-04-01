@@ -35,6 +35,8 @@ int isEmpty_hand(hand h);
 void push_hand(card c, hand *h);
 card pop_hand(hand *h);
 card popNthCard_hand(hand *h, int n);
+card getTopCard_hand(hand *h);
+card getNthCard_hand(hand *h, int n);
 void reset_hand(hand *h);
 void delete_hand(hand *h);
 //void print_hand(hand *h);
