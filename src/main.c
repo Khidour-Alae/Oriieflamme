@@ -67,22 +67,22 @@ int main()
         //phase 1
 
         //drawphase
-        drawCard(&f1);
+        drawCards(&f1);
         showHand(f1);
         if (!(hasTheDeckBeenShuffled(f1)) && (askReshuffle(f1)))
         {
             discardHand(&f1);
             reshuffleDeck(&f1);
-            drawCard(&f1);
+            drawCards(&f1);
         }
 
-        drawCard(&f2);
+        drawCards(&f2);
         showHand(f2);
         if (!(hasTheDeckBeenShuffled(f2)) && (askReshuffle(f2)))
         {
             discardHand(&f2);
             reshuffleDeck(&f2);
-            drawCard(&f2);
+            drawCards(&f2);
         }
         
         //placing cards
