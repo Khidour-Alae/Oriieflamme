@@ -10,4 +10,6 @@ struct impl_faction{
     hand f_hand;
     deck f_deck;
     int hasBeenReshuffled; // 1 if the deck has been reshuffled, 0 if not
+    int nbRoundWin;
+    
 }

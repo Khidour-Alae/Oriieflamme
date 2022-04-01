@@ -45,6 +45,54 @@ void shuffleDeck(faction *faction);
 */
 void drawCard(faction *faction);
 
+
+/**
+* \brief 
+* \param 
+* \return 
+*/
+
+/**
+* \brief 
+* \param 
+* \return 
+*/
+char getFactionName(faction f);
+
+/**
+* \brief 
+* \param 
+* \return 
+*/
+int getFactionDdrsPoints(faction f);
+
+/**
+* \brief 
+* \param 
+* \return 
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #endif
 
 
