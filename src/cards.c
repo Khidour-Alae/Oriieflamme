@@ -1,6 +1,7 @@
     #include "../headers/cards.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #define SIZE_NAME 150
 #define EFFECT_DESCRIPTION 1000
@@ -50,6 +51,10 @@ struct impl_card{
     int cardStatus; // 0 if Face Down, 1 if Face Up
 };
 
+/*--------------------------------------------------------------------------*/
+
+//GETTERS
+
 char getCardName(card card){
     return card->c_name;
 }
@@ -64,4 +69,29 @@ int getNumberOfOccurrence(card card){
 
 int getCardStatus(card card){
     return card->cardStatus;
+}
+
+
+/*--------------------------------------------------------------------------*/
+
+//SETTERS
+
+void setCardName(card card, char* name){
+    if (strlen(name) < strlen(card->c_name)){    
+        strcpy(card->c_name, name);
+    }
+}
+
+void setCardEffectDescription(card card, char* effectDescription){
+    if (strlen(effectDescription) < strlen(card->c_effectDescription)){    
+        strcpy(card->c_effectDescription, effectDescription);
+    }
+}
+
+void setNumberOfOccurrence(card card, int numberOfOccurrence){
+    card->numberOfOccurrence=numberOfOccurrence;
+}
+
+void setCardStatus(card card, int status){
+    card->cardStatus=status;
 }

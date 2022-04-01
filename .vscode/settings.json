@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "faction.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "typeinfo": "c"
     }
 }
