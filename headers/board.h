@@ -16,7 +16,7 @@ board createBoard();
 * \param b A pointer of type board
 * \attention the pointer must be valid
 **/
-void freeBoard(board *b);
+void freeBoard(board b);
 
 /**
 * \brief Create a new round, or indicate if the game is finished
