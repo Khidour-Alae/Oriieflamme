@@ -1,5 +1,4 @@
 #include "../headers/faction.h"
-#include "../headers/structure.h"
 #include <stdlib.h>
 #include <stdio.h>
 
