@@ -8,45 +8,173 @@
 #define NB_CARDS_IN_HAND 8
 #define SIZE_2DBOARD 1089 // (4*NB_CARDS_IN_HAND + 1)^2
 
-//deck structure
+// #######################################################
+// ### The deck structure
+// #######################################################
+
+/**
+* \brief The deck is a classic FILO structure
+**/
 typedef struct {
     card *c;
     int top;
 } deck;
 
+/**
+* \brief Initializes the deck (mostly memory allocation)
+* \param d is the deck
+**/
 void init_deck(deck *d);
+
+/**
+* \brief Check if there are cards in the deck
+* \param d is the deck
+* \return 0 if there is at least one card in the deck, 1 otherwise
+**/
 int isEmpty_deck(deck d);
+
+/**
+* \brief Puts a card on top of the deck
+* \param d is the deck
+* \param c is the card
+**/
 void push_deck(card c, deck *d);
+
+/**
+* \brief Draws the card on top of the deck
+* \param d is the deck
+* \return the card that was on top of the deck
+**/
 card pop_deck(deck *d);
+
+/**
+* \brief Shuffles the deck using Fisher–Yates shuffle algorithm
+* \param d is the deck
+**/
 void shuffle_deck(deck *d);
+
+/**
+* \brief Empty the deck
+* \param d is the deck
+**/
 void reset_deck(deck *d);
+
+/**
+* \brief Deletes the deck (free allocated memory)
+* \param d is the deck
+**/
 void delete_deck(deck *d);
-//void print_deck(deck *d);
 
 
-//hand structure
+// #######################################################
+// ### The hand structure
+// #######################################################
+
+/**
+* \brief The hand is a classic FILO structure
+**/
 typedef struct {
     card *c;
     int top;
 } hand;
 
+/**
+* \brief Initializes the hand (mostly memory allocation)
+* \param h is the hand
+**/
 void init_hand(hand *h);
+
+/**
+* \brief Check if there are cards in the hand
+* \param h is the hand
+* \return 0 if there is at least one card in the hand, 1 otherwise
+**/
 int isEmpty_hand(hand h);
+
+/**
+* \brief Puts a card in the hand
+* \param c is the card
+* \param h is the hand
+**/
 void push_hand(card c, hand *h);
+
+/**
+* \brief discard the last card that was added to the hand
+* \param h is the hand
+* \return the last card that was added to the hand
+**/
 card pop_hand(hand *h);
+
+/**
+* \brief discard the nth card (the 1-th being the last card added to the hand)
+* \param h is the hand
+* \param n correspond to the number of the card you want to discard (the n-th card)
+* \return the discarded card
+**/
 card popNthCard_hand(hand *h, int n);
+
+/**
+* \brief get the last card that was added to the hand
+* \param h is the hand
+* \return the last card that was added to the hand
+**/
 card getTopCard_hand(hand *h);
+
+/**
+* \brief get the n-th card (1-th being the last card added)
+* \param h is the hand
+* \param n correspond to the number of the card you want to get (the n-th card)
+* \return the n-th card
+**/
 card getNthCard_hand(hand *h, int n);
+
+/**
+* \brief Empty the hand
+* \param h is the hand
+**/
 void reset_hand(hand *h);
+
+/**
+* \brief Deletes the hand (free allocated memory)
+* \param h is the hand
+**/
 void delete_hand(hand *h);
-//void print_hand(hand *h);
 
 
-//board2D structure
+// #######################################################
+// ### The board2D structure
+// #######################################################
+
+/**
+* It's recommended to read the comments of board2D before.
+* board2DBoundingBox defines the boundingBox of the board2D
+**/
 typedef struct {
     int pmin; int pmax;
 } board2DBoundingBox;
 
+/**
+* board2D is a complex structure. It represents the board,
+* that is to say a 2D plane on which you can place cards 
+* belonging to factions. The cards can only be placed on 
+* integer coordinates (for example : (0,0), (3,2), (-1,-2)).
+* 
+* To do this, we make two 2D-arrays, one that store the cards
+* and one that stores from which faction the card was placed.
+* 
+* The 2D-arrays are implemented as a 1D-array with the following
+* transformation : 1DArray[sizeOfLine * y + x] <=> 2DArray[x][y]
+* 
+* To represent an infinite 2D plane, the arrays can be
+* dynamically resized. For example, if the array covers the
+* 2D plane for :
+*   # -5 <= x <= 5
+*   # -5 <= y <= 5
+* and we need to place a card at (5,6), then the array will
+* grow in order to cover enough of the 2D plane to place the card
+*
+* 
+**/
 typedef struct {
     card *c;
     faction *f;
