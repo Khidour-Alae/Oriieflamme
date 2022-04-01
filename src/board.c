@@ -1,4 +1,5 @@
 #include "../headers/board.h"
+#include "../headers/structure.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -22,7 +23,7 @@ faction* listFactions(board b){
 }
 
 void putDownCard(board *b, card c, faction f, int p){
-    addCard_board2D(b->b2D, c, f, p)
+    addCard_board2D(b->b2D, c, f, p);
 }
 
 int flipCard(board *b, card *c){
