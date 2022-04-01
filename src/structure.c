@@ -161,7 +161,23 @@ void init_board2D(board2D *b2D) {
         b2D->f[i] = NULL;
     }
     b2D->sideLength = 4*NB_CARDS_IN_HAND + 1;
-    //b2D->box.pmax = ;
+    
+    //we would like to do
+    //b2D->box.pmax = getPositionFromCoordinates_board2D(xmax = 1, ymax = 1);
+    //but we can't use getPositionFromCoordinates_board2D() yet as it requires a board as parameter
+    int xmax = 1, ymax = 1;
+    int xcenter = b2D->sideLength / 2;
+    int ycenter = b2D->sideLength / 2;
+    int xshiftedmax = xcenter + xmax;
+    int yshiftedmax = ycenter + ymax;
+
+    b2D->box.pmax = b2D->sideLength * yshiftedmax + xshiftedmax;
+    //same goes for b2D->box.pmin
+    int xmin = -1, ymin = -1;
+    int xshiftedmin = xcenter + xmin;
+    int yshiftedmin = ycenter + ymin;
+
+    b2D->box.pmin = b2D->sideLength * yshiftedmin + xshiftedmin;
 }
 
 int isEmpty_board2D(board2D b2D) {
@@ -206,8 +222,41 @@ void resize_board2D(board2D *b2D) {
     b2D->c = newc; b2D->f = newf;
 }
 
+int min(int a, int b) {return a < b ? a : b;}
+int max(int a, int b) {return a < b ? b : a;}
 void addCard_board2D(board2D *b2D, card c, faction f, int pos) {
     
+    //check if we can place the card in the board
+    int x = getXFromPosition_board2D(b2D,pos);
+    int y = getYFromPosition_board2D(b2D,pos);
+
+    if (getCard_board2D(b2D,pos) != NULL)
+    {
+        //there already is a card there
+        //raise error
+    }
+    else //we place the card
+    {
+        //check if we need to resize the board
+        if (x == 0 || x == b2D->sideLength - 1 || y == 0 || y == b2D->sideLength - 1)
+        {
+            resize_board2D(b2D);
+        }
+
+        //resize the boundingBox if needed
+        int x_min = getXFromPosition_board2D(b2D, b2D->box.pmin);
+        int y_min = getYFromPosition_board2D(b2D, b2D->box.pmin);
+        int x_max = getXFromPosition_board2D(b2D, b2D->box.pmax);
+        int y_max = getYFromPosition_board2D(b2D, b2D->box.pmax);
+        
+        b2D->box.pmin = getPositionFromCoordinates_board2D(b2D,min(x,x_min),min(y,y_min));
+        b2D->box.pmax = getPositionFromCoordinates_board2D(b2D,max(x,x_max),max(y,y_max));
+
+        //place the card
+        //we need to update the position as the board might have been resized
+        int p = getPositionFromCoordinates_board2D(b2D,x,y);
+        b2D->c[p] = c; b2D->f[p] = f;
+    }
 }
 
 void reset_board2D(board2D *b2D) {
