@@ -147,7 +147,11 @@ void delete_hand(hand *h);
 
 /**
 * It's recommended to read the comments of board2D before.
-* board2DBoundingBox defines the boundingBox of the board2D
+* board2DBoundingBox defines the boundingBox of the board2D.
+* It just represent a rectangle with two points :
+* one point is the lowest left point
+* one point is the highest right point
+*
 **/
 typedef struct {
     int pmin; int pmax;
@@ -173,31 +177,114 @@ typedef struct {
 * and we need to place a card at (5,6), then the array will
 * grow in order to cover enough of the 2D plane to place the card
 *
-* 
+* As the array could be covering unecessary parts of the 2D plane
+* we are using a bounding box. For example :
+* if the array is covering -50 <= x <= 50 and -50 <= y <= 50
+* but there are cards only in -10 <= x <= 3 and -7 <= y <= 4
+* then the bounding box is used to get this information
+* This is usefull mostly for printing the board or iterating
+* through the board.
+*
 **/
 typedef struct {
     card *c;
     faction *f;
-    board2DBoundingBox box; //this box will be used for displaying the board
-    int sideLength; //the board is will be a square
-    int sizeBoard2D;
+    board2DBoundingBox box;
+    int sideLength; //the board is a square
+    int sizeBoard2D; //the 1D-array length
 } board2D;
 
+/**
+* \brief Initializes the board (mostly memory allocation)
+* \param b2D is the board2D
+**/
 void init_board2D(board2D *b2D);
+
+/**
+* \brief Check if the board is empty
+* \param b2D is the board2D
+* \return 0 if there is at least one card placed on the board, 1 otherwise
+**/
 int isEmpty_board2D(board2D b2D);
+
+/**
+* \brief get the position of the center of the board (the index of the 1D-array)
+* \param b2D is the board2D
+* \return the index that gives the center of the board
+**/
 int getCenter_board2D(board2D *b2D);
-card getCard_board2D(board2D *b2D, int p); //return NULL if no card;
-faction getFaction_board2D(board2D *b2D, int p); //return NULL if no faction associated to the spot (i.e. there is no card);
+
+/**
+* \brief get the card placed at position \a p
+* \param b2D is the board2D
+* \param p is the position
+* \return NULL if there are no card placed at position p; return the card otherwise
+**/
+card getCard_board2D(board2D *b2D, int p);
+
+/**
+* \brief get the faction that played the card placed at position \a p
+* \param b2D is the board2D
+* \param p is the position
+* \return NULL if there are no card placed at position p; return the faction that played the card otherwise
+**/
+faction getFaction_board2D(board2D *b2D, int p);
+
+/**
+* \brief place a card \a c at position \a p
+* \param b2D is the board2D
+* \param c is the card
+* \param f is the faction that played the card
+* \param pos is the position at which you want to play the card
+**/
 void addCard_board2D(board2D *b2D, card c, faction f, int pos);
+
+/**
+* \brief puts the board back to its original state (that is to say the empty board)
+* \param b2D is the board2D
+**/
 void reset_board2D(board2D *b2D);
+
+/**
+* \brief Deletes the board2D (free allocated memory)
+* \param b2D is the board2D
+**/
 void delete_board2D(board2D *b2D);
 
+/**
+* \brief get the bounding box of the board2D
+* \param b2D is the board2D
+* \param xmin is the x coordinate of the lowest left point of the bounding box (=rectangle)
+* \param ymin is the y coordinate of the lowest left point of the bounding box (=rectangle)
+* \param xmax is the x coordinate of the highest right point of the bounding box (=rectangle)
+* \param ymax is the y coordinate of the highest right point of the bounding box (=rectangle)
+**/
 void getBoundingBox(board2D *b2D, int *xmin, int *ymin, int *xmax, int *ymax);
 
 
-//we need the board2D argument as the board can be dynamically extended
+/**
+* \brief get the position (index) correstponding to the point ( \a x, \a y)
+* \param b2D is the board2D, we need the board2D argument as the board can be dynamically extended
+* \param x is the x coordinate of the point
+* \param y is the y coordinate of the point
+* \return \a p the position corresponding to the point ( \a x, \a y)
+**/
 int getPositionFromCoordinates_board2D(board2D *b2D, int x, int y);
+
+/**
+* \brief get the x coordinate correstponding to the position \a p
+* \param b2D is the board2D, we need the board2D argument as the board can be dynamically extended
+* \param p is the position
+* \return \a x the x coordinate correstponding to the position \a p
+**/
 int getXFromPosition_board2D(board2D *b2D, int p);
+
+/**
+* \brief get the y coordinate correstponding to the position \a p
+* \param b2D is the board2D, we need the board2D argument as the board can be dynamically extended
+* \param p is the position
+* \return \a y the y coordinate correstponding to the position \a p
+**/
 int getYFromPosition_board2D(board2D *b2D, int p);
 
 
