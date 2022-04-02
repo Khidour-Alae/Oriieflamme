@@ -17,24 +17,24 @@ int hasTheDeckBeenShuffled(faction faction){
     return faction->hasBeenReshuffled; 
 };
 
-void reshuffleDeck(faction *faction){
-    shuffle_deck(&(*faction)->f_deck);
-    (*faction)->hasBeenReshuffled = 1;
+void reshuffleDeck(faction faction){
+    shuffle_deck(&(faction->f_deck));
+    faction->hasBeenReshuffled = 1;
 };
 
-void discardHand(faction *faction){
+void discardHand(faction faction){
     for(int j=0; j<NB_CARDS_IN_HAND; j++){
-        push_deck(pop_hand(&((*faction)->f_hand)), &((*faction)->f_deck));
+        push_deck(pop_hand(&(faction->f_hand)), &(faction->f_deck));
     }
 };
 
-void shuffleDeck(faction *faction){
-    shuffle_deck(&(*faction)->f_deck);
+void shuffleDeck(faction faction){
+    shuffle_deck(&(faction->f_deck));
 };
 
-void drawCards(faction *faction){
+void drawCards(faction faction){
     for (int i=0;i<NB_CARDS_IN_HAND;i++){
-        push_hand(pop_deck(&((*faction)->f_deck)),&((*faction)->f_hand));
+        push_hand(pop_deck(&(faction->f_deck)),&(faction->f_hand));
     }
 }
 

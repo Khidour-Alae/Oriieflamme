@@ -43,8 +43,8 @@ int main()
                 f1 = f2;
                 f2 = tmp;
             }
-            shuffleDeck(&f1);
-            shuffleDeck(&f2);
+            shuffleDeck(f1);
+            shuffleDeck(f2);
             break;
         case 3:
             if (rand() % 2)
@@ -67,22 +67,22 @@ int main()
         //phase 1
 
         //drawphase
-        drawCards(&f1);
+        drawCards(f1);
         showHand(f1);
         if (!(hasTheDeckBeenShuffled(f1)) && (askReshuffle(f1)))
         {
-            discardHand(&f1);
-            reshuffleDeck(&f1);
-            drawCards(&f1);
+            discardHand(f1);
+            reshuffleDeck(f1);
+            drawCards(f1);
         }
 
-        drawCards(&f2);
+        drawCards(f2);
         showHand(f2);
         if (!(hasTheDeckBeenShuffled(f2)) && (askReshuffle(f2)))
         {
-            discardHand(&f2);
-            reshuffleDeck(&f2);
-            drawCards(&f2);
+            discardHand(f2);
+            reshuffleDeck(f2);
+            drawCards(f2);
         }
         
         //placing cards
@@ -91,13 +91,13 @@ int main()
         showHand(f1);
         cardToPlay = askCardWantToPlay(f1);
         pos = getCenterOfBoard(b);
-        putDownCard(&b,cardToPlay,f1,pos); //the first card is placed in the center of board
+        putDownCard(b,cardToPlay,f1,pos); //the first card is placed in the center of board
 
         showHand(f2);
         cardToPlay = askCardWantToPlay(f2);
         showBoard(b);
         pos = askWhereWantToPlaceCard(cardToPlay);
-        putDownCard(&b,cardToPlay,f2,pos);
+        putDownCard(b,cardToPlay,f2,pos);
 
         for (int i = 0; i < 7; i++)
         {
@@ -105,20 +105,20 @@ int main()
             cardToPlay = askCardWantToPlay(f1);
             showBoard(b);
             pos = askWhereWantToPlaceCard(cardToPlay);
-            putDownCard(&b,cardToPlay,f1,pos);
+            putDownCard(b,cardToPlay,f1,pos);
 
             showHand(f2);
             cardToPlay = askCardWantToPlay(f2);
             showBoard(b);
             pos = askWhereWantToPlaceCard(cardToPlay);
-            putDownCard(&b,cardToPlay,f2,pos);
+            putDownCard(b,cardToPlay,f2,pos);
         }
         
 
         //reveal
         showBoard(b);
         card cardFlipped;
-        while (flipCard(&b, &cardFlipped))
+        while (flipCard(b, &cardFlipped))
         {
             showBoard(b);
             showCardEffect(cardFlipped);
@@ -127,7 +127,7 @@ int main()
     
     showWinner(f1,f2);
 
-    freeBoard(&b);
+    freeBoard(b);
 
     return 0;
 }

@@ -31,7 +31,7 @@ void init_deck(deck *d);
 * \param d is the deck
 * \return 0 if there is at least one card in the deck, 1 otherwise
 **/
-int isEmpty_deck(deck d);
+int isEmpty_deck(deck *d);
 
 /**
 * \brief Puts a card on top of the deck
@@ -89,7 +89,7 @@ void init_hand(hand *h);
 * \param h is the hand
 * \return 0 if there is at least one card in the hand, 1 otherwise
 **/
-int isEmpty_hand(hand h);
+int isEmpty_hand(hand *h);
 
 /**
 * \brief Puts a card in the hand
@@ -205,7 +205,7 @@ void init_board2D(board2D *b2D);
 * \param b2D is the board2D
 * \return 0 if there is at least one card placed on the board, 1 otherwise
 **/
-int isEmpty_board2D(board2D b2D);
+int isEmpty_board2D(board2D *b2D);
 
 /**
 * \brief get the position of the center of the board (the index of the 1D-array)

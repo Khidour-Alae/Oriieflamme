@@ -21,7 +21,7 @@ int hasTheDeckBeenShuffled(faction faction); //DONE
 * \brief Shuffles the deck and remove the right of the faction to use the shuffle option
 * \param faction Valid faction
 */
-void reshuffleDeck(faction *faction); //DONE
+void reshuffleDeck(faction faction); //DONE
 
 
 
@@ -29,7 +29,7 @@ void reshuffleDeck(faction *faction); //DONE
 * \brief Discards all the cards from the hand to the deck
 * \param faction Valid faction
 */
-void discardHand(faction *faction); //DONE
+void discardHand(faction faction); //DONE
 
 
 
@@ -37,7 +37,7 @@ void discardHand(faction *faction); //DONE
 * \brief Shuffles the deck 
 * \param faction Valid faction
 */
-void shuffleDeck(faction *faction); //DONE
+void shuffleDeck(faction faction); //DONE
 
 
 
@@ -45,7 +45,7 @@ void shuffleDeck(faction *faction); //DONE
 * \brief Draws 8 cards from the deck to the hand
 * \param faction Valid faction
 */
-void drawCards(faction *faction); //DONE
+void drawCards(faction faction); //DONE
 
 
 /**
