@@ -67,7 +67,9 @@ int getNumberOfOccurrence(card card){
     return card->numberOfOccurrence;
 }
 
-int getCardStatus(card card){
+int getCardStatus(board2D *b2D, int x, int y){
+    int position = getPositionFromCoordinates_board2D(b2D,x,y);
+    card card = getCard_board2D(b2D,position);
     return card->cardStatus;
 }
 
@@ -92,6 +94,10 @@ void setNumberOfOccurrence(card card, int numberOfOccurrence){
     card->numberOfOccurrence=numberOfOccurrence;
 }
 
-void setCardStatus(card card, int status){
+void setCardStatus(board2D *b2D, int x, int y, int status){
+    int position = getPositionFromCoordinates_board2D(b2D,x,y);
+    card card = getCard_board2D(b2D,position);
     card->cardStatus=status;
 }
+
+/*--------------------------------------------------------------------------*/

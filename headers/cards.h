@@ -1,6 +1,7 @@
 /**
 * To avoid multiple inclusions 
 */
+#include "../headers/structure.h"
 #ifndef _CARDS_H  
 #define _CARDS_H
 
@@ -33,12 +34,12 @@ int getNumberOfOccurrence(card card); //DONE
 
 /**
 * \brief get the state of the card (fliped or not)
-* \param card a card
-* \param x x position of the card
-* \param y y position of the card
+* \param b2D the board
+* \param x x position of the card (valid card on the board)
+* \param y y position of the card (valid card on the board)
 * \return the state of the card
 */
-int getCardStatus(card card, int x, int y); //TODO
+int getCardStatus(board2D *b2D, int x, int y); //DONE
 
 /*--------------------------------------------------------------------------*/
 
@@ -68,13 +69,14 @@ void setNumberOfOccurrence(card card, int numberOfOccurrence); //DONE
 
 /**
 * \brief set the state of the card (fliped or not)
-* \param card a card
+* \param b2D the board
+* \param x x position of the card (valid card on the board)
+* \param y y position of the card (valid card on the board)
 * \param status state of the card (fliped or not)
 */
-void setCardStatus(card card, int status); //TODO
+void setCardStatus(board2D *b2D, int x, int y, int status); //TODO
 
 /*--------------------------------------------------------------------------*/
-
 
 
 

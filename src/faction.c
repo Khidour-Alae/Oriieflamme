@@ -38,6 +38,10 @@ void drawCards(faction faction){
     }
 }
 
+/*--------------------------------------------------------------------------*/
+
+//GETTERS
+
 char getFactionName(faction faction){
     return faction->f_name;
 }
@@ -57,3 +61,31 @@ deck getDeck(faction faction){
 int getNbRoundWin(faction faction){
     return faction->nbRoundWin;
 }
+
+/*--------------------------------------------------------------------------*/
+
+//SETTERS
+
+void setFactionName(faction faction, char* name){
+    if (strlen(name) < strlen(faction->f_name)){    
+        strcpy(faction->f_name, name);
+    }
+}
+
+void setFactionDdrsPoints(faction faction, int DDRS_Points){
+    faction->f_ddrsPoints=DDRS_Points;
+}
+
+void addFactionDdrsPoints(faction faction, int DDRS_PointsAdded){
+    faction->f_ddrsPoints += DDRS_PointsAdded;
+}
+
+void setHand(faction faction, hand *hand){
+    reset_hand(faction->f_hand);
+    for (int i = 1; i <= 8; i++){
+        push_hand(getNthCard_hand(hand,i), faction->f_hand);
+    }
+    
+}
+
+/*--------------------------------------------------------------------------*/

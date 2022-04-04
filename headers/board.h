@@ -3,6 +3,7 @@
 #include "faction.h"
 #include "cards.h"
 
+
 typedef struct board_base * board;
 
 /**
