@@ -17,26 +17,30 @@ int hasTheDeckBeenShuffled(faction faction){
     return faction->hasBeenReshuffled; 
 };
 
-void reshuffleDeck(faction *faction){
-    shuffle_deck(&(*faction)->f_deck);
-    (*faction)->hasBeenReshuffled = 1;
+void reshuffleDeck(faction faction){
+    shuffle_deck(&(faction->f_deck));
+    faction->hasBeenReshuffled = 1;
 };
 
-void discardHand(faction *faction){
+void discardHand(faction faction){
     for(int j=0; j<NB_CARDS_IN_HAND; j++){
-        push_deck(pop_hand(&((*faction)->f_hand)), &((*faction)->f_deck));
+        push_deck(pop_hand(&(faction->f_hand)), &(faction->f_deck));
     }
 };
 
-void shuffleDeck(faction *faction){
-    shuffle_deck(&(*faction)->f_deck);
+void shuffleDeck(faction faction){
+    shuffle_deck(&(faction->f_deck));
 };
 
-void drawCards(faction *faction){
+void drawCards(faction faction){
     for (int i=0;i<NB_CARDS_IN_HAND;i++){
-        push_hand(pop_deck(&((*faction)->f_deck)),&((*faction)->f_hand));
+        push_hand(pop_deck(&(faction->f_deck)),&(faction->f_hand));
     }
 }
+
+/*--------------------------------------------------------------------------*/
+
+//GETTERS
 
 char getFactionName(faction faction){
     return faction->f_name;
@@ -57,3 +61,31 @@ deck getDeck(faction faction){
 int getNbRoundWin(faction faction){
     return faction->nbRoundWin;
 }
+
+/*--------------------------------------------------------------------------*/
+
+//SETTERS
+
+void setFactionName(faction faction, char* name){
+    if (strlen(name) < strlen(faction->f_name)){    
+        strcpy(faction->f_name, name);
+    }
+}
+
+void setFactionDdrsPoints(faction faction, int DDRS_Points){
+    faction->f_ddrsPoints=DDRS_Points;
+}
+
+void addFactionDdrsPoints(faction faction, int DDRS_PointsAdded){
+    faction->f_ddrsPoints += DDRS_PointsAdded;
+}
+
+void setHand(faction faction, hand *hand){
+    reset_hand(faction->f_hand);
+    for (int i = 1; i <= 8; i++){
+        push_hand(getNthCard_hand(hand,i), faction->f_hand);
+    }
+    
+}
+
+/*--------------------------------------------------------------------------*/

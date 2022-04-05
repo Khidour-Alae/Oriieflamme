@@ -37,11 +37,11 @@ faction* listFactions(board b){
     return b->listFactions;
 }
 
-void putDownCard(board *b, card c, faction f, int p){
+void putDownCard(board b, card c, faction f, int p){
     addCard_board2D(b->b2D, c, f, p);
 }
 
-int flipCard(board *b, card *c){
+int flipCard(board b, card *c){
     /* Récupérer le bounding box de b avec la fonction getBoundingBox
     Il faudra ensuite parcourir le tableau de en haut à gauche jusqu'à en bas à droite, et utiliser la fonction getCard_board2D. 
     S'il n'y a aucune carte, cette fonction revoie NULL. 

@@ -8,8 +8,8 @@ void init_deck(deck *d) {
     d->top = -1;
 }
 
-int isEmpty_deck(deck d) {
-    return d.top == -1;
+int isEmpty_deck(deck *d) {
+    return d->top == -1;
 }
 
 void push_deck(card c, deck *d) {
@@ -58,8 +58,8 @@ void init_hand(hand *h) {
     h->c = malloc(sizeof(card)*NB_CARDS_IN_HAND);
     h->top = -1;
 }
-int isEmpty_hand(hand h) {
-    return h.top == -1;
+int isEmpty_hand(hand *h) {
+    return h->top == -1;
 }
 
 void push_hand(card c, hand *h) {
@@ -180,10 +180,10 @@ void init_board2D(board2D *b2D) {
     b2D->box.pmin = b2D->sideLength * yshiftedmin + xshiftedmin;
 }
 
-int isEmpty_board2D(board2D b2D) {
-    for (int i = 0; i < b2D.sizeBoard2D; i++)
+int isEmpty_board2D(board2D *b2D) {
+    for (int i = 0; i < b2D->sizeBoard2D; i++)
     {
-        if (b2D.c[i] != NULL)
+        if (b2D->c[i] != NULL)
         {
             return 1;
         }

@@ -3,6 +3,7 @@
 #include "faction.h"
 #include "cards.h"
 
+
 typedef struct board_base * board;
 
 /**
@@ -41,7 +42,7 @@ faction* listFactions(board b);
 * \param f is the faction which wants to put the card on the board
 * \param p is the position of the card oon the board
 **/
-void putDownCard(board *b, card c, faction f, int p);
+void putDownCard(board b, card c, faction f, int p);
 
 /**
 * \brief return the card selected and activate its effect
@@ -49,7 +50,7 @@ void putDownCard(board *b, card c, faction f, int p);
 * \return 1 as long as the board contains a flipable card, 0 otherwise
 * \attention the pointer must be valid
 **/
-int flipCard(board *b, card *c);
+int flipCard(board b, card *c);
 
 /**
 * \brief Get the center of the board
