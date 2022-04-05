@@ -3,9 +3,11 @@
 */
 #ifndef _FACTIONS_H  
 #define _FACTIONS_H
-#include "../headers/structure.h"
 
-typedef struct impl_faction *faction;
+#include "structure.h"
+
+
+typedef struct impl_faction * faction;
 
 /**
 * \brief Allows to know if the shuffle option was used
