@@ -84,7 +84,7 @@ card popNthCard_hand(hand *h, int n) {
     hand tmp;
     for (int i = 0; i < n - 1; i++)
     {
-        if (!isEmpty_hand(*h))
+        if (!isEmpty_hand(h))
         {
             push_hand(pop_hand(h),&tmp);
         }
@@ -93,10 +93,10 @@ card popNthCard_hand(hand *h, int n) {
             //raise exception
         }
     }
-    if (!isEmpty_hand(*h))
+    if (!isEmpty_hand(h))
     {
         card nthCard = pop_hand(h);
-        while (!isEmpty_hand(tmp))
+        while (!isEmpty_hand(&tmp))
         {
             push_hand(pop_hand(&tmp),h);
         }
@@ -116,7 +116,7 @@ card getNthCard_hand(hand *h, int n) {
     hand tmp;
     for (int i = 0; i < n - 1; i++)
     {
-        if (!isEmpty_hand(*h))
+        if (!isEmpty_hand(h))
         {
             push_hand(pop_hand(h),&tmp);
         }
@@ -125,11 +125,11 @@ card getNthCard_hand(hand *h, int n) {
             //raise exception
         }
     }
-    if (!isEmpty_hand(*h))
+    if (!isEmpty_hand(h))
     {
         card nthCard = pop_hand(h);
         push_hand(nthCard,h);
-        while (!isEmpty_hand(tmp))
+        while (!isEmpty_hand(&tmp))
         {
             push_hand(pop_hand(&tmp),h);
         }
@@ -151,6 +151,12 @@ void delete_hand(hand *h) {
 
 
 //board2D structure
+
+//defined later but used some functions
+int getPositionFromCoordinates_board2D(board2D *b2D, int x, int y);
+int getXFromPosition_board2D(board2D *b2D, int p);
+int getYFromPosition_board2D(board2D *b2D, int p);
+
 void init_board2D(board2D *b2D) {
     b2D->sizeBoard2D = SIZE_2DBOARD;
     b2D->c = malloc(sizeof(card)*b2D->sizeBoard2D);
@@ -162,22 +168,10 @@ void init_board2D(board2D *b2D) {
     }
     b2D->sideLength = 4*NB_CARDS_IN_HAND + 1;
     
-    //we would like to do
-    //b2D->box.pmax = getPositionFromCoordinates_board2D(xmax = 1, ymax = 1);
-    //but we can't use getPositionFromCoordinates_board2D() yet as it requires a board as parameter
-    int xmax = 1, ymax = 1;
-    int xcenter = b2D->sideLength / 2;
-    int ycenter = b2D->sideLength / 2;
-    int xshiftedmax = xcenter + xmax;
-    int yshiftedmax = ycenter + ymax;
-
-    b2D->box.pmax = b2D->sideLength * yshiftedmax + xshiftedmax;
-    //same goes for b2D->box.pmin
-    int xmin = -1, ymin = -1;
-    int xshiftedmin = xcenter + xmin;
-    int yshiftedmin = ycenter + ymin;
-
-    b2D->box.pmin = b2D->sideLength * yshiftedmin + xshiftedmin;
+    b2D->box.xmin = -1;
+    b2D->box.ymin = -1;
+    b2D->box.xmax = 1;
+    b2D->box.ymax = 1;
 }
 
 int isEmpty_board2D(board2D *b2D) {
@@ -195,12 +189,12 @@ int getCenter_board2D(board2D *b2D) {
     return getPositionFromCoordinates_board2D(b2D,0,0);
 }
 
-card getCard_board2D(board2D *b2D, int p) {
-    return b2D->c[p];
+card getCard_board2D(board2D *b2D, int x, int y) {
+    return b2D->c[getPositionFromCoordinates_board2D(b2D,x,y)];
 }
 
-faction getFaction_board2D(board2D *b2D, int p) {
-    return b2D->f[p];
+faction getFaction_board2D(board2D *b2D, int x, int y) {
+    return b2D->f[getPositionFromCoordinates_board2D(b2D,x,y)];
 }
 
 void resize_board2D(board2D *b2D) {
@@ -224,36 +218,29 @@ void resize_board2D(board2D *b2D) {
 
 int min(int a, int b) {return a < b ? a : b;}
 int max(int a, int b) {return a < b ? b : a;}
-void addCard_board2D(board2D *b2D, card c, faction f, int pos) {
+void addCard_board2D(board2D *b2D, card c, faction f, int x, int y) {
     
-    //check if we can place the card in the board
-    int x = getXFromPosition_board2D(b2D,pos);
-    int y = getYFromPosition_board2D(b2D,pos);
+    //check if we need to resize the board
+    if (x == 0 || x == b2D->sideLength - 1 || y == 0 || y == b2D->sideLength - 1)
+    {
+        resize_board2D(b2D);
+    }
 
-    if (getCard_board2D(b2D,pos) != NULL)
+    //resize the boundingBox if needed
+    b2D->box.xmin = min(x,b2D->box.xmin);
+    b2D->box.ymin = min(y,b2D->box.ymin);
+    b2D->box.xmax = max(x,b2D->box.xmax);
+    b2D->box.ymax = max(y,b2D->box.ymax);
+
+    //check if we can place the card in the board
+    if (getCard_board2D(b2D,x,y) != NULL)
     {
         //there already is a card there
         //raise error
     }
     else //we place the card
     {
-        //check if we need to resize the board
-        if (x == 0 || x == b2D->sideLength - 1 || y == 0 || y == b2D->sideLength - 1)
-        {
-            resize_board2D(b2D);
-        }
-
-        //resize the boundingBox if needed
-        int x_min = getXFromPosition_board2D(b2D, b2D->box.pmin);
-        int y_min = getYFromPosition_board2D(b2D, b2D->box.pmin);
-        int x_max = getXFromPosition_board2D(b2D, b2D->box.pmax);
-        int y_max = getYFromPosition_board2D(b2D, b2D->box.pmax);
-        
-        b2D->box.pmin = getPositionFromCoordinates_board2D(b2D,min(x,x_min),min(y,y_min));
-        b2D->box.pmax = getPositionFromCoordinates_board2D(b2D,max(x,x_max),max(y,y_max));
-
         //place the card
-        //we need to update the position as the board might have been resized
         int p = getPositionFromCoordinates_board2D(b2D,x,y);
         b2D->c[p] = c; b2D->f[p] = f;
     }
@@ -271,12 +258,19 @@ void delete_board2D(board2D *b2D) {
 }
 
 void getBoundingBox(board2D *b2D, int *xmin, int *ymin, int *xmax, int *ymax) {
-    (*xmin) = getXFromPosition_board2D(b2D, b2D->box.pmin);
-    (*ymin) = getXFromPosition_board2D(b2D, b2D->box.pmin);
-    (*xmax) = getXFromPosition_board2D(b2D, b2D->box.pmax);
-    (*ymax) = getYFromPosition_board2D(b2D, b2D->box.pmax);
+    (*xmin) = b2D->box.xmin;
+    (*ymin) = b2D->box.ymin;
+    (*xmax) = b2D->box.xmax;
+    (*ymax) = b2D->box.ymax;
 }
 
+/**
+* \brief get the position (index) correstponding to the point ( \a x, \a y)
+* \param b2D is the board2D, we need the board2D argument as the board can be dynamically extended
+* \param x is the x coordinate of the point
+* \param y is the y coordinate of the point
+* \return \a p the position corresponding to the point ( \a x, \a y)
+**/
 int getPositionFromCoordinates_board2D(board2D *b2D, int x, int y) {
     int xcenter = b2D->sideLength / 2;
     int ycenter = b2D->sideLength / 2;
@@ -286,12 +280,24 @@ int getPositionFromCoordinates_board2D(board2D *b2D, int x, int y) {
     return b2D->sideLength * yshifted + xshifted;
 }
 
+/**
+* \brief get the x coordinate correstponding to the position \a p
+* \param b2D is the board2D, we need the board2D argument as the board can be dynamically extended
+* \param p is the position
+* \return \a x the x coordinate correstponding to the position \a p
+**/
 int getXFromPosition_board2D(board2D *b2D, int p) {
     int xcenter = b2D->sideLength / 2;
     int xshifted = p % b2D->sideLength;
     return xshifted - xcenter;
 }
 
+/**
+* \brief get the y coordinate correstponding to the position \a p
+* \param b2D is the board2D, we need the board2D argument as the board can be dynamically extended
+* \param p is the position
+* \return \a y the y coordinate correstponding to the position \a p
+**/
 int getYFromPosition_board2D(board2D *b2D, int p) {
     int ycenter = b2D->sideLength / 2;
     int yshifted = (p - (p % b2D->sideLength))/b2D->sideLength;
