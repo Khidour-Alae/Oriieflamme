@@ -44,10 +44,10 @@ enum cardName {
 
 
 struct impl_card{
-    char c_name[SIZE_NAME]; 
-    cardName c_enumName;
-    char c_effectDescription[EFFECT_DESCRIPTION];
-    int numberOfOccurrence;
+    char c_name[SIZE_NAME]; // Name of the card
+    cardName c_enumName; //Attribute that allows to find the card by an identifier (useful for the program that codes the effects of the cards, a switch...case will be used)
+    char c_effectDescription[EFFECT_DESCRIPTION]; // Description of the card's effect
+    int numberOfOccurrence; // Number of occurence of the card in the deck
     int cardStatus; // 0 if Face Down, 1 if Face Up
 };
 

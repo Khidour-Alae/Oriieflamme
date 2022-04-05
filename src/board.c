@@ -5,8 +5,8 @@
 
 struct board_base
 {
-    board2D b2D;
-    faction listFactions[2];
+    board2D b2D; // Board of the game
+    faction listFactions[2]; // List of factions playing on the board 
 };
 
 board2D getBoard(board b){
