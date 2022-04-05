@@ -1,12 +1,13 @@
 /**
 *To avoid multiple inclusions 
 */
-#include "../headers/structure.h"
 #ifndef _FACTIONS_H  
 #define _FACTIONS_H
 
+#include "structure.h"
 
-typedef struct impl_faction *faction;
+
+typedef struct impl_faction * faction;
 
 /**
 * \brief Allows to know if the shuffle option was used

@@ -3,27 +3,28 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct board
+struct board_base
 {
-    board2D board;
+    board2D b2D;
     faction listFactions[2];
 };
 
 board createBoard(){
-    board2D *b2D;
-    init_board2D(*b2D);
+    board b;
+    init_board2D(&b->b2D);
     faction f1;
     faction f2;
-    b2D->listFactions[0] = f1;
-    b2D->listFactions[1] = f2;
-    init_deck(f1->f_deck);
-    init_deck(f2->f_deck);
-    init_hand(f1->f_hand);
-    init_hand(f2->f_hand);
+    b->listFactions[0] = f1;
+    b->listFactions[1] = f2;
+    init_deck(&f1->f_deck);
+    init_deck(&f2->f_deck);
+    init_hand(&f1->f_hand);
+    init_hand(&f2->f_hand);
+    return b;
 }
 
 void freeBoard(board b){
-    delete_board2D(b->b2D);
+    delete_board2D(b->board);
 }
 
 int newRound(int counterRoundNumber, faction f1, faction f2){

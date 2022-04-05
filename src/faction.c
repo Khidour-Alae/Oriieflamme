@@ -4,7 +4,7 @@
 
 #define SIZE_NAME 150
 
-struct impl_faction{
+struct impl_faction {
     char f_name[SIZE_NAME];
     int f_ddrsPoints;
     hand f_hand;
@@ -80,12 +80,8 @@ void addFactionDdrsPoints(faction faction, int DDRS_PointsAdded){
     faction->f_ddrsPoints += DDRS_PointsAdded;
 }
 
-void setHand(faction faction, hand *hand){
-    reset_hand(faction->f_hand);
-    for (int i = 1; i <= 8; i++){
-        push_hand(getNthCard_hand(hand,i), faction->f_hand);
-    }
-    
+void setHand(faction faction, hand hand){
+    faction->f_hand = hand; 
 }
 
 /*--------------------------------------------------------------------------*/
