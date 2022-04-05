@@ -1,10 +1,9 @@
 /**
 *To avoid multiple inclusions 
 */
-#include "../headers/structure.h"
 #ifndef _FACTIONS_H  
 #define _FACTIONS_H
-
+#include "../headers/structure.h"
 
 typedef struct impl_faction *faction;
 
