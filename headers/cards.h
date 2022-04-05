@@ -32,14 +32,23 @@ char getCardEffectDescription(card card); //DONE
 */
 int getNumberOfOccurrence(card card); //DONE
 
+
 /**
 * \brief get the state of the card (fliped or not)
+* \param card a card
+* \return the state of the card
+*/
+int getCardStatus(card card); //DONE
+
+
+/**
+* \brief get the state of the card in a specific position (fliped or not)
 * \param b2D the board
 * \param x x position of the card (valid card on the board)
 * \param y y position of the card (valid card on the board)
 * \return the state of the card
 */
-int getCardStatus(board2D *b2D, int x, int y); //DONE
+int getCardStatusByPosition(board2D *b2D, int x, int y); //DONE
 
 /*--------------------------------------------------------------------------*/
 
@@ -60,6 +69,7 @@ void setCardName(card card, char* name); //DONE
 */
 void setCardEffectDescription(card card, char* effectDescription); //DONE
 
+
 /**
 * \brief set the number of occurrence of a card
 * \param card a card
@@ -67,14 +77,23 @@ void setCardEffectDescription(card card, char* effectDescription); //DONE
 */
 void setNumberOfOccurrence(card card, int numberOfOccurrence); //DONE
 
+
 /**
 * \brief set the state of the card (fliped or not)
+* \param card a card
+* \param status state of the card (fliped or not)
+*/
+void setCardStatus(card card, int status);//DONE
+
+
+/**
+* \brief set the state of the card in a specific position (fliped or not)
 * \param b2D the board
 * \param x x position of the card (valid card on the board)
 * \param y y position of the card (valid card on the board)
 * \param status state of the card (fliped or not)
 */
-void setCardStatus(board2D *b2D, int x, int y, int status); //TODO
+void setCardStatusByPosition(board2D *b2D, int x, int y, int status); //DONE
 
 /*--------------------------------------------------------------------------*/
 
