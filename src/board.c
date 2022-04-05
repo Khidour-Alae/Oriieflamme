@@ -9,6 +9,19 @@ struct board_base
     faction listFactions[2];
 };
 
+board2D getBoard(board b){
+    return b->b2D;
+}
+
+void setBoard(board b, board2D b2D){
+    b->b2D=b2D;
+}
+
+void setBoard(board b, board2D b2D){
+    b->listFactions=listFactions;
+}
+
+
 board createBoard(){
     board b;
     init_board2D(&b->b2D);

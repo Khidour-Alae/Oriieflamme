@@ -6,6 +6,38 @@
 
 typedef struct board_base * board;
 
+
+//GETTERS
+
+/**
+* \brief get the 2Dboard from the board (because board = 2Dboard + factionList)
+* \param b a board
+* \return the 2Dboard of the board
+*/
+board2D getBoard(board b);
+
+/*--------------------------------------------------------------------------*/
+
+//SETTERS
+
+/**
+* \brief set the 2Dboard of the board (because board = 2Dboard + factionList)
+* \param b a board
+* \param b2D a 2Dboard
+*/
+void setBoard(board b, board2D b2D);
+
+/**
+* \brief get the name of the card
+* \param b a board
+* \param listFactions list of factions
+*/
+void setFactionInBoard(board b, faction* listFactions);
+
+/*--------------------------------------------------------------------------*/
+
+
+
 /**
 * \brief Create a board and the two factions
 * \return a struct board with the elements initialized

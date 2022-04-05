@@ -84,4 +84,16 @@ void setHand(faction faction, hand hand){
     faction->f_hand = hand; 
 }
 
+void setDeck(faction faction, deck deck){
+    faction->f_deck = deck;
+}
+
+void setNbRoundWin(faction faction, int nbRoundWin){
+    faction->nbRoundWin = nbRoundWin;
+}
+
+void addNbRoundWin(faction faction, int nbRoundWinAdded){
+    faction->nbRoundWin += nbRoundWinAdded;
+}
+
 /*--------------------------------------------------------------------------*/

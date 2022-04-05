@@ -148,7 +148,7 @@ void setDeck(faction faction, deck deck);
 * \param faction a  faction
 * \param NbRoundWin points to set
 */
-void setNbRoundWin(faction faction, int NbRoundWin);
+void setNbRoundWin(faction faction, int nbRoundWin);
 
 
 /**
@@ -156,7 +156,7 @@ void setNbRoundWin(faction faction, int NbRoundWin);
 * \param faction a faction 
 * \param NbRoundWinAdded points to add (or remove)
 */
-void addNbRoundWin(faction faction, int NbRoundWinAdded);
+void addNbRoundWin(faction faction, int nbRoundWinAdded);
 
 
 
