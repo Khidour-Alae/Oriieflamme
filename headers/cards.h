@@ -1,9 +1,10 @@
 /**
 * To avoid multiple inclusions 
 */
-#include "../headers/structure.h"
 #ifndef _CARDS_H  
 #define _CARDS_H
+
+#include "../headers/structure.h"
 
 typedef struct impl_card *card;
 
