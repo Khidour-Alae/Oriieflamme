@@ -120,74 +120,27 @@ void reset_hand(hand h);
 // ### The board2D structure
 // #######################################################
 
-/**
-* It's recommended to read the comments of board2D before.
-* board2DBoundingBox defines the boundingBox of the board2D.
-* It just represent a rectangle with two points :
-* one point is the lowest left point
-* one point is the highest right point
-*
-**/
-typedef struct {
-    int xmin; int ymin; int xmax; int ymax;
-} board2DBoundingBox;
-
-/**
-* board2D is a complex structure. It represents the board,
-* that is to say a 2D plane on which you can place cards 
-* belonging to factions. The cards can only be placed on 
-* integer coordinates (for example : (0,0), (3,2), (-1,-2)).
-* 
-* To do this, we make two 2D-arrays, one that store the cards
-* and one that stores from which faction the card was placed.
-* 
-* The 2D-arrays are implemented as a 1D-array with the following
-* transformation : 1DArray[sizeOfLine * y + x] <=> 2DArray[x][y]
-* 
-* To represent an infinite 2D plane, the arrays can be
-* dynamically resized. For example, if the array covers the
-* 2D plane for :
-*   # -5 <= x <= 5
-*   # -5 <= y <= 5
-* and we need to place a card at (5,6), then the array will
-* grow in order to cover enough of the 2D plane to place the card
-*
-* As the array could be covering unecessary parts of the 2D plane
-* we are using a bounding box. For example :
-* if the array is covering -50 <= x <= 50 and -50 <= y <= 50
-* but there are cards only in -10 <= x <= 3 and -7 <= y <= 4
-* then the bounding box is used to get this information
-* This is usefull mostly for printing the board or iterating
-* through the board.
-*
-**/
-typedef struct {
-    card *c;
-    faction *f;
-    board2DBoundingBox box;
-    int sideLength; //the board is a square
-    int sizeBoard2D; //the 1D-array length
-} board2D;
+typedef struct board2DBase * board2D;
 
 /**
 * \brief Initializes the board (mostly memory allocation)
 * \param b2D is the board2D
 **/
-void init_board2D(board2D *b2D);
+void init_board2D(board2D b2D);
 
 /**
 * \brief Check if the board is empty
 * \param b2D is the board2D
 * \return 0 if there is at least one card placed on the board, 1 otherwise
 **/
-int isEmpty_board2D(board2D *b2D);
+int isEmpty_board2D(board2D b2D);
 
 /**
 * \brief get the position of the center of the board (the index of the 1D-array)
 * \param b2D is the board2D
 * \return the index that gives the center of the board
 **/
-int getCenter_board2D(board2D *b2D);
+int getCenter_board2D(board2D b2D);
 
 /**
 * \brief get the card placed at coordinates ( \a x, \a y)
@@ -196,7 +149,7 @@ int getCenter_board2D(board2D *b2D);
 * \param y is the y-coordinate
 * \return NULL if there are no card placed at at coordinates ( \a x, \a y); return the card otherwise
 **/
-card getCard_board2D(board2D *b2D, int x, int y);
+card getCard_board2D(board2D b2D, int x, int y);
 
 /**
 * \brief get the faction that played the card placed at coordinates ( \a x, \a y)
@@ -205,7 +158,7 @@ card getCard_board2D(board2D *b2D, int x, int y);
 * \param y is the y-coordinate
 * \return NULL if there are no card placed at coordinates ( \a x, \a y); return the faction that played the card otherwise
 **/
-faction getFaction_board2D(board2D *b2D, int x, int y);
+faction getFaction_board2D(board2D b2D, int x, int y);
 
 /**
 * \brief place a card \a c at coordinates ( \a x, \a y)
@@ -215,19 +168,19 @@ faction getFaction_board2D(board2D *b2D, int x, int y);
 * \param x is the x-coordinate at which you want to place the card
 * \param y is the y-coordinate at which you want to place the card
 **/
-void addCard_board2D(board2D *b2D, card c, faction f, int x, int y);
+void addCard_board2D(board2D b2D, card c, faction f, int x, int y);
 
 /**
 * \brief puts the board back to its original state (that is to say the empty board)
 * \param b2D is the board2D
 **/
-void reset_board2D(board2D *b2D);
+void reset_board2D(board2D b2D);
 
 /**
 * \brief Deletes the board2D (free allocated memory)
 * \param b2D is the board2D
 **/
-void delete_board2D(board2D *b2D);
+void delete_board2D(board2D b2D);
 
 /**
 * \brief get the bounding box of the board2D
@@ -237,6 +190,6 @@ void delete_board2D(board2D *b2D);
 * \param xmax is the x coordinate of the highest right point of the bounding box (=rectangle)
 * \param ymax is the y coordinate of the highest right point of the bounding box (=rectangle)
 **/
-void getBoundingBox(board2D *b2D, int *xmin, int *ymin, int *xmax, int *ymax);
+void getBoundingBox(board2D b2D, int *xmin, int *ymin, int *xmax, int *ymax);
 
 #endif
