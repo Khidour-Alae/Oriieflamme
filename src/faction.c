@@ -5,12 +5,12 @@
 #define SIZE_NAME 150
 
 struct impl_faction {
-    char f_name[SIZE_NAME];
-    int f_ddrsPoints;
-    hand f_hand;
-    deck f_deck;
+    char f_name[SIZE_NAME]; // Name of the faction
+    int f_ddrsPoints; // Number of DDRS points of the team
+    hand f_hand; // Hand of the faction
+    deck f_deck; // Deck of the faction
     int hasBeenReshuffled; // 1 if the deck has been reshuffled, 0 if not
-    int nbRoundWin;
+    int nbRoundWin; // Number of rounds won by the faction 
 };
 
 int hasTheDeckBeenShuffled(faction faction){
