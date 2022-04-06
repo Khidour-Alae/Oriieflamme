@@ -2,17 +2,24 @@
 #include <stdlib.h>
 #include <time.h>
 
+struct deckBase
+{
+    card *c;
+    int top;
+};
+
+
 //deck structure
-void init_deck(deck *d) {
+void init_deck(deck d) {
     d->c = malloc(sizeof(card)*NB_CARDS_IN_DECK);
     d->top = -1;
 }
 
-int isEmpty_deck(deck *d) {
+int isEmpty_deck(deck d) {
     return d->top == -1;
 }
 
-void push_deck(card c, deck *d) {
+void push_deck(card c, deck d) {
     if (d->top == NB_CARDS_IN_DECK - 1)
     {
         //raise error
@@ -24,13 +31,13 @@ void push_deck(card c, deck *d) {
     }
 }
 
-card pop_deck(deck *d) {
+card pop_deck(deck d) {
     d->top -= 1;
     return d->c[d->top + 1];
 }
 
 //using Fisher–Yates shuffle algorithm
-void shuffle_deck(deck *d) {
+void shuffle_deck(deck d) {
     srand(time(NULL));
     int j;
     for (int i = 0; i < d->top - 2; i++)
@@ -42,111 +49,52 @@ void shuffle_deck(deck *d) {
     }
 }
 
-void reset_deck(deck *d) {
+void reset_deck(deck d) {
     free(d->c);
     init_deck(d);
 }
 
-void delete_deck(deck *d) {
+void delete_deck(deck d) {
     free(d->c);
 }
 
 
 
 //hand structure
-void init_hand(hand *h) {
-    h->c = malloc(sizeof(card)*NB_CARDS_IN_HAND);
-    h->top = -1;
-}
-int isEmpty_hand(hand *h) {
-    return h->top == -1;
-}
+struct handBase
+{
+    card c[NB_CARDS_IN_HAND];
+};
 
-void push_hand(card c, hand *h) {
-        if (h->top == NB_CARDS_IN_HAND - 1)
+void init_hand(hand h) {
+    for (int i = 0; i < NB_CARDS_IN_HAND; i++)
     {
-        //raise error
-    }
-    else
-    {
-        h->top += 1;
-        h->c[h->top] = c;        
+        h->c[i] = NULL;
     }
 }
+int isEmpty_hand(hand h) {
+    for (int i = 0; i < NB_CARDS_IN_HAND; i++)
+    {
+        if (h->c[i] != NULL) return 0;
+    }
+    return 1;
+}
 
-card pop_hand(hand *h) {
-    h->top -= 1;
-    return h->c[h->top + 1];
+void setCard_hand(hand h, card c, int index) {
+    h->c[index] = c;
+}
+
+card getCard_hand(hand h, int index) {
+    return h->c[index];
 }
 
 //the hand being numbered from 1 to X
-card popNthCard_hand(hand *h, int n) {
-    hand tmp;
-    for (int i = 0; i < n - 1; i++)
-    {
-        if (!isEmpty_hand(h))
-        {
-            push_hand(pop_hand(h),&tmp);
-        }
-        else
-        {
-            //raise exception
-        }
-    }
-    if (!isEmpty_hand(h))
-    {
-        card nthCard = pop_hand(h);
-        while (!isEmpty_hand(&tmp))
-        {
-            push_hand(pop_hand(&tmp),h);
-        }
-        return nthCard;
-    }
-    else
-    {
-        //raise exception
-    }
+void discardCard_hand(hand h, int index) {
+    h->c[index] = NULL;
 }
 
-card getTopCard_hand(hand *h) {
-    return h->c[h->top];
-}
-
-card getNthCard_hand(hand *h, int n) {
-    hand tmp;
-    for (int i = 0; i < n - 1; i++)
-    {
-        if (!isEmpty_hand(h))
-        {
-            push_hand(pop_hand(h),&tmp);
-        }
-        else
-        {
-            //raise exception
-        }
-    }
-    if (!isEmpty_hand(h))
-    {
-        card nthCard = pop_hand(h);
-        push_hand(nthCard,h);
-        while (!isEmpty_hand(&tmp))
-        {
-            push_hand(pop_hand(&tmp),h);
-        }
-        return nthCard;
-    }
-    else
-    {
-        //raise exception
-    }
-}
-
-void reset_hand(hand *h) {
-    free(h->c);
+void reset_hand(hand h) {
     init_hand(h);
-}
-void delete_hand(hand *h) {
-    free(h->c);
 }
 
 

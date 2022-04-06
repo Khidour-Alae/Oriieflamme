@@ -14,56 +14,54 @@
 
 /**
 * \brief The deck is a classic FILO structure
+*  with the particularity of providing an optimized shuffle function
 **/
-typedef struct {
-    card *c;
-    int top;
-} deck;
+typedef struct deckBase * deck;
 
 /**
 * \brief Initializes the deck (mostly memory allocation)
 * \param d is the deck
 **/
-void init_deck(deck *d);
+void init_deck(deck d);
 
 /**
 * \brief Check if there are cards in the deck
 * \param d is the deck
 * \return 0 if there is at least one card in the deck, 1 otherwise
 **/
-int isEmpty_deck(deck *d);
+int isEmpty_deck(deck d);
 
 /**
 * \brief Puts a card on top of the deck
 * \param d is the deck
 * \param c is the card
 **/
-void push_deck(card c, deck *d);
+void push_deck(card c, deck d);
 
 /**
 * \brief Draws the card on top of the deck
 * \param d is the deck
 * \return the card that was on top of the deck
 **/
-card pop_deck(deck *d);
+card pop_deck(deck d);
 
 /**
 * \brief Shuffles the deck using Fisher–Yates shuffle algorithm
 * \param d is the deck
 **/
-void shuffle_deck(deck *d);
+void shuffle_deck(deck d);
 
 /**
 * \brief Empty the deck
 * \param d is the deck
 **/
-void reset_deck(deck *d);
+void reset_deck(deck d);
 
 /**
 * \brief Deletes the deck (free allocated memory)
 * \param d is the deck
 **/
-void delete_deck(deck *d);
+void delete_deck(deck d);
 
 
 // #######################################################
@@ -71,74 +69,51 @@ void delete_deck(deck *d);
 // #######################################################
 
 /**
-* \brief The hand is a classic FILO structure
+* \brief The hand is an array of cards of size NB_CARDS_IN_HAND
 **/
-typedef struct {
-    card *c;
-    int top;
-} hand;
+typedef struct handBase * hand;
 
 /**
-* \brief Initializes the hand (mostly memory allocation)
+* \brief Initializes the hand to the empty hand
 * \param h is the hand
 **/
-void init_hand(hand *h);
+void init_hand(hand h);
 
 /**
 * \brief Check if there are cards in the hand
 * \param h is the hand
 * \return 0 if there is at least one card in the hand, 1 otherwise
 **/
-int isEmpty_hand(hand *h);
+int isEmpty_hand(hand h);
 
 /**
-* \brief Puts a card in the hand
+* \brief Put a card in the hand at index \a index
+* \param h is the hand
 * \param c is the card
-* \param h is the hand
+* \param index is the index at which you want to put the card, it is between 0 and NB_CARDS_IN_HAND
 **/
-void push_hand(card c, hand *h);
+void setCard_hand(hand h, card c, int index);
 
 /**
-* \brief discard the last card that was added to the hand
+* \brief Get the card at index \a index
 * \param h is the hand
+* \param index is the index at which you want to put the card, it is between 0 and NB_CARDS_IN_HAND
 * \return the last card that was added to the hand
 **/
-card pop_hand(hand *h);
+card getCard_hand(hand h, int index);
 
 /**
 * \brief discard the nth card (the 1-th being the last card added to the hand)
 * \param h is the hand
-* \param n correspond to the number of the card you want to discard (the n-th card)
-* \return the discarded card
+* \param index is the index at which you want to put the card, it is between 0 and NB_CARDS_IN_HAND
 **/
-card popNthCard_hand(hand *h, int n);
-
-/**
-* \brief get the last card that was added to the hand
-* \param h is the hand
-* \return the last card that was added to the hand
-**/
-card getTopCard_hand(hand *h);
-
-/**
-* \brief get the n-th card (1-th being the last card added)
-* \param h is the hand
-* \param n correspond to the number of the card you want to get (the n-th card)
-* \return the n-th card
-**/
-card getNthCard_hand(hand *h, int n);
+void discardCard_hand(hand h, int index);
 
 /**
 * \brief Empty the hand
 * \param h is the hand
 **/
-void reset_hand(hand *h);
-
-/**
-* \brief Deletes the hand (free allocated memory)
-* \param h is the hand
-**/
-void delete_hand(hand *h);
+void reset_hand(hand h);
 
 
 // #######################################################
