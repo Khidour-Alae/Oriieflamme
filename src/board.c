@@ -277,6 +277,38 @@ board createBoard(){
     initFaction(f2);
     b->listFactions[0] = f1;
     b->listFactions[1] = f2;
+    card FISE = const_card("FISE", 1, 4);
+    card FISA = const_card("FISA", 1, 4);
+    card FC = const_card("FC", 1, 4);
+    card EcologIIE = const_card("EcologIIE", 1, 2);
+    card lIIEns = const_card("lIIEns", 1, 2);
+    card Soiree_sans_alcool = const_card("Soiree_sans_alcool", 1, 1);
+    card Alcool = const_card("Alcool", 1, 1);
+    card Cafe = const_card("Cafe", 1, 3);
+    card The = const_card("The", 1, 3);
+    card Ecocup = const_card("Ecocup", 1, 1);
+    card Reprographie = const_card("Reprographie", 1, 1);
+    card Isolation_du_batiment = const_card("Isolation_du_batiment", 1, 1);
+    card Parcours_sobriete_numerique = const_card("Parcours_sobriete_numerique", 1, 1);
+    card Heures_supplementaires = const_card("Heures_supplementaires", 1, 1);
+    card Kahina_Bouchama = const_card("Kahina_Bouchama", 1, 1);
+    card Kevin_Goilard = const_card("Kevin_Goilard", 1, 1);
+    card Massinissa_Merabet = const_card("Massinissa_Merabet", 1, 1);
+    card Vitera_Y = const_card("Vitera_Y", 1, 1);
+    card Jonas_Senizergues = const_card("Jonas_Senizergues", 1, 1);
+    card Fetia_Bannour = const_card("Fetia_Bannour", 1, 1);
+    card Catherine_Dubois = const_card("Catherine_Dubois", 1, 1);
+    card Anne_Laure_Ligozat = const_card("Anne_Laure_Ligozat", 1, 1);
+    card Guillaume_Burel = const_card("Guillaume_Burel", 1, 1);
+    card Christophe_Mouilleron = const_card("Christophe_Mouilleron", 1, 1);
+    card Thomas_Lim = const_card("Thomas_Lim", 1, 1);
+    card Julien_Forest = const_card("Julien_Forest", 1, 1);
+    card Dimitri_Watel = const_card("Dimitri_Watel", 1, 1);
+    card Djibril_Aurelien_Dembele_Cabot = const_card("Djibril_Aurelien_Dembele_Cabot", 1, 1);
+    card Eric_Lejeune = const_card("Eric_Lejeune", 1, 1);
+    card Lucienne_Pacave = const_card("Lucienne_Pacave", 1, 1);
+    card Katrin_Salhab = const_card("Katrin_Salhab", 1, 1);
+    card Laurent_Prevel = const_card("Laurent_Prevel", 1, 1);
     return b;
 }
 

@@ -16,6 +16,7 @@ struct impl_faction {
 void initFaction(faction f){
     init_deck(getDeck(f));
     init_hand(getHand(f));
+    
 }
 
 int hasTheDeckBeenShuffled(faction faction){

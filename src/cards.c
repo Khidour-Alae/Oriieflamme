@@ -15,9 +15,13 @@ struct impl_card{
     int cardStatus; // 0 if Face Down, 1 if Face Up
 };
 
-card const_card(cardName cName, int numberOccurence, int cardStatus){
-    card->c_enumName = cName;
-    
+card const_card(char* nameCard, int enumCard, int numberOccurence){
+    card c;
+    strcpy(c->c_name, nameCard);
+    c->c_enumName = enumCard;
+    c->numberOfOccurrence = numberOccurence;
+    c->cardStatus = 0;
+    return c;
 }
 
 /*--------------------------------------------------------------------------*/
