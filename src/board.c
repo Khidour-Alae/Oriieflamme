@@ -101,14 +101,6 @@ int isEmpty_board2D(board2D b2D) {
     return 0;
 }
 
-/**
-* \brief get the position of the center of the board (the index of the 1D-array)
-* \param b2D is the board2D
-* \return the index that gives the center of the board
-**/
-int getCenter_board2D(board2D b2D) {
-    return getPositionFromCoordinates_board2D(b2D,0,0);
-}
 
 /**
 * \brief get the card placed at coordinates ( \a x, \a y)
@@ -311,8 +303,4 @@ int flipCard(board b, card *c){
     Il faudra ensuite parcourir le tableau de en haut à gauche jusqu'à en bas à droite, et utiliser la fonction getCard_board2D. 
     S'il n'y a aucune carte, cette fonction revoie NULL. 
     S'il y a une carte, il faudra retourner la carte. */
-}
-
-int getCenterOfBoard(board b){
-    getCenter_board2D(b->b2D);
 }
