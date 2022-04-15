@@ -4,8 +4,6 @@
 #ifndef _CARDS_H  
 #define _CARDS_H
 
-#include "../headers/structure.h"
-
 typedef struct impl_card *card;
 
 
@@ -42,15 +40,6 @@ int getNumberOfOccurrence(card card); //DONE
 int getCardStatus(card card); //DONE
 
 
-/**
-* \brief get the state of the card in a specific position (fliped or not)
-* \param b2D the board
-* \param x x position of the card (valid card on the board)
-* \param y y position of the card (valid card on the board)
-* \return the state of the card
-*/
-int getCardStatusByPosition(board2D *b2D, int x, int y); //DONE
-
 /*--------------------------------------------------------------------------*/
 
 //SETTERS
@@ -86,15 +75,6 @@ void setNumberOfOccurrence(card card, int numberOfOccurrence); //DONE
 */
 void setCardStatus(card card, int status);//DONE
 
-
-/**
-* \brief set the state of the card in a specific position (fliped or not)
-* \param b2D the board
-* \param x x position of the card (valid card on the board)
-* \param y y position of the card (valid card on the board)
-* \param status state of the card (fliped or not)
-*/
-void setCardStatusByPosition(board2D *b2D, int x, int y, int status); //DONE
 
 /*--------------------------------------------------------------------------*/
 
