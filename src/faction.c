@@ -42,7 +42,7 @@ void drawCards(faction faction){
 
 //GETTERS
 
-char getFactionName(faction faction){
+char* getFactionName(faction faction){
     return faction->f_name;
 }
 
