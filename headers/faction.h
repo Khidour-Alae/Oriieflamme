@@ -57,7 +57,7 @@ void drawCards(faction faction); //DONE
 * \param faction a faction
 * \return the name of the faction
 */
-char getFactionName(faction faction); //DONE
+char* getFactionName(faction faction); //DONE
 
 
 /**

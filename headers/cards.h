@@ -22,7 +22,7 @@ char* getCardName(card card); //DONE
 * \param card a card
 * \return the descripion of the card's effect
 */
-char getCardEffectDescription(card card); //DONE
+char* getCardEffectDescription(card card); //DONE
 
 /**
 * \brief get the number of occurrence of a card

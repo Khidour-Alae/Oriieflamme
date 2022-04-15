@@ -59,7 +59,7 @@ char* getCardName(card card){
     return card->c_name;
 }
 
-char getCardEffectDescription(card card){
+char* getCardEffectDescription(card card){
     return card->c_effectDescription;
 }
 
