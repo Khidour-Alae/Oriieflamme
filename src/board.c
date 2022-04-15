@@ -274,17 +274,18 @@ struct board_base
     faction listFactions[2]; // List of factions playing on the board 
 };
 
+faction initFaction(){
+    faction f;
+    init_deck(getDeck(f));
+    init_hand(getHand(f));
+    return f;
+}
+
 board createBoard(){
     board b;
-    init_board2D(&b->b2D);
-    faction f1;
-    faction f2;
-    b->listFactions[0] = f1;
-    b->listFactions[1] = f2;
-    init_deck(getDeck(f1));
-    init_deck(getDeck(f2));
-    init_hand(getHand(f1));
-    init_hand(getHand(f2));
+    init_board2D(b->b2D);
+    b->listFactions[0] = initFaction();
+    b->listFactions[1] = initFaction();
     return b;
 }
 
