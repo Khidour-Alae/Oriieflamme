@@ -75,7 +75,6 @@ void setNumberOfOccurrence(card card, int numberOfOccurrence); //DONE
 */
 void setCardStatus(card card, int status);//DONE
 
-
 /*--------------------------------------------------------------------------*/
 
 

@@ -48,14 +48,6 @@ void shuffleDeck(faction faction); //DONE
 */
 void drawCards(faction faction); //DONE
 
-
-/**
-* \brief 
-* \param 
-* \return 
-*/
-
-
 /*--------------------------------------------------------------------------*/
 
 //GETTERS
