@@ -13,6 +13,11 @@ struct impl_faction {
     int nbRoundWin; // Number of rounds won by the faction 
 };
 
+void initFaction(faction f){
+    init_deck(getDeck(f));
+    init_hand(getHand(f));
+}
+
 int hasTheDeckBeenShuffled(faction faction){
     return faction->hasBeenReshuffled; 
 };
