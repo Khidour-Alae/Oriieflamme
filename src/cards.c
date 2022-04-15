@@ -15,6 +15,11 @@ struct impl_card{
     int cardStatus; // 0 if Face Down, 1 if Face Up
 };
 
+card const_card(cardName cName, int numberOccurence, int cardStatus){
+    card->c_enumName = cName;
+    
+}
+
 /*--------------------------------------------------------------------------*/
 
 //GETTERS
