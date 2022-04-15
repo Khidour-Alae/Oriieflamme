@@ -6,26 +6,9 @@
 
 typedef struct board_base * board;
 
-
-//GETTERS
-
-/**
-* \brief get the 2Dboard from the board (because board = 2Dboard + factionList)
-* \param b a board
-* \return the 2Dboard of the board
-*/
-board2D getBoard(board b);
-
 /*--------------------------------------------------------------------------*/
 
 //SETTERS
-
-/**
-* \brief set the 2Dboard of the board (because board = 2Dboard + factionList)
-* \param b a board
-* \param b2D a 2Dboard
-*/
-void setBoard(board b, board2D b2D);
 
 /**
 * \brief get the name of the card
@@ -72,9 +55,10 @@ faction* listFactions(board b);
 * \param b is the board created at the beginning of the game
 * \param c is the card the faction wants to put on the board
 * \param f is the faction which wants to put the card on the board
-* \param p is the position of the card oon the board
+* \param x is the position of the card on the x axe
+* \param y is the position of the card on the y axe
 **/
-void putDownCard(board b, card c, faction f, int p);
+void putDownCard(board b, card c, faction f, int x, int y);
 
 /**
 * \brief return the card selected and activate its effect
