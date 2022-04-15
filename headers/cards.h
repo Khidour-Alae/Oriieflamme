@@ -14,7 +14,7 @@ typedef struct impl_card *card;
 * \param card a card
 * \return the name of the card
 */
-char getCardName(card card); //DONE
+char* getCardName(card card); //DONE
 
 
 /**

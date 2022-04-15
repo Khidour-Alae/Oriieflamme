@@ -19,7 +19,7 @@ enum cardName {
     The,
     Ecocup,
     Reprographie,
-    Iolation_du_batiment,
+    Isolation_du_batiment,
     Parcours_sobriete_numerique,
     Heures_supplementaires,
     Kahina_Bouchama,
@@ -35,7 +35,7 @@ enum cardName {
     Thomas_Lim,
     Julien_Forest,
     Dimitri_Watel,
-    Djibril_Aurélien_Dembele_Cabot,
+    Djibril_Aurelien_Dembele_Cabot,
     Eric_Lejeune,
     Lucienne_Pacave,
     Katrin_Salhab,
@@ -55,7 +55,7 @@ struct impl_card{
 
 //GETTERS
 
-char getCardName(card card){
+char* getCardName(card card){
     return card->c_name;
 }
 
