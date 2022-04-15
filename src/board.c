@@ -142,8 +142,8 @@ void resize_board2D(board2D b2D) {
     {
         for (int j = 0; j < b2D->sideLength-2; j++)
         {
-            newc[(i+1)*b2D->sideLength + (j+1)] = b2D->c[i*b2D->sideLength + j];
-            newc[(i+1)*b2D->sideLength + (j+1)] = b2D->f[i*b2D->sideLength + j];
+            newc[(i+1)*b2D->sideLength + (j+1)] = (b2D->c[i*b2D->sideLength + j]);
+            newc[(i+1)*b2D->sideLength + (j+1)] = (b2D->f[i*b2D->sideLength + j]);
         }
     }
 
@@ -274,19 +274,6 @@ struct board_base
     faction listFactions[2]; // List of factions playing on the board 
 };
 
-board2D getBoard(board b){
-    return b->b2D;
-}
-
-void setBoard(board b, board2D b2D){
-    b->b2D=b2D;
-}
-
-void setBoard(board b, board2D b2D){
-    b->listFactions=listFactions;
-}
-
-
 board createBoard(){
     board b;
     init_board2D(&b->b2D);
@@ -294,20 +281,20 @@ board createBoard(){
     faction f2;
     b->listFactions[0] = f1;
     b->listFactions[1] = f2;
-    init_deck(&f1->f_deck);
-    init_deck(&f2->f_deck);
-    init_hand(&f1->f_hand);
-    init_hand(&f2->f_hand);
+    init_deck(getDeck(f1));
+    init_deck(getDeck(f2));
+    init_hand(getHand(f1));
+    init_hand(getHand(f2));
     return b;
 }
 
 void freeBoard(board b){
-    delete_board2D(b->board);
+    delete_board2D(b->b2D);
 }
 
 int newRound(int counterRoundNumber, faction f1, faction f2){
     if (counterRoundNumber == 3) return 0;
-    if (f1->nbRoundWin == 2 || f2->nbRoundWin == 2) return 0;
+    if (getNbRoundWin(f1) == 2 || getNbRoundWin(f2) == 2) return 0;
     return 1;
 }
 
@@ -315,8 +302,8 @@ faction* listFactions(board b){
     return b->listFactions;
 }
 
-void putDownCard(board b, card c, faction f, int p){
-    addCard_board2D(b->b2D, c, f, p);
+void putDownCard(board b, card c, faction f, int x, int y){
+    addCard_board2D(b->b2D, c, f, x, y);
 }
 
 int flipCard(board b, card *c){

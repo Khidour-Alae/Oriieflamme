@@ -90,8 +90,7 @@ int main()
 
         showHand(f1);
         cardToPlay = askCardWantToPlay(f1);
-        pos = getCenterOfBoard(b);
-        putDownCard(b,cardToPlay,f1,pos); //the first card is placed in the center of board
+        putDownCard(b,cardToPlay,f1,0,0); //the first card is placed in the center of board
 
         showHand(f2);
         cardToPlay = askCardWantToPlay(f2);
