@@ -86,7 +86,7 @@ int main()
         }
         
         //placing cards
-        int pos; card cardToPlay;
+        int x,y; card cardToPlay;
 
         showHand(f1);
         cardToPlay = askCardWantToPlay(f1);
@@ -95,22 +95,22 @@ int main()
         showHand(f2);
         cardToPlay = askCardWantToPlay(f2);
         showBoard(b);
-        pos = askWhereWantToPlaceCard(cardToPlay);
-        putDownCard(b,cardToPlay,f2,pos);
+        askWhereWantToPlaceCard(cardToPlay,&x,&y);
+        putDownCard(b,cardToPlay,f2,x,y);
 
         for (int i = 0; i < 7; i++)
         {
             showHand(f1);
             cardToPlay = askCardWantToPlay(f1);
             showBoard(b);
-            pos = askWhereWantToPlaceCard(cardToPlay);
-            putDownCard(b,cardToPlay,f1,pos);
+            askWhereWantToPlaceCard(cardToPlay,&x,&y);
+            putDownCard(b,cardToPlay,f1,x,y);
 
             showHand(f2);
             cardToPlay = askCardWantToPlay(f2);
             showBoard(b);
-            pos = askWhereWantToPlaceCard(cardToPlay);
-            putDownCard(b,cardToPlay,f2,pos);
+            askWhereWantToPlaceCard(cardToPlay,&x,&y);
+            putDownCard(b,cardToPlay,f2,x,y);
         }
         
 

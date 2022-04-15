@@ -57,9 +57,10 @@ card askCardWantToPlay(faction f);
 /**
 * \brief asks a faction where to place the card \a c .
 * \param c A card.
-* \return The answer of the faction, an int.
+* \param x the x-coordinate where you want to place a card
+* \param y the y-coordinate where you want to place a card
 */
-int askWhereWantToPlaceCard(card c);
+void askWhereWantToPlaceCard(card c, int *x, int *y);
 
 
 /**
