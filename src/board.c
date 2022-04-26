@@ -273,8 +273,8 @@ board createBoard(){
     init_board2D(b->b2D);
     faction f1;
     faction f2;
-    initFaction(f1);
-    initFaction(f2);
+    initFaction(f1, "Communiste");
+    initFaction(f2, "Capitaliste");
     b->listFactions[0] = f1;
     b->listFactions[1] = f2;
     card fise = const_card("FISE", "La faction qui a posé cette carte gagne 1 point DDRS.", FISE, 4);

@@ -1,4 +1,4 @@
-    #include "../headers/cards.h"
+#include "../headers/cards.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -15,12 +15,13 @@ struct impl_card{
     int cardStatus; // 0 if Face Down, 1 if Face Up
 };
 
-card const_card(char* nameCard, cardName enumCard, int numberOccurence){
+card const_card(char* nameCard, char* descCard, cardName enumCard, int numberOccurence){
     card c;
-    strcpy(c->c_name, nameCard);
+    setCardName(c, nameCard);
+    setCardEffectDescription(c, descCard);
+    setNumberOfOccurrence(c, numberOccurence);
+    setCardStatus(c, 0);
     c->c_enumName = enumCard;
-    c->numberOfOccurrence = numberOccurence;
-    c->cardStatus = 0;
     return c;
 }
 

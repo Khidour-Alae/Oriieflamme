@@ -13,10 +13,13 @@ struct impl_faction {
     int nbRoundWin; // Number of rounds won by the faction 
 };
 
-void initFaction(faction f){
+void initFaction(faction f, char* factionName){
     init_deck(getDeck(f));
     init_hand(getHand(f));
-    
+    setFactionName(f, factionName);
+    setFactionDdrsPoints(f, 0);
+    setNbRoundWin(f, 0);
+    f->hasBeenReshuffled = 0;
 }
 
 int hasTheDeckBeenShuffled(faction faction){
