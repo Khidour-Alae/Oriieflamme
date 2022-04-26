@@ -1,6 +1,7 @@
 #include "../headers/faction.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #define SIZE_NAME 150
 
