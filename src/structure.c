@@ -6,6 +6,7 @@ struct deckBase
 {
     card *c;
     int top;
+    int nbOfCards; //utile pour les tests
 };
 
 
@@ -13,6 +14,7 @@ struct deckBase
 void init_deck(deck d) {
     d->c = malloc(sizeof(card)*NB_CARDS_IN_DECK);
     d->top = -1;
+    d->nbOfCards = 0;
 }
 
 int isEmpty_deck(deck d) {
@@ -27,12 +29,15 @@ void push_deck(card c, deck d) {
     else
     {
         d->top += 1;
-        d->c[d->top] = c;        
+        d->c[d->top] = c;  
+        d->nbOfCards += 1;   
     }
+
 }
 
 card pop_deck(deck d) {
     d->top -= 1;
+    d->nbOfCards -= 1; 
     return d->c[d->top + 1];
 }
 
@@ -78,6 +83,17 @@ int isEmpty_hand(hand h) {
         if (h->c[i] != NULL) return 0;
     }
     return 1;
+}
+
+
+
+int numberOfCards(hand h) {//Used for tests
+    int n = 0;
+    for (int i = 0; i < NB_CARDS_IN_HAND; i++)
+    {
+        if (h->c[i] != NULL) n+=1;
+    }
+    return n;
 }
 
 void setCard_hand(hand h, card c, int index) {
