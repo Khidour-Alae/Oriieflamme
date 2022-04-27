@@ -10,6 +10,13 @@
 typedef struct impl_faction * faction;
 
 /**
+* \brief Initializes the faction (mostly memory allocation)
+* \param f is the faction
+* \param factionName is the name of the faction
+**/
+void initFaction(faction f, char* factionName);
+
+/**
 * \brief Allows to know if the shuffle option was used
 * \param faction Valid faction
 * \return 1 if the shuffle option was used, else returns 0

@@ -1,6 +1,7 @@
 #include "../headers/faction.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #define SIZE_NAME 150
 
@@ -12,6 +13,15 @@ struct impl_faction {
     int hasBeenReshuffled; // 1 if the deck has been reshuffled, 0 if not
     int nbRoundWin; // Number of rounds won by the faction 
 };
+
+void initFaction(faction f, char* factionName){
+    init_deck(getDeck(f));
+    init_hand(getHand(f));
+    setFactionName(f, factionName);
+    setFactionDdrsPoints(f, 0);
+    setNbRoundWin(f, 0);
+    f->hasBeenReshuffled = 0;
+}
 
 int hasTheDeckBeenShuffled(faction faction){
     return faction->hasBeenReshuffled; 

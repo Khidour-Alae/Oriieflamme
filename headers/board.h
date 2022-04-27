@@ -1,3 +1,17 @@
+/**
+* \file board.h
+*
+* This file describes the functions we need to manage the board. 
+* There are 6 fonctions and 1 type :
+* - the type \a board define the structure of the board.
+* - createBoard allow to create the board and the two factions.
+* - freeBoard allow to free the memory allocated to the board and the two factions.
+* - newRound it creates a new round, or indicates if the game is finished.
+* - listFactions shows the list of the factions.
+* - putDownCard it allows to put a card on the board.
+* - flipCard return the card selected and activate its effect.
+*/
+
 #ifndef _BOARD_H
 #define _BOARD_H
 #include "faction.h"
@@ -5,21 +19,6 @@
 
 
 typedef struct board_base * board;
-
-/*--------------------------------------------------------------------------*/
-
-//SETTERS
-
-/**
-* \brief get the name of the card
-* \param b a board
-* \param listFactions list of factions
-*/
-void setFactionInBoard(board b, faction* listFactions);
-
-/*--------------------------------------------------------------------------*/
-
-
 
 /**
 * \brief Create a board and the two factions
@@ -68,11 +67,5 @@ void putDownCard(board b, card c, faction f, int x, int y);
 **/
 int flipCard(board b, card *c);
 
-/**
-* \brief Get the center of the board
-* \param b the board of which we wants the center
-* \return the index of the center of the board
-**/
-int getCenterOfBoard(board b);
 
 #endif 
