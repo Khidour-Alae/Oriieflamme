@@ -4,6 +4,7 @@
 #include "cards.c"
 #include "faction.c"
 #include "interface.c"
+
 /* 
 Functions to test:
     In cards.c:
@@ -102,7 +103,7 @@ void handTest(void){
 
     int i;
     for ( i = 0; i < NB_CARDS_IN_HAND; i++){ // Add 8 different cards
-        card c = const_card("test%i",i,1); // Check this later
+        card c = const_card((char) i,"useless",i,1); // Check this later
         setCard_hand(h,c,i)
         CU_ASSERT_FALSE(isEmpty_hand(h));
         CU_ASSERT_EQUAL(numberOfCards(h),(i+1));
@@ -110,13 +111,13 @@ void handTest(void){
     
     card c1 = getCard_hand(h,1);
     CU_ASSERT_PTR_NOT_NULL(c1);
-    CU_ASSERT_STRING_EQUAL(getCardName(c1),"test1");
+    CU_ASSERT_STRING_EQUAL(getCardName(c1),"1");
     CU_ASSERT_EQUAL(getCardEnum(c1),1);
     CU_ASSERT_EQUAL(getNumberOfOccurrence(c1),1);    
 
     card c2 = getCard_hand(h,2);
     CU_ASSERT_PTR_NOT_NULL(c2);
-    CU_ASSERT_STRING_EQUAL(getCardName(c2),"test2");
+    CU_ASSERT_STRING_EQUAL(getCardName(c2),"2");
     CU_ASSERT_EQUAL(getCardEnum(c2),2);
     CU_ASSERT_EQUAL(getNumberOfOccurrence(c2),1);  
 
@@ -131,12 +132,13 @@ void handTest(void){
 void factionTest(void){
     faction f;
     initFaction(f);
+
     CU_ASSERT_EQUAL(hasTheDeckBeenShuffled(f),0);
     CU_ASSERT_EQUAL(getNbRoundWin(f),0);
     CU_ASSERT_EQUAL(getFactionDdrsPoints(f),0);
     
     for (int i = 1; i < 11; i++){ // Add 10 different cards
-        card c = const_card("test%i",i,1); // Check this later
+        card c = const_card((char) i,"useless",i,1);
         push_deck(c,getDeck(f));
     }
 
