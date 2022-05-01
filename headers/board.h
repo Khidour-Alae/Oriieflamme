@@ -2,7 +2,7 @@
 * \file board.h
 *
 * This file describes the functions we need to manage the board. 
-* There are 6 fonctions and 1 type :
+* There are 7 fonctions and 1 type :
 * - the type \a board define the structure of the board.
 * - createBoard allow to create the board and the two factions.
 * - freeBoard allow to free the memory allocated to the board and the two factions.
@@ -10,6 +10,7 @@
 * - listFactions shows the list of the factions.
 * - putDownCard it allows to put a card on the board.
 * - flipCard return the card selected and activate its effect.
+* - isFlipped returns 1 if there the card is flipped, 0 otherwise
 */
 
 #ifndef _BOARD_H
@@ -85,5 +86,16 @@ void getBoundingBoxOfTheBoardToPrint(board b, int *xmin, int *ymin, int *xmax, i
  * \return 1 if there is a card, 0 otherwise
  */
 int isCardPlacedAt(board b, int x, int y);
+
+
+/**
+ * \brief returns 1 if there the card is flipped, 0 otherwise
+ * 
+ * \param b the board
+ * \param x the x coordinate
+ * \param y the y coordinate
+ * \return 1 if there the card is flipped, 0 otherwise
+ */
+int isFlipped(board b, int x, int y);
 
 #endif 
