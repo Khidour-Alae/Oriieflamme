@@ -1604,3 +1604,10 @@ int isCardPlacedAt(board b, int x, int y) {
     if (p < b->b2D->sizeBoard2D && p >= 0 && getCard_board2D(b->b2D,x,y) != NULL) return 1;
     else return 0;
 }
+
+int isFlipped(board b, int x, int y)
+{
+    board2D b2D = b->b2D;
+    card c = getCard_board2D(b2D, x, y);
+    return getCardStatus(c);
+}
