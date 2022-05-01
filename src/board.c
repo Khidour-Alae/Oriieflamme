@@ -381,13 +381,13 @@ int flipCard(board b, card *c){
 
     int k;
 
-    bool boolean;
-    bool bool_gauche;
-    bool bool_droit;
-    bool bool_top;
-    bool bool_bottom;
-    bool bool_left;
-    bool bool_right;
+    int boolean;
+    int bool_gauche;
+    int bool_droit;
+    int bool_top;
+    int bool_bottom;
+    int bool_left;
+    int bool_right;
 
     int int_tab[17];
 
