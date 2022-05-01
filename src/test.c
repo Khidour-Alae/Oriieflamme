@@ -154,6 +154,118 @@ void factionTest(void){
     
 }
 
+void gameTest(void){
+    board b; faction* f;
+    faction f1; faction f2;
+    b = createBoard();
+    f = listFactions(b);
+    f1 = f[0]; f2 = f[1];
+
+    int roundCounter = 0;
+    
+    while (1) 
+    {
+        if (!(newRound(roundCounter,f1,f2))) //if game finished we leave the wile loop
+        {
+            break;
+        }
+        else roundCounter++;
+
+        switch (roundCounter)
+        {
+        case 1:
+            if (rand() % 2)
+            {
+                faction tmp;
+                tmp = f1;
+                f1 = f2;
+                f2 = tmp;
+            }
+            shuffleDeck(f1);
+            shuffleDeck(f2);
+            break;
+        case 3:
+            if (rand() % 2)
+            {
+                faction tmp;
+                tmp = f1;
+                f1 = f2;
+                f2 = tmp;
+            }
+            break;
+        default:
+            ; // a declaration can't follow "default" in the c99 standart, only statement : ";" is an empty statement 
+            faction tmp;
+            tmp = f1;
+            f1 = f2;
+            f2 = tmp;
+            break;
+        }
+
+        //phase 1
+
+        card fise = const_card("FISE", "La faction qui a posé cette carte gagne 1 point DDRS.", FISE, 4);
+        card ecologiie = const_card("EcologIIE", "La faction qui a posé cette carte gagne 1 point DDRS par carte FISE/FISA/FC retournée.", EcologIIE, 2);
+        card the = const_card("The", "Supprimez toutes les cartes Café et Alcool retournées sur le plateau. Si une carte Ecocup est retournée sur le plateau, la faction qui a posé cette carte gagne 1 point DDRS. Sinon elle perd 1 point DDRS.", The, 3);
+        setCard_hand(f1->f_hand,fise,0);
+        setCard_hand(f1->f_hand,the,1);
+        setCard_hand(f1->f_hand,ecologiie,2);
+
+        card fisa = const_card("FISA", "La faction qui a posé cette carte gagne 2 points DDRS si le nombre de cartes retournées sur le plateau (y compris celle-ci) est pair, et 0 sinon.", FISA, 4);
+        card dimitri_watel = const_card("Dimitri_Watel", "La faction qui a posé cette carte gagne 3 points DDRS par carte FISA ou FC retournée sur le plateau si au moins une carte Thé est retournée sur le plateau.", Dimitri_Watel, 1);
+        card ecocup = const_card("Ecocup", "Cette carte est sans effet.", Ecocup, 1);
+        setCard_hand(f2->f_hand,fisa,0);
+        setCard_hand(f2->f_hand,liiens,1);
+        setCard_hand(f2->f_hand,dimitri_watel,2);
+
+        
+        int x,y;;
+        putDownCard(b,(f1->f_hand)[0],f1,0,0); // fise put
+        putDownCard(b,(f2->f_hand)[0],f2,1,0); // fisa put
+
+        putDownCard(b,(f1->f_hand)[1],f1,2,0); // the put
+        putDownCard(b,(f2->f_hand)[1],f2,1,-1); // ecocup put
+
+        putDownCard(b,(f1->f_hand)[2],f1,1,-2); // ecologiie put
+        putDownCard(b,(f2->f_hand)[2],f2,2,-1); // dimitri_watel put
+
+        //reveal phase 1
+        card cardFlipped;
+        flipCard(b, &cardFlipped); // fise flipped
+        CU_ASSERT_TRUE(f1->f_ddrsPoints==1);
+
+        flipCard(b, &cardFlipped); // fisa flipped 
+        CU_ASSERT_TRUE(f2->f_ddrsPoints==2);
+
+        flipCard(b, &cardFlipped); // the flipped
+        CU_ASSERT_TRUE(f1->f_ddrsPoints==0);
+
+        flipCard(b, &cardFlipped); // ecocup flipped
+        //Nothing to test
+        
+        flipCard(b, &cardFlipped); // dimitri_watel flipped
+        CU_ASSERT_TRUE(f2->f_ddrsPoints==5);
+
+        flipCard(b, &cardFlipped); // ecologiie flipped
+        CU_ASSERT_TRUE(f1->f_ddrsPoints==2);
+
+
+
+
+
+
+
+
+
+    }    
+
+
+
+
+
+        
+}
+
 
 
 
