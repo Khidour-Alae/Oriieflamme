@@ -15,16 +15,18 @@ struct impl_card{
     int cardStatus; // 0 if Face Down, 1 if Face Up
 };
 
-void const_card(card c, char* nameCard, char* descCard, cardName enumCard, int numberOccurence){
+card const_card(char* nameCard, char* descCard, cardName enumCard, int numberOccurence){
+    card c = malloc(sizeof(struct impl_card));
     setCardName(c, nameCard);
     setCardEffectDescription(c, descCard);
     setNumberOfOccurrence(c, numberOccurence);
     setCardStatus(c, 0);
     c->c_enumName = enumCard;
+    return c;
 }
 
 card copy(card c1) {
-    card c2;
+    card c2 = malloc(sizeof(struct impl_card));
     setCardName(c2, c1->c_name);
     setCardEffectDescription(c2, c1->c_effectDescription);
     setNumberOfOccurrence(c2, c1->numberOfOccurrence);
