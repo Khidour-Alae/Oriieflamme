@@ -135,7 +135,7 @@ void resize_board2D(board2D b2D) {
         for (int j = 0; j < b2D->sideLength-2; j++)
         {
             newc[(i+1)*b2D->sideLength + (j+1)] = (b2D->c[i*b2D->sideLength + j]);
-            newc[(i+1)*b2D->sideLength + (j+1)] = (b2D->f[i*b2D->sideLength + j]);
+            newf[(i+1)*b2D->sideLength + (j+1)] = (b2D->f[i*b2D->sideLength + j]);
         }
     }
 
@@ -268,6 +268,8 @@ struct board_base
 
 
 
+
+
 board createBoard(){
     board b;
     init_board2D(b->b2D);
@@ -277,42 +279,146 @@ board createBoard(){
     initFaction(f2, "Capitaliste");
     b->listFactions[0] = f1;
     b->listFactions[1] = f2;
-    card fise = const_card("FISE", "La faction qui a posé cette carte gagne 1 point DDRS.", FISE, 4);
-    card fisa = const_card("FISA", "La faction qui a posé cette carte gagne 2 points DDRS si le nombre de cartes retournées sur le plateau (y compris celle-ci) est pair, et 0 sinon.", FISA, 4);
-    card fc = const_card("FC", "La faction qui a posé cette carte gagne 4 points DDRS si au moins une autre carte FC est retournée sur le plateau et 0 sinon", FC, 4);
-    card ecologiie = const_card("EcologIIE", "La faction qui a posé cette carte gagne 1 point DDRS par carte FISE/FISA/FC retournée.", EcologIIE, 2);
-    card liiens = const_card("lIIEns", "Prenez toutes les cartes FISE/FISA/FC retournées, retirez les du plateau, mélangez les et reposez les face cachées une par une sur la gauche de la carte la plus en haut à gauche du plateau, dans cet ordre. Les prochaines cartes à être retournées sont ces cartes là.", lIIEns, 2);
-    card soiree_sans_alcool = const_card("Soiree_sans_alcool", "Si au moins une carte alcool est retournée, supprimez toutes les cartes FISE/FISA/FC retournées du plateau. Supprimez ensuite la première et la dernière ligne du plateau. Sinon la faction qui a posé cette carte gagne 5 points DDRS.", Soiree_sans_alcool, 1);
-    card alcool = const_card("Alcool", "Supprimez du plateau toutes les cartes qui touchent cette carte-ci (mais laissez la carte Alcool sur le plateau).", Alcool, 1);
-    card cafe = const_card("Cafe", "Supprimez toutes les cartes Thé et Alcool retournées sur le plateau. Si une carte Ecocup est retournée sur le plateau, la faction qui a posé cette carte gagne 1 point DDRS. Sinon elle perd 1 point DDRS.", Cafe, 3);
-    card the = const_card("The", "Supprimez toutes les cartes Café et Alcool retournées sur le plateau. Si une carte Ecocup est retournée sur le plateau, la faction qui a posé cette carte gagne 1 point DDRS. Sinon elle perd 1 point DDRS.", The, 3);
-    card ecocup = const_card("Ecocup", "Cette carte est sans effet.", Ecocup, 1);
-    card reprographie = const_card("Reprographie", "La faction adverse de celle qui a posé cette carte perd 1 points DDRS pour chaque paire de cartes retournées et identiques sur le plateau. (S'il y a 3 cartes identiques, cela fait 3 paires).", Reprographie, 1);
-    card isolation_du_batiment = const_card("Isolation_du_batiment", "Chaque faction gagne 1 point DDRS par carte non retournée et non supprimée du plateau qu'elle a posée sur le plateau.", Isolation_du_batiment, 1);
-    card parcours_sobriete_numerique = const_card("Parcours_sobriete_numerique", "Retournez toutes les cartes non retournées les plus à gauche et à droite de chaque ligne, sans appliquer leur effet.", Parcours_sobriete_numerique, 1);
-    card heures_supplementaires = const_card("Heures_supplementaires", "La faction adverse de celle qui a posé cette carte perd 3 points DDRS par carte Heures supplémentaires retournée sur le plateau (y compris celle-ci).", Heures_supplementaires, 1);
-    card kahina_bouchama = const_card("Kahina_Bouchama", "Supprimez une carte non retournée du plateau choisie au hasard.", Kahina_Bouchama, 1);
-    card kevin_goilard = const_card("Kevin_Goilard", "Supprimez une ligne au hasard, la faction qui a posé cette carte gagne 2 points DDRS par carte supprimée ainsi.", Kevin_Goilard, 1);
-    card massinissa_merabet = const_card("Massinissa_Merabet", "La faction qui a posé cette carte réactive l'effet de la dernière carte retournée avant Massinissa Merabet, en faisant comme elle l'avait posée elle-même, même si ce n'est pas le cas.", Massinissa_Merabet, 1);
-    card vitera_y = const_card("Vitera_Y", "La faction qui a le moins de points DDRS gagne 3 points DDRS.", Vitera_Y, 1);
-    card jonas_senizergues = const_card("Jonas_Senizergues", "Supprimez toutes les cartes Heures supplémentaires retournées du plateau.", Jonas_Senizergues, 1);
-    card fetia_bannour = const_card("Fetia_Bannour", "Si la carte Heures supplémentaires est retournée sur le plateau, supprimez toutes les cartes de la ligne et de la colonne où est posée cette carte (y compris celle-ci). Sinon la faction qui a posé cette carte gagne 1 point DDRS par carte Catherine Dubois, Anne-Laure Ligozat, Guillaume Burel, Christophe Mouilleron, Thomas Lim, Julien Forest et Dimitri Watel retournée sur le plateau.", Fetia_Bannour, 1);
-    card catherine_dubois = const_card("Catherine_Dubois", "Supprimez la première et la dernière cartes de la ligne et de la colonne où est posée cette carte.", Catherine_Dubois, 1);
-    card anne_laure_ligozat = const_card("Anne_Laure_Ligozat", "Pour chaque carte EcologIIE, Ecocup, Isolation du bâtiment et parcours Sobriété numérique retournée, la faction qui a posé cette carte gagne 3 points DDRS et la dernière carte non retournée du plateau est supprimée. (L'effet continue même si Anne-Laure Ligozat ou une des 4 cartes précédemment mentionnées est supprimée).", Anne_Laure_Ligozat, 1);
-    card guillaume_burel = const_card("Guillaume_Burel", "Si la faction adverse de celle qui a posé cette carte a plus de points DDRS, la seconde lui vole 3 points DDRS.", Guillaume_Burel, 1);
-    card christophe_mouilleron = const_card("Christophe_Mouilleron", "Si la carte Heures supplémentaires est retournée sur le plateau, supprimez toutes les cartes retournées du plateau sauf les cartes Christophe Mouilleron et Heures supplémentaires.", Christophe_Mouilleron, 1);
-    card thomas_lim = const_card("Thomas_Lim", "Si Julien Forest n'est par retourné sur le plateau, la faction qui a posé cette carte gagne 3 points DDRS par carte FISE retournée sur le plateau. Sinon la faction adverse perd 1 point DDRS par carte FISE retournée sur le plateau.", Thomas_Lim, 1);
-    card julien_forest = const_card("Julien_Forest", "La faction qui a posé cette carte gagne 6 points DDRS par carte FISE retournée sur le plateau si au moins une carte Café est retournée sur le plateau.", Julien_Forest, 1);
-    card dimitri_watel = const_card("Dimitri_Watel", "La faction qui a posé cette carte gagne 3 points DDRS par carte FISA ou FC retournée sur le plateau si au moins une carte Thé est retournée sur le plateau.", Dimitri_Watel, 1);
-    card djibril_aurelien_dembele_cabot = const_card("Djibril_Aurelien_Dembele_Cabot", "S'il y a plus de 3 cartes retournées sur la ligne de cette carte, la faction qui a posé cette carte gagne 5 points DDRS.", Djibril_Aurelien_Dembele_Cabot, 1);
-    card eric_lejeune = const_card("Eric_Lejeune", "Prenez au hasard 5 cartes retournées du plateau (ou toutes les cartes retournées du plateau s'il y a moins de 5). Si une de ces cartes est une carte Catherine Dubois, Anne-Laure Ligozat, Guillaume Burel, Christophe Mouilleron, Thomas Lim, Julien Forest ou Dimitri Watel, mélangez les et placez les à gauche de la case la plus à gauche de la première ligne. Les prochaines cartes à être retournées sont ces cartes là. Sinon, supprimez ces cartes du plateau.", Eric_Lejeune, 1);
-    card lucienne_pacave = const_card("Lucienne_Pacave", "S'il y a une carte FISA retournée dans la même ligne ou la même colonne que cette carte, la faction qui a posé cette carte gagne 5 points DDRS.", Lucienne_Pacave, 1);
-    card katrin_salhab = const_card("Katrin_Salhab", "Si les cartes Djibril-Aurélien Djembele-Cabeau, Eric Lejeune et Lucienne Pacavé sont retournées, la faction qui a posé cette carte gagne 10 points DDRS. Sinon, retournez toutes les cartes dans la même ligne de cette carte sans appliquer leurs effets.", Katrin_Salhab, 1);
-    card laurent_prevel = const_card("Laurent_Prevel", "Si Laurent Prével est la dernière carte retournée du plateau, la faction qui a posé cette carte gagne la manche, quel que soit le nombre de points DDRS des deux factions.", Laurent_Prevel, 1);
+
+    //set up deck of factions
+    card fise, fisa, fc, ecologiie, liiens, soiree_sans_alcool, alcool, cafe, the, ecocup, reprographie, isolation_du_batiment;
+    card parcours_sobriete_numerique, heures_supplementaires, kahina_bouchama, kevin_goilard, massinissa_merabet, vitera_y, jonas_senizergues, fetia_bannour;
+    card catherine_dubois, anne_laure_ligozat, guillaume_burel, christophe_mouilleron, thomas_lim, julien_forest, dimitri_watel, djibril_aurelien_dembele_cabot;
+    card eric_lejeune, lucienne_pacave, katrin_salhab, laurent_prevel;
+    const_card(fise,"FISE", "La faction qui a posé cette carte gagne 1 point DDRS.", FISE, 4);
+    const_card(fisa,"FISA", "La faction qui a posé cette carte gagne 2 points DDRS si le nombre de cartes retournées sur le plateau (y compris celle-ci) est pair, et 0 sinon.", FISA, 4);
+    const_card(fc,"FC", "La faction qui a posé cette carte gagne 4 points DDRS si au moins une autre carte FC est retournée sur le plateau et 0 sinon", FC, 4);
+    const_card(ecologiie,"EcologIIE", "La faction qui a posé cette carte gagne 1 point DDRS par carte FISE/FISA/FC retournée.", EcologIIE, 2);
+    const_card(liiens,"lIIEns", "Prenez toutes les cartes FISE/FISA/FC retournées, retirez les du plateau, mélangez les et reposez les face cachées une par une sur la gauche de la carte la plus en haut à gauche du plateau, dans cet ordre. Les prochaines cartes à être retournées sont ces cartes là.", lIIEns, 2);
+    const_card(soiree_sans_alcool,"Soiree_sans_alcool", "Si au moins une carte alcool est retournée, supprimez toutes les cartes FISE/FISA/FC retournées du plateau. Supprimez ensuite la première et la dernière ligne du plateau. Sinon la faction qui a posé cette carte gagne 5 points DDRS.", Soiree_sans_alcool, 1);
+    const_card(alcool,"Alcool", "Supprimez du plateau toutes les cartes qui touchent cette carte-ci (mais laissez la carte Alcool sur le plateau).", Alcool, 1);
+    const_card(cafe,"Cafe", "Supprimez toutes les cartes Thé et Alcool retournées sur le plateau. Si une carte Ecocup est retournée sur le plateau, la faction qui a posé cette carte gagne 1 point DDRS. Sinon elle perd 1 point DDRS.", Cafe, 3);
+    const_card(the,"The", "Supprimez toutes les cartes Café et Alcool retournées sur le plateau. Si une carte Ecocup est retournée sur le plateau, la faction qui a posé cette carte gagne 1 point DDRS. Sinon elle perd 1 point DDRS.", The, 3);
+    const_card(ecocup,"Ecocup", "Cette carte est sans effet.", Ecocup, 1);
+    const_card(reprographie,"Reprographie", "La faction adverse de celle qui a posé cette carte perd 1 points DDRS pour chaque paire de cartes retournées et identiques sur le plateau. (S'il y a 3 cartes identiques, cela fait 3 paires).", Reprographie, 1);
+    const_card(isolation_du_batiment,"Isolation_du_batiment", "Chaque faction gagne 1 point DDRS par carte non retournée et non supprimée du plateau qu'elle a posée sur le plateau.", Isolation_du_batiment, 1);
+    const_card(parcours_sobriete_numerique,"Parcours_sobriete_numerique", "Retournez toutes les cartes non retournées les plus à gauche et à droite de chaque ligne, sans appliquer leur effet.", Parcours_sobriete_numerique, 1);
+    const_card(heures_supplementaires,"Heures_supplementaires", "La faction adverse de celle qui a posé cette carte perd 3 points DDRS par carte Heures supplémentaires retournée sur le plateau (y compris celle-ci).", Heures_supplementaires, 1);
+    const_card(kahina_bouchama,"Kahina_Bouchama", "Supprimez une carte non retournée du plateau choisie au hasard.", Kahina_Bouchama, 1);
+    const_card(kevin_goilard,"Kevin_Goilard", "Supprimez une ligne au hasard, la faction qui a posé cette carte gagne 2 points DDRS par carte supprimée ainsi.", Kevin_Goilard, 1);
+    const_card(massinissa_merabet,"Massinissa_Merabet", "La faction qui a posé cette carte réactive l'effet de la dernière carte retournée avant Massinissa Merabet, en faisant comme elle l'avait posée elle-même, même si ce n'est pas le cas.", Massinissa_Merabet, 1);
+    const_card(vitera_y,"Vitera_Y", "La faction qui a le moins de points DDRS gagne 3 points DDRS.", Vitera_Y, 1);
+    const_card(jonas_senizergues,"Jonas_Senizergues", "Supprimez toutes les cartes Heures supplémentaires retournées du plateau.", Jonas_Senizergues, 1);
+    const_card(fetia_bannour,"Fetia_Bannour", "Si la carte Heures supplémentaires est retournée sur le plateau, supprimez toutes les cartes de la ligne et de la colonne où est posée cette carte (y compris celle-ci). Sinon la faction qui a posé cette carte gagne 1 point DDRS par carte Catherine Dubois, Anne-Laure Ligozat, Guillaume Burel, Christophe Mouilleron, Thomas Lim, Julien Forest et Dimitri Watel retournée sur le plateau.", Fetia_Bannour, 1);
+    const_card(catherine_dubois,"Catherine_Dubois", "Supprimez la première et la dernière cartes de la ligne et de la colonne où est posée cette carte.", Catherine_Dubois, 1);
+    const_card(anne_laure_ligozat,"Anne_Laure_Ligozat", "Pour chaque carte EcologIIE, Ecocup, Isolation du bâtiment et parcours Sobriété numérique retournée, la faction qui a posé cette carte gagne 3 points DDRS et la dernière carte non retournée du plateau est supprimée. (L'effet continue même si Anne-Laure Ligozat ou une des 4 cartes précédemment mentionnées est supprimée).", Anne_Laure_Ligozat, 1);
+    const_card(guillaume_burel,"Guillaume_Burel", "Si la faction adverse de celle qui a posé cette carte a plus de points DDRS, la seconde lui vole 3 points DDRS.", Guillaume_Burel, 1);
+    const_card(christophe_mouilleron,"Christophe_Mouilleron", "Si la carte Heures supplémentaires est retournée sur le plateau, supprimez toutes les cartes retournées du plateau sauf les cartes Christophe Mouilleron et Heures supplémentaires.", Christophe_Mouilleron, 1);
+    const_card(thomas_lim,"Thomas_Lim", "Si Julien Forest n'est par retourné sur le plateau, la faction qui a posé cette carte gagne 3 points DDRS par carte FISE retournée sur le plateau. Sinon la faction adverse perd 1 point DDRS par carte FISE retournée sur le plateau.", Thomas_Lim, 1);
+    const_card(julien_forest,"Julien_Forest", "La faction qui a posé cette carte gagne 6 points DDRS par carte FISE retournée sur le plateau si au moins une carte Café est retournée sur le plateau.", Julien_Forest, 1);
+    const_card(dimitri_watel,"Dimitri_Watel", "La faction qui a posé cette carte gagne 3 points DDRS par carte FISA ou FC retournée sur le plateau si au moins une carte Thé est retournée sur le plateau.", Dimitri_Watel, 1);
+    const_card(djibril_aurelien_dembele_cabot,"Djibril_Aurelien_Dembele_Cabot", "S'il y a plus de 3 cartes retournées sur la ligne de cette carte, la faction qui a posé cette carte gagne 5 points DDRS.", Djibril_Aurelien_Dembele_Cabot, 1);
+    const_card(eric_lejeune,"Eric_Lejeune", "Prenez au hasard 5 cartes retournées du plateau (ou toutes les cartes retournées du plateau s'il y a moins de 5). Si une de ces cartes est une carte Catherine Dubois, Anne-Laure Ligozat, Guillaume Burel, Christophe Mouilleron, Thomas Lim, Julien Forest ou Dimitri Watel, mélangez les et placez les à gauche de la case la plus à gauche de la première ligne. Les prochaines cartes à être retournées sont ces cartes là. Sinon, supprimez ces cartes du plateau.", Eric_Lejeune, 1);
+    const_card(lucienne_pacave,"Lucienne_Pacave", "S'il y a une carte FISA retournée dans la même ligne ou la même colonne que cette carte, la faction qui a posé cette carte gagne 5 points DDRS.", Lucienne_Pacave, 1);
+    const_card(katrin_salhab,"Katrin_Salhab", "Si les cartes Djibril-Aurélien Djembele-Cabeau, Eric Lejeune et Lucienne Pacavé sont retournées, la faction qui a posé cette carte gagne 10 points DDRS. Sinon, retournez toutes les cartes dans la même ligne de cette carte sans appliquer leurs effets.", Katrin_Salhab, 1);
+    const_card(laurent_prevel,"Laurent_Prevel", "Si Laurent Prével est la dernière carte retournée du plateau, la faction qui a posé cette carte gagne la manche, quel que soit le nombre de points DDRS des deux factions.", Laurent_Prevel, 1);
+
+    deck d_f1 = getDeck(f1);
+    deck d_f2 = getDeck(f2);
+    push_deck(fise,d_f1);
+    push_deck(copy(fise),d_f1);
+    push_deck(copy(fise),d_f1);
+    push_deck(copy(fise),d_f1);
+    push_deck(fisa,d_f1);
+    push_deck(copy(fisa),d_f1);
+    push_deck(copy(fisa),d_f1);
+    push_deck(copy(fisa),d_f1);
+    push_deck(fc,d_f1);
+    push_deck(copy(fc),d_f2);
+    push_deck(copy(fc),d_f2);
+    push_deck(copy(fc),d_f2);
+    push_deck(ecologiie,d_f1);
+    push_deck(copy(ecologiie),d_f1);
+    push_deck(liiens,d_f1);
+    push_deck(copy(liiens),d_f1);
+    push_deck(soiree_sans_alcool,d_f1);
+    push_deck(alcool,d_f1);
+    push_deck(cafe,d_f1);
+    push_deck(copy(cafe),d_f1);
+    push_deck(copy(cafe),d_f1);
+    push_deck(the,d_f1);
+    push_deck(copy(the),d_f1);
+    push_deck(copy(the),d_f1);
+    push_deck(ecocup,d_f1);
+    push_deck(reprographie,d_f1);
+    push_deck(isolation_du_batiment,d_f1);
+    push_deck(parcours_sobriete_numerique,d_f1);
+    push_deck(heures_supplementaires,d_f1);
+    push_deck(kahina_bouchama,d_f1);
+    push_deck(kevin_goilard,d_f1);
+    push_deck(massinissa_merabet,d_f1);
+    push_deck(vitera_y,d_f1);
+    push_deck(jonas_senizergues,d_f1);
+    push_deck(fetia_bannour,d_f1);
+    push_deck(catherine_dubois,d_f1);
+    push_deck(anne_laure_ligozat,d_f1);
+    push_deck(guillaume_burel,d_f1);
+    push_deck(christophe_mouilleron,d_f1);
+    push_deck(thomas_lim,d_f1);
+    push_deck(julien_forest,d_f1);
+    push_deck(dimitri_watel,d_f1);
+    push_deck(djibril_aurelien_dembele_cabot,d_f1);
+    push_deck(eric_lejeune,d_f1);
+    push_deck(lucienne_pacave,d_f1);
+    push_deck(katrin_salhab,d_f1);
+    push_deck(laurent_prevel,d_f1);
+
+    push_deck(copy(fise),d_f2);
+    push_deck(copy(fise),d_f2);
+    push_deck(copy(fise),d_f2);
+    push_deck(copy(fise),d_f2);
+    push_deck(copy(fisa),d_f2);
+    push_deck(copy(fisa),d_f2);
+    push_deck(copy(fisa),d_f2);
+    push_deck(copy(fisa),d_f2);
+    push_deck(copy(fc),d_f2);
+    push_deck(copy(fc),d_f2);
+    push_deck(copy(fc),d_f2);
+    push_deck(copy(fc),d_f2);
+    push_deck(copy(ecologiie),d_f2);
+    push_deck(copy(ecologiie),d_f2);
+    push_deck(copy(liiens),d_f2);
+    push_deck(copy(liiens),d_f2);
+    push_deck(copy(soiree_sans_alcool),d_f2);
+    push_deck(copy(alcool),d_f2);
+    push_deck(copy(cafe),d_f2);
+    push_deck(copy(cafe),d_f2);
+    push_deck(copy(cafe),d_f2);
+    push_deck(copy(the),d_f2);
+    push_deck(copy(the),d_f2);
+    push_deck(copy(the),d_f2);
+    push_deck(copy(ecocup),d_f2);
+    push_deck(copy(reprographie),d_f2);
+    push_deck(copy(isolation_du_batiment),d_f2);
+    push_deck(copy(parcours_sobriete_numerique),d_f2);
+    push_deck(copy(heures_supplementaires),d_f2);
+    push_deck(copy(kahina_bouchama),d_f2);
+    push_deck(copy(kevin_goilard),d_f2);
+    push_deck(copy(massinissa_merabet),d_f2);
+    push_deck(copy(vitera_y),d_f2);
+    push_deck(copy(jonas_senizergues),d_f2);
+    push_deck(copy(fetia_bannour),d_f2);
+    push_deck(copy(catherine_dubois),d_f2);
+    push_deck(copy(anne_laure_ligozat),d_f2);
+    push_deck(copy(guillaume_burel),d_f2);
+    push_deck(copy(christophe_mouilleron),d_f2);
+    push_deck(copy(thomas_lim),d_f2);
+    push_deck(copy(julien_forest),d_f2);
+    push_deck(copy(dimitri_watel),d_f2);
+    push_deck(copy(djibril_aurelien_dembele_cabot),d_f2);
+    push_deck(copy(eric_lejeune),d_f2);
+    push_deck(copy(lucienne_pacave),d_f2);
+    push_deck(copy(katrin_salhab),d_f2);
+    push_deck(copy(laurent_prevel),d_f2);
     return b;
 }
 
-void freeBoard(board b){
+void freeBoard(board b) {
     delete_board2D(b->b2D);
 }
 
@@ -342,6 +448,8 @@ faction getEnemyFaction(board b, faction f)
         return (b->listFactions[0]);
     }
 }
+
+
 
 int reprographie_nbpoints(board2D b2D, int xmin, int xmax, int ymin, int ymax)
 {
@@ -479,12 +587,18 @@ int reprographie_nbpoints(board2D b2D, int xmin, int xmax, int ymin, int ymax)
     return s;
 }
 
+// We want the scores not to remain >=0
+setFactionDdrsPointsLEGIT(faction f, int s)
+{
+    int fp = getFactionDdrsPoints(f);
+    setFactionDdrsPoints(f, (fp - s)*(fp-s>0));
+}
 
 
 
 ///TODO: Verifier les arguments des getFaction_board2D (normalement c'est bon mais on sait jamais)
 
-///TODO: refaire les currendcardboucle2 qui ont x y au lieu de X Y et vérifier qu'on les affecte toujours avant utilisation
+///DONE: refaire les currendcardboucle2 qui ont x y au lieu de X Y et vérifier qu'on les affecte toujours avant utilisation
 
 ///DONE: Virer tous les "int" X dans les boucles 
 
@@ -542,8 +656,8 @@ int flipCard(board b, card *c){
                 case FISE: 
                     /* La faction qui a posé cette carte gagne 1 point DDRS. */
                     f = getFaction_board2D(b->b2D,x,y); 
-                    setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 1);
-                    setCardStatus(currentCard, 1);
+                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 1);
+                    
                     break;
 
                 case FISA:
@@ -560,8 +674,8 @@ int flipCard(board b, card *c){
                             }
                         }
                     }
-                    setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 2 * (s%2 == 0));
-                    setCardStatus(currentCard, 1);
+                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 2 * (s%2 == 0));
+                    
                     break;
 
                 case FC:
@@ -578,8 +692,8 @@ int flipCard(board b, card *c){
                             }
                         }
                     }
-                    setCardStatus(currentCard, 1);
-                    setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 4 * (s > 0));
+                    
+                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 4 * (s > 0));
                     break;
 
                 case EcologIIE:
@@ -596,8 +710,8 @@ int flipCard(board b, card *c){
                             }
                         }
                     }
-                    setCardStatus(currentCard, 1);
-                    setFactionDdrsPoints(f, getFactionDdrsPoints(f) + s);
+                    
+                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + s);
                     break;
 
 
@@ -651,7 +765,7 @@ int flipCard(board b, card *c){
                         addCard_board2D(b->b2D, card_tab[k-1], fac_tab[k-1], X_C, Y_C - k);
                     }
                     /// TODO: Ces cartes sont à nouveau cachées et doivent être les premières à être retournées par la suite.
-                    setCardStatus(currentCard, 1);
+                    
                     break;
 
                 case Soiree_sans_alcool:
@@ -696,9 +810,9 @@ int flipCard(board b, card *c){
                     else
                     {
                         f = getFaction_board2D(b->b2D,x,y);
-                        setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 5);
+                        setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 5);
                     }
-                    setCardStatus(currentCard, 1);
+                    
                     break;
 
                 /// Ici le sujet est un peu subjectif: c'est quoi les cartes qui touchent une carte ? Les 4 ou les 8 ?
@@ -706,35 +820,27 @@ int flipCard(board b, card *c){
                     // Left card
                     if (x - 1 >= xmin)
                     {
-                        p = getPositionFromCoordinates_board2D(b->b2D,x - 1,y);
-                                b->b2D->c[p] = NULL; 
-                                b->b2D->f[p] = NULL;
+                        addCard_board2D(b->b2D, NULL, NULL, x-1, y);
                     }
 
                     // Right card
                     if (x + 1 <= xmax)
                     {
-                        p = getPositionFromCoordinates_board2D(b->b2D,x + 1,y);
-                        b->b2D->c[p] = NULL; 
-                        b->b2D->f[p] = NULL;
+                        addCard_board2D(b->b2D, NULL, NULL, x+1, y);
                     }
 
                     // Top card
                     if (y - 1 >= ymin)
                     {
-                        p = getPositionFromCoordinates_board2D(b->b2D, x, y - 1);
-                        b->b2D->c[p] = NULL; 
-                        b->b2D->f[p] = NULL;
+                        addCard_board2D(b->b2D, NULL, NULL, x, y-1);
                     }
 
                     // Bottom card
                     if (y + 1 <= ymax)
                     {
-                        p = getPositionFromCoordinates_board2D(b->b2D, x, y + 1);
-                        b->b2D->c[p] = NULL; 
-                        b->b2D->f[p] = NULL;
+                        addCard_board2D(b->b2D, NULL, NULL, x, y+1);
                     }
-                    setCardStatus(currentCard, 1);
+                    
                     break;
 
                 case Cafe:
@@ -756,8 +862,8 @@ int flipCard(board b, card *c){
                         }
                     } 
                     f = getFaction_board2D(b->b2D,x,y);
-                    setFactionDdrsPoints(f, getFactionDdrsPoints(f) - 1 + 2 * boolean);
-                    setCardStatus(currentCard, 1);
+                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) - 1 + 2 * boolean);
+                    
                     break;
 
                 case The:
@@ -779,19 +885,19 @@ int flipCard(board b, card *c){
                         }
                     } 
                     f = getFaction_board2D(b->b2D,x,y);
-                    setFactionDdrsPoints(f, getFactionDdrsPoints(f) - 1 + 2 * boolean);
-                    setCardStatus(currentCard, 1);
+                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) - 1 + 2 * boolean);
+                    
                     break;
 
                 case Ecocup:
-                    setCardStatus(currentCard, 1);
+                   
                     break;
 
                 case Reprographie:
                     f = getFaction_board2D(b->b2D,x,y);
                     f2 = getEnemyFaction(b, f);
-                    setFactionDdrsPoints(f2, getFactionDdrsPoints(f2) - reprographie_nbpoints(b->b2D, xmin, xmax, ymin, ymax));
-                    setCardStatus(currentCard, 1);
+                    setFactionDdrsPointsLEGIT(f2, getFactionDdrsPoints(f2) - reprographie_nbpoints(b->b2D, xmin, xmax, ymin, ymax));
+                    
                     break;
 
                 case Isolation_du_batiment:
@@ -802,7 +908,7 @@ int flipCard(board b, card *c){
                             currentCard_boucle2 = getCard_board2D(b->b2D,x,y);
                             if (currentCard_boucle2 != NULL && !getCardStatus(currentCard_boucle2))
                             {
-                                setFactionDdrsPoints(getFaction_board2D(b->b2D,X,Y), getFactionDdrsPoints(f) + 1);
+                                setFactionDdrsPointsLEGIT(getFaction_board2D(b->b2D,X,Y), getFactionDdrsPoints(f) + 1);
                             }
                         }
                     }
@@ -811,10 +917,10 @@ int flipCard(board b, card *c){
                 case Parcours_sobriete_numerique:
                     for (X = xmin; X <= xmax; X++)
                     {
-                        bool_right = 0;
-                        bool_left = 0;
+                        bool_right = 1; // "we haven't found a card yet"
+                        bool_left = 1;  // Same
                         Y = 0;
-                        while (bool_left || Y <= ymax)
+                        while (bool_left && Y <= ymax)
                         {
                             currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
                             if (currentCard_boucle2 != NULL && !getCardStatus(currentCard_boucle2))
@@ -825,7 +931,7 @@ int flipCard(board b, card *c){
                             Y++;
                         }
                         Y = 0;
-                        while (bool_left || Y <= ymax)
+                        while (bool_right && Y <= ymax)
                         {
                             currentCard_boucle2 = getCard_board2D(b->b2D,X, ymax - Y);
                             if (currentCard_boucle2 != NULL && !getCardStatus(currentCard_boucle2))
@@ -842,7 +948,7 @@ int flipCard(board b, card *c){
                     // The subject wants us to make the other faction lose 3 points * number of "Heure_supplementaires" cards, 
                     // but there is only one such card so the other faction always lose the same amount of points which is 3.
                     f = getEnemyFaction(b, getFaction_board2D(b->b2D,x,y));
-                    setFactionDdrsPoints(f, getFactionDdrsPoints(f) - 3);
+                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) - 3);
 
 
                 case Kahina_Bouchama:
@@ -863,9 +969,9 @@ int flipCard(board b, card *c){
                     X = xmin;
                     Y = ymin;
                     /// Vérifier que le X et le Y gardent leur valeur à la sortie de la boucle while
-                    while (X <= xmax || s != r)
+                    while (X <= xmax && s != r)
                     {
-                        while (Y <= ymax || s != r)
+                        while (Y <= ymax && s != r)
                         {
                             currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
                             if (currentCard_boucle2 != NULL && !getCardStatus(currentCard_boucle2))
@@ -877,9 +983,7 @@ int flipCard(board b, card *c){
                         X++;
                         Y = ymin;
                     }
-                    p = getPositionFromCoordinates_board2D(b->b2D,X,Y);
-                    b->b2D->c[p] = NULL; 
-                    b->b2D->f[p] = NULL;
+                    addCard_board2D(b->b2D, NULL, NULL, X, Y);
                     break;
 
                 case Kevin_Goilard:
@@ -890,23 +994,21 @@ int flipCard(board b, card *c){
                         currentCard_boucle2 = getCard_board2D(b->b2D,r,Y);
                         if (currentCard_boucle2 != NULL)
                         {
-                            p = getPositionFromCoordinates_board2D(b->b2D,r,Y);
-                            b->b2D->c[p] = NULL; 
-                            b->b2D->f[p] = NULL;
-                            setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 2);
+                            addCard_board2D(b->b2D, NULL, NULL, r, Y);
+                            setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 2);
                         }
                     }
                     break;
                 
                 case Massinissa_Merabet:
                     f = getFaction_board2D(b->b2D,x,y);
-                    boolean = 1;
+                    boolean = 1; // we haven't found a card yet
                     X = x;
                     Y = y - 1;
                     
-                    while (boolean || X >= xmin)
+                    while (boolean && X >= xmin)
                     {
-                        while (boolean || Y >= ymin)
+                        while (boolean && Y >= ymin)
                         {
                             currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
                             if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2))
@@ -920,7 +1022,10 @@ int flipCard(board b, card *c){
                                 p = getPositionFromCoordinates_board2D(b->b2D,X,Y);
                                 b->b2D->f[p] = f2;
                             }
+                            Y--;
                         }
+                        X--;
+                        Y = ymax;
                     }
                     break;
 
@@ -933,11 +1038,11 @@ int flipCard(board b, card *c){
                     s2 = getFactionDdrsPoints(f2);
                     if (s >= s2)
                     {
-                        setFactionDdrsPoints(f2, getFactionDdrsPoints(f2) + 3);
+                        setFactionDdrsPointsLEGIT(f2, getFactionDdrsPoints(f2) + 3);
                     }
                     if (s <= s2)
                     {
-                        setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 3);
+                        setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 3);
                     }
                     break;
 
@@ -949,9 +1054,7 @@ int flipCard(board b, card *c){
                             currentCard_boucle2 = getCard_board2D(b->b2D,x,y);
                             if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2) == 1 && (getCardEnumName(currentCard_boucle2) == Heures_supplementaires))
                             {
-                                p = getPositionFromCoordinates_board2D(b->b2D,X,Y);
-                                b->b2D->c[p] = NULL; 
-                                b->b2D->f[p] = NULL;
+                                addCard_board2D(b->b2D, NULL, NULL, X, Y);
                             }
                         }
                     }
@@ -978,22 +1081,18 @@ int flipCard(board b, card *c){
                     if (boolean)
                     {
                         f = getFaction_board2D(b->b2D,x,y);
-                        setFactionDdrsPoints(f, getFactionDdrsPoints(f) + s);
+                        setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + s);
                     }
                     else
                     {
                         for (X = xmin; X <= xmax; X++)
                         {
-                            p = getPositionFromCoordinates_board2D(b->b2D,X,y);
-                            b->b2D->c[p] = NULL; 
-                            b->b2D->f[p] = NULL;
+                            addCard_board2D(b->b2D, NULL, NULL, X, y);
                         }
 
                         for (Y = ymin; Y <= ymax; Y++)
                         {
-                            p = getPositionFromCoordinates_board2D(b->b2D,x,Y);
-                            b->b2D->c[p] = NULL;
-                            b->b2D->f[p] = NULL;
+                            addCard_board2D(b->b2D, NULL, NULL, x, Y);
                         }
                     }
                     break;
@@ -1006,55 +1105,47 @@ int flipCard(board b, card *c){
                     bool_gauche = 1;
                     bool_droit = 1;
                     // Left card
-                    while (X <= xmax || bool_left)
+                    while (X <= xmax && bool_left)
                     {
                         currentCard_boucle2 = getCard_board2D(b->b2D,X,y);
                         if (currentCard_boucle2 != NULL)
                         {
-                            p = getPositionFromCoordinates_board2D(b->b2D,X,y);
-                            b->b2D->c[p] = NULL; 
-                            b->b2D->f[p] = NULL;
+                            addCard_board2D(b->b2D, NULL, NULL, X, y);
                             bool_left = 0;
                         }
                         X++;
                     }
                     X = xmax;
                     // Right card
-                    while (X >= xmin || bool_right)
+                    while (X >= xmin && bool_right)
                     {
                         currentCard_boucle2 = getCard_board2D(b->b2D,X,y);
                         if (currentCard_boucle2 != NULL)
                         {
-                            p = getPositionFromCoordinates_board2D(b->b2D,X,y);
-                            b->b2D->c[p] = NULL; 
-                            b->b2D->f[p] = NULL;
+                            addCard_board2D(b->b2D, NULL, NULL, X, y);
                             bool_right = 0;
                         }
                         X--;
                     }
                     // Top card
-                    while (Y <= ymax || bool_top)
+                    while (Y <= ymax && bool_top)
                     {
                         currentCard_boucle2 = getCard_board2D(b->b2D,x,Y);
                         if (currentCard_boucle2 != NULL)
                         {
-                            p = getPositionFromCoordinates_board2D(b->b2D,x,Y);
-                            b->b2D->c[p] = NULL; 
-                            b->b2D->f[p] = NULL;
+                            addCard_board2D(b->b2D, NULL, NULL, x, Y);
                             bool_top = 0;
                         }
                         Y++;
                     }
                     Y = ymax;
                     // Bottom card
-                    while (Y >= ymin || bool_bottom)
+                    while (Y >= ymin && bool_bottom)
                     {
                         currentCard_boucle2 = getCard_board2D(b->b2D,x,Y);
                         if (currentCard_boucle2 != NULL)
                         {
-                            p = getPositionFromCoordinates_board2D(b->b2D,x,Y);
-                            b->b2D->c[p] = NULL; 
-                            b->b2D->f[p] = NULL;
+                            addCard_board2D(b->b2D, NULL, NULL, x, Y);
                             bool_bottom = 0;
                         }
                         Y--;
@@ -1075,7 +1166,7 @@ int flipCard(board b, card *c){
                         }
                     }
                     f = getFaction_board2D(b->b2D,x,y);
-                    setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 3*s);
+                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 3*s);
                     ///TODO: Supprimer la dernière carte non retournée du board, mais je sais pas si on parle de temporalité ou de coordonnées...
 
                     break;
@@ -1088,8 +1179,8 @@ int flipCard(board b, card *c){
                     // Here we decided to allow the faction f to steal points only when their score is stricly inferior since it seemed to be more in the spirit of the card
                     if (s < s2)
                     {
-                        setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 3);
-                        setFactionDdrsPoints(f2, getFactionDdrsPoints(f2) - 3);
+                        setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 3);
+                        setFactionDdrsPointsLEGIT(f2, getFactionDdrsPoints(f2) - 3);
                     }
                     break;
 
@@ -1097,9 +1188,9 @@ int flipCard(board b, card *c){
                     boolean = 1;
                     X = xmin;
                     Y = ymin;
-                    while (X <= xmax || boolean)
+                    while (X <= xmax && boolean)
                     {
-                        while (Y <= ymax || boolean)
+                        while (Y <= ymax && boolean)
                         {
                             currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
                             if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2) == 1 && (getCardEnumName(currentCard_boucle2) == Heures_supplementaires))
@@ -1120,9 +1211,7 @@ int flipCard(board b, card *c){
                                 currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
                                 if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2) == 1 && getCardEnumName(currentCard_boucle2) != Christophe_Mouilleron && getCardEnumName(currentCard_boucle2) != Heures_supplementaires)
                                 {
-                                    p = getPositionFromCoordinates_board2D(b->b2D,X,Y);
-                                    b->b2D->c[p] = NULL; 
-                                    b->b2D->f[p] = NULL;
+                                    addCard_board2D(b->b2D, NULL, NULL, X, Y);
                                 }
                             }
                         }
@@ -1133,16 +1222,19 @@ int flipCard(board b, card *c){
                     boolean = 1; // boolean = "Forest isn't on the board or isn't flipped"
                     X = xmin;
                     Y = ymin;
-                    while (X <= xmax || boolean)
+                    while (X <= xmax && boolean)
                     {
-                        while (Y <= ymax || boolean)
+                        while (Y <= ymax && boolean)
                         {
                             currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
                             if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2) == 1 && (getCardEnumName(currentCard_boucle2) == Julien_Forest))
                             {
                                 boolean = 0;
                             }
+                            Y ++;
                         }
+                        X ++;
+                        Y = ymin;
                     }
         
                     s = 0;
@@ -1159,12 +1251,12 @@ int flipCard(board b, card *c){
                     f = getFaction_board2D(b->b2D,x,y);
                     if (boolean)
                     {
-                        setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 3*s);
+                        setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 3*s);
                     }
                     else
                     {
                         f2 = getEnemyFaction(b, f);
-                        setFactionDdrsPoints(f2, getFactionDdrsPoints(f2) - s);
+                        setFactionDdrsPointsLEGIT(f2, getFactionDdrsPoints(f2) - s);
                     }
                     break;
 
@@ -1172,16 +1264,19 @@ int flipCard(board b, card *c){
                     boolean = 1; // Boolean = "Cafe isn't on the board or isn't flipped"
                     X = xmin;
                     Y = ymin;
-                    while (X <= xmax || boolean)
+                    while (X <= xmax && boolean)
                     {
-                        while (Y <= ymax || boolean)
+                        while (Y <= ymax && boolean)
                         {
                             currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
                             if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2) == 1 && (getCardEnumName(currentCard_boucle2) == Cafe))
                             {
                                 boolean = 0;
                             }
+                            Y++;
                         }
+                        X++;
+                        Y = ymin;
                     }
                     if (!boolean)
                     {
@@ -1198,7 +1293,7 @@ int flipCard(board b, card *c){
                             }
                         }
                         f = getFaction_board2D(b->b2D,x,y);
-                        setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 6*s);
+                        setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 6*s);
                     }
                     break;
                 
@@ -1232,7 +1327,7 @@ int flipCard(board b, card *c){
                             }
                         }
                         f = getFaction_board2D(b->b2D,x,y);
-                        setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 3*s);
+                        setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 3*s);
                     }
                     break;
 
@@ -1247,7 +1342,7 @@ int flipCard(board b, card *c){
                         }
                     }
                     f = getFaction_board2D(b->b2D,x,y);
-                    setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 5*(s >= 3)); // The subject didn't precise wether we should count the current card or not, we chose not to.
+                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 5*(s >= 3)); // The subject didn't precise wether we should count the current card or not, we chose not to.
                     break;
 
                 case Eric_Lejeune:///mamamia la galère
@@ -1350,7 +1445,7 @@ int flipCard(board b, card *c){
                     }
 
                     f = getFaction_board2D(b->b2D,x,y);
-                    setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 5*(1 - boolean));
+                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 5*(1 - boolean));
                     break;
                     
 
@@ -1379,7 +1474,7 @@ int flipCard(board b, card *c){
                         }
                     }
                     f = getFaction_board2D(b->b2D,x,y);
-                    setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 10*(bool_left && boolean && bool_right));
+                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 10*(bool_left && boolean && bool_right));
                     break;
 
                 case Laurent_Prevel:
@@ -1396,15 +1491,21 @@ int flipCard(board b, card *c){
                         }
                     }
                     f = getFaction_board2D(b->b2D,x,y);
-                    setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 1000 * (boolean));
+                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 1000 * (boolean));
                     break;            
                 
                 default:
                     break;
                 }
 
+                currentCard = getCard_board2D(b->b2D,x,y);
+                if (currentCard != NULL)
+                {
+                    setCardStatus(currentCard, 1);
+                }
+
                 //return the card flipped and boolean 1
-                *c = currentCard; /// Faut flip la carte un jour par contre
+                *c = currentCard; 
                 return 1;
             }
         }
@@ -1434,7 +1535,7 @@ b2D->f[p] = NULL;
 
 
 f = getFaction_board2D(b->b2D,x,y);
-setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 3*s);
+setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 3*s);
 
 
 for (X = xmin; X <= xmax; X++)
