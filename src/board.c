@@ -1498,7 +1498,7 @@ int flipCard(board b, card *c){
                     break;
                 }
 
-                currentCard = getCard_board2D(x,y);
+                currentCard = getCard_board2D(b->b2D,x,y);
                 if (currentCard != NULL)
                 {
                     setCardStatus(currentCard, 1);
