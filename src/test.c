@@ -62,7 +62,7 @@ void deckTest(void){
     CU_ASSERT(isEmpty_deck(d));
 
     for (int i = 1; i < 11; i++){ // Add 10 different cards
-        card c = const_card("test%i",i,1); // Check this later
+        card c = const_card((char) i,"useless",i,1); // Check this later
         push_deck(c,d);
         CU_ASSERT_FALSE(isEmpty_deck(d));
         CU_ASSERT_EQUAL(d->nbOfCards,i);
@@ -70,7 +70,7 @@ void deckTest(void){
 
     card c1 = pop_deck(d);
     CU_ASSERT_PTR_NOT_NULL(c);
-    CU_ASSERT_STRING_EQUAL(getCardName(c),"test10");
+    CU_ASSERT_STRING_EQUAL(getCardName(c),"10");
     CU_ASSERT_EQUAL(getCardEnum(c),10);
     CU_ASSERT_EQUAL(getNumberOfOccurrence(c),1);
     CU_ASSERT_EQUAL(d->nbOfCards,9);
