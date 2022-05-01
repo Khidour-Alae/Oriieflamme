@@ -65,8 +65,9 @@ enum cardName {
 * \param descCard the description of the card
 * \param enumCard the name of the card in the enum
 * \param numberOccurence the number of occurence of the card
+* \return the card
 */
-void const_card(card c, char* nameCard, char* descCard, cardName enumCard, int numberOccurence);
+card const_card(char* nameCard, char* descCard, cardName enumCard, int numberOccurence);
 
 /**
 * \brief makes a copy of the card

@@ -76,7 +76,7 @@ int askReshuffle(faction f){
     printf( "Veuillez saisir votre réponse : " );
     scanf( "%[^\n]", buffer);
 
-    return(buffer[0] == "o");
+    return (buffer[0] == 'o');
 }
 
 void showWinner(faction f1,faction f2) {
@@ -159,7 +159,9 @@ card askCardWantToPlay(faction f) {
 }
 
 void askWhereWantToPlaceCard(card c, int *x, int *y) {
-    printf("Où souhaitez-vous la jouer ? (Coordonnées x y)\n");
+    printf("Où souhaitez-vous la carte ");
+    print_cardName(c);
+    printf(" ? (Coordonnées x y)\n");
     printf("On rapelle quel doit être jouer à côté d'une autre carte.\n");
     printf("x : ");
     scanf("%i", x);
