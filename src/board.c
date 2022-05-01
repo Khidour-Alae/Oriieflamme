@@ -469,7 +469,7 @@ int reprographie_nbpoints(board2D b2D, int xmin, int xmax, int ymin, int ymax)
         }
     }
     int s = 0;
-    for (k = 0, k < 32, k++)
+    for (k = 0; k < 32; k++)
     {
         if (tab[k] >= 2)
         {
@@ -478,6 +478,8 @@ int reprographie_nbpoints(board2D b2D, int xmin, int xmax, int ymin, int ymax)
     }
     return s;
 }
+
+
 
 
 ///TODO: Verifier les arguments des getFaction_board2D (normalement c'est bon mais on sait jamais)
@@ -1060,7 +1062,7 @@ int flipCard(board b, card *c){
                     break;
 
                 case Anne_Laure_Ligozat:
-                    s = ;
+                    s = 0;
                     for (int X = xmin; X <= xmax; X++)
                     {
                         for (int Y = ymin; Y < ymax; Y++)
@@ -1100,7 +1102,7 @@ int flipCard(board b, card *c){
                         while (Y <= ymax || boolean)
                         {
                             currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
-                            if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2) == 1 && (getCardName(currentCard_boucle2) == Heure_supplementaires))
+                            if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2) == 1 && (getCardName(currentCard_boucle2) == Heures_supplementaires))
                             {
                                 boolean = 0;
                             }
@@ -1257,14 +1259,74 @@ int flipCard(board b, card *c){
                         for (Y = ymin; Y < ymax; Y++)
                         {
                             currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
-                            if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2) == 1))
+                            if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2))
                             {
                                 s ++;
                             }
                         }
                     }
 
-                    /// TODO: finir
+                    int rep[2*NB_CARDS_IN_HAND];
+                    int n;
+                    int random_number = rand()%s;
+                    for (n = 0; n < s; n++)
+                    {
+                        rep[n] = n;
+                    }
+                    
+                    //Fisher–Yates shuffle algorithm
+                    srand(time(NULL));
+                    int j;
+                    for (int i = 0; i < s -2; i++)
+                    {
+                        j = rand()%((s)-i) + i;
+                        int tmp = rep[i];
+                        rep[i] = rep[j];
+                        rep[j] = tmp;
+                    }
+
+                    // Now we need to find the top leftmost card of the board. 
+                    currentCard_boucle2 = NULL; 
+                    X_C = 0;
+                    Y_C = 0;
+
+                    X = xmin;
+                    Y = ymin;
+                    while (currentCard_boucle2 == NULL && X < xmax)
+                        while (Y < ymax && currentCard_boucle2 == NULL)
+                        {
+                            currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
+                            Y ++;     
+                        }
+                        X ++;
+                        Y = ymin;
+                    
+                    X_C = X;
+                    Y_C = Y;
+                    
+                    s2 = -1; //s number of flipped cards.
+                    for (X = xmin; X <= xmax; X++)
+                    {
+                        for (Y = ymin; Y < ymax; Y++)
+                        {
+                            currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
+                            if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2))
+                            {
+                                s2 ++;
+                                k = 0;
+                                for (k = 0; k < min_int(5,s); k++)
+                                {
+                                    if (s2 == rep[k])
+                                    {
+                                        f = getFaction_board2D(b->b2D, X, Y);
+                                        addCard_board2D(b->b2D, currentCard_boucle2, f, X_C, Y_C - k);
+                                        addCard_board2D(b->b2D, NULL, NULL, X, Y);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     break;
 
 
@@ -1288,14 +1350,15 @@ int flipCard(board b, card *c){
                     }
 
                     f = getFaction_board2D(b->b2D,x,y);
-                    setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 5*(1 - boolean));7
+                    setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 5*(1 - boolean));
                     break;
                     
 
                 case Katrin_Salhab:
-                    boolean_left = 1; //Djibril-Aurélien Djembele-Cabeau
+                
+                    bool_left = 1; //Djibril-Aurélien Djembele-Cabeau
                     boolean = 1; //Eric Lejeune
-                    boolean_right = 1; //Lucienne Pacavé
+                    bool_right = 1; //Lucienne Pacavé
                     for (X = xmin; X <= xmax; X++)
                     {
                         for (Y = ymin; Y < ymax; Y++)
@@ -1303,7 +1366,7 @@ int flipCard(board b, card *c){
                             currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
                             if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2) == 1 && (getCardName(currentCard_boucle2) == Djibril_Aurelien_Dembele_Cabot))
                             {
-                                boolean_left = 0;
+                                bool_left = 0;
                             }
                             if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2) == 1 && (getCardName(currentCard_boucle2) == Eric_Lejeune))
                             {
@@ -1311,7 +1374,7 @@ int flipCard(board b, card *c){
                             }
                             if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2) == 1 && (getCardName(currentCard_boucle2) == Lucienne_Pacave))
                             {
-                                boolean_right = 0;
+                                bool_right = 0;
                             }
                         }
                     }
@@ -1350,6 +1413,17 @@ int flipCard(board b, card *c){
     return 0;
 }
 
+int min_int(int a, int b)
+{
+    if (a>b)
+    {
+        return b;
+    }
+    else
+    {
+        return a;
+    }
+}
 
 /* Trucs utiles
 
