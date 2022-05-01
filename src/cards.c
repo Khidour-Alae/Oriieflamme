@@ -33,6 +33,9 @@ char* getCardName(card card){
     return card->c_name;
 }
 
+cardName getCardEnumName(card card) {
+    return card->c_enumName;
+}
 char* getCardEffectDescription(card card){
     return card->c_effectDescription;
 }

@@ -64,7 +64,7 @@ void print_pts(faction f1, faction f2){
     printf(": %i\n\n", f2_pts);
 }
 
-int askResuffle(faction f){
+int askReshuffle(faction f){
     char buffer[2];
 
     system("cls");
@@ -161,12 +161,11 @@ card askCardWantToPlay(faction f) {
 void askWhereWantToPlaceCard(card c, int *x, int *y) {
     printf("Où souhaitez-vous la jouer ? (Coordonnées x y)\n");
     printf("On rapelle quel doit être jouer à côté d'une autre carte.\n");
-    int x,y;
     printf("x : ");
-    scanf("%i", &x);
+    scanf("%i", x);
     printf("\n");
     printf("y : ");
-    scanf("%i", &y);
+    scanf("%i", y);
     printf("\n");
 }
 

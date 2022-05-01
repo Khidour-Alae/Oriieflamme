@@ -78,6 +78,12 @@ card const_card(char* nameCard, char* descCard, cardName enumCard, int numberOcc
 */
 char* getCardName(card card); //DONE
 
+/**
+* \brief get the id of the card
+* \param card a card
+* \return the id of the card
+*/
+cardName getCardEnumName(card card); //DONE
 
 /**
 * \brief get the descripion of a card's effect
