@@ -97,7 +97,7 @@ void setCard_hand(hand h, card c, int index);
 * \brief Get the card at index \a index
 * \param h is the hand
 * \param index is the index at which you want to put the card, it is between 0 and NB_CARDS_IN_HAND
-* \return the last card that was added to the hand
+* \return the the card at index \a index
 **/
 card getCard_hand(hand h, int index);
 
