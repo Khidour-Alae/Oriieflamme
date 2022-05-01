@@ -13,6 +13,8 @@
 void showBoard(board b) {
     int xmin,ymin,xmax,ymax;
     getBoundingBoxOfTheBoardToPrint(b,&xmin,&ymin,&xmax,&ymax);
+
+    
     for (int y = ymin; y < ymax+1; y++)
     {
         printf("%3i | ",y);
@@ -20,7 +22,15 @@ void showBoard(board b) {
         {
             if (isCardPlacedAt(b,x,y))
             {
-                printf(" X  | ");
+                if (isFlipped(b, x, y))
+                {
+                    printf(" O  | ");
+                }
+                else 
+                {
+                    printf(" X  | ");
+                }
+                
             }
             else
             {
