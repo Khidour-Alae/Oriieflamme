@@ -583,12 +583,19 @@ int reprographie_nbpoints(board2D b2D, int xmin, int xmax, int ymin, int ymax)
     return s;
 }
 
+// We want the scores not to remain >=0
+setFactionDdrsPointsLEGIT(faction f, int s)
+{
+    int fp = getFactionDdrsPoints(f);
+    return((fp - s)*(fp-s>0));
+}
 
+setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + s);
 
 
 ///TODO: Verifier les arguments des getFaction_board2D (normalement c'est bon mais on sait jamais)
 
-///TODO: refaire les currendcardboucle2 qui ont x y au lieu de X Y et vérifier qu'on les affecte toujours avant utilisation
+///DONE: refaire les currendcardboucle2 qui ont x y au lieu de X Y et vérifier qu'on les affecte toujours avant utilisation
 
 ///DONE: Virer tous les "int" X dans les boucles 
 
@@ -646,8 +653,8 @@ int flipCard(board b, card *c){
                 case FISE: 
                     /* La faction qui a posé cette carte gagne 1 point DDRS. */
                     f = getFaction_board2D(b->b2D,x,y); 
-                    setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 1);
-                    setCardStatus(currentCard, 1);
+                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 1);
+                    
                     break;
 
                 case FISA:
@@ -664,8 +671,8 @@ int flipCard(board b, card *c){
                             }
                         }
                     }
-                    setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 2 * (s%2 == 0));
-                    setCardStatus(currentCard, 1);
+                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 2 * (s%2 == 0));
+                    
                     break;
 
                 case FC:
@@ -682,8 +689,8 @@ int flipCard(board b, card *c){
                             }
                         }
                     }
-                    setCardStatus(currentCard, 1);
-                    setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 4 * (s > 0));
+                    
+                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 4 * (s > 0));
                     break;
 
                 case EcologIIE:
@@ -700,8 +707,8 @@ int flipCard(board b, card *c){
                             }
                         }
                     }
-                    setCardStatus(currentCard, 1);
-                    setFactionDdrsPoints(f, getFactionDdrsPoints(f) + s);
+                    
+                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + s);
                     break;
 
 
@@ -755,7 +762,7 @@ int flipCard(board b, card *c){
                         addCard_board2D(b->b2D, card_tab[k-1], fac_tab[k-1], X_C, Y_C - k);
                     }
                     /// TODO: Ces cartes sont à nouveau cachées et doivent être les premières à être retournées par la suite.
-                    setCardStatus(currentCard, 1);
+                    
                     break;
 
                 case Soiree_sans_alcool:
@@ -800,9 +807,9 @@ int flipCard(board b, card *c){
                     else
                     {
                         f = getFaction_board2D(b->b2D,x,y);
-                        setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 5);
+                        setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 5);
                     }
-                    setCardStatus(currentCard, 1);
+                    
                     break;
 
                 /// Ici le sujet est un peu subjectif: c'est quoi les cartes qui touchent une carte ? Les 4 ou les 8 ?
@@ -810,35 +817,27 @@ int flipCard(board b, card *c){
                     // Left card
                     if (x - 1 >= xmin)
                     {
-                        p = getPositionFromCoordinates_board2D(b->b2D,x - 1,y);
-                                b->b2D->c[p] = NULL; 
-                                b->b2D->f[p] = NULL;
+                        addCard_board2D(b->b2D, NULL, NULL, x-1, y);
                     }
 
                     // Right card
                     if (x + 1 <= xmax)
                     {
-                        p = getPositionFromCoordinates_board2D(b->b2D,x + 1,y);
-                        b->b2D->c[p] = NULL; 
-                        b->b2D->f[p] = NULL;
+                        addCard_board2D(b->b2D, NULL, NULL, x+1, y);
                     }
 
                     // Top card
                     if (y - 1 >= ymin)
                     {
-                        p = getPositionFromCoordinates_board2D(b->b2D, x, y - 1);
-                        b->b2D->c[p] = NULL; 
-                        b->b2D->f[p] = NULL;
+                        addCard_board2D(b->b2D, NULL, NULL, x, y-1);
                     }
 
                     // Bottom card
                     if (y + 1 <= ymax)
                     {
-                        p = getPositionFromCoordinates_board2D(b->b2D, x, y + 1);
-                        b->b2D->c[p] = NULL; 
-                        b->b2D->f[p] = NULL;
+                        addCard_board2D(b->b2D, NULL, NULL, x, y+1);
                     }
-                    setCardStatus(currentCard, 1);
+                    
                     break;
 
                 case Cafe:
@@ -860,8 +859,8 @@ int flipCard(board b, card *c){
                         }
                     } 
                     f = getFaction_board2D(b->b2D,x,y);
-                    setFactionDdrsPoints(f, getFactionDdrsPoints(f) - 1 + 2 * boolean);
-                    setCardStatus(currentCard, 1);
+                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) - 1 + 2 * boolean);
+                    
                     break;
 
                 case The:
@@ -883,19 +882,19 @@ int flipCard(board b, card *c){
                         }
                     } 
                     f = getFaction_board2D(b->b2D,x,y);
-                    setFactionDdrsPoints(f, getFactionDdrsPoints(f) - 1 + 2 * boolean);
-                    setCardStatus(currentCard, 1);
+                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) - 1 + 2 * boolean);
+                    
                     break;
 
                 case Ecocup:
-                    setCardStatus(currentCard, 1);
+                   
                     break;
 
                 case Reprographie:
                     f = getFaction_board2D(b->b2D,x,y);
                     f2 = getEnemyFaction(b, f);
-                    setFactionDdrsPoints(f2, getFactionDdrsPoints(f2) - reprographie_nbpoints(b->b2D, xmin, xmax, ymin, ymax));
-                    setCardStatus(currentCard, 1);
+                    setFactionDdrsPointsLEGIT(f2, getFactionDdrsPoints(f2) - reprographie_nbpoints(b->b2D, xmin, xmax, ymin, ymax));
+                    
                     break;
 
                 case Isolation_du_batiment:
@@ -906,7 +905,7 @@ int flipCard(board b, card *c){
                             currentCard_boucle2 = getCard_board2D(b->b2D,x,y);
                             if (currentCard_boucle2 != NULL && !getCardStatus(currentCard_boucle2))
                             {
-                                setFactionDdrsPoints(getFaction_board2D(b->b2D,X,Y), getFactionDdrsPoints(f) + 1);
+                                setFactionDdrsPointsLEGIT(getFaction_board2D(b->b2D,X,Y), getFactionDdrsPoints(f) + 1);
                             }
                         }
                     }
@@ -915,10 +914,10 @@ int flipCard(board b, card *c){
                 case Parcours_sobriete_numerique:
                     for (X = xmin; X <= xmax; X++)
                     {
-                        bool_right = 0;
-                        bool_left = 0;
+                        bool_right = 1; // "we haven't found a card yet"
+                        bool_left = 1;  // Same
                         Y = 0;
-                        while (bool_left || Y <= ymax)
+                        while (bool_left && Y <= ymax)
                         {
                             currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
                             if (currentCard_boucle2 != NULL && !getCardStatus(currentCard_boucle2))
@@ -929,7 +928,7 @@ int flipCard(board b, card *c){
                             Y++;
                         }
                         Y = 0;
-                        while (bool_left || Y <= ymax)
+                        while (bool_right && Y <= ymax)
                         {
                             currentCard_boucle2 = getCard_board2D(b->b2D,X, ymax - Y);
                             if (currentCard_boucle2 != NULL && !getCardStatus(currentCard_boucle2))
@@ -946,7 +945,7 @@ int flipCard(board b, card *c){
                     // The subject wants us to make the other faction lose 3 points * number of "Heure_supplementaires" cards, 
                     // but there is only one such card so the other faction always lose the same amount of points which is 3.
                     f = getEnemyFaction(b, getFaction_board2D(b->b2D,x,y));
-                    setFactionDdrsPoints(f, getFactionDdrsPoints(f) - 3);
+                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) - 3);
 
 
                 case Kahina_Bouchama:
@@ -967,9 +966,9 @@ int flipCard(board b, card *c){
                     X = xmin;
                     Y = ymin;
                     /// Vérifier que le X et le Y gardent leur valeur à la sortie de la boucle while
-                    while (X <= xmax || s != r)
+                    while (X <= xmax && s != r)
                     {
-                        while (Y <= ymax || s != r)
+                        while (Y <= ymax && s != r)
                         {
                             currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
                             if (currentCard_boucle2 != NULL && !getCardStatus(currentCard_boucle2))
@@ -981,9 +980,7 @@ int flipCard(board b, card *c){
                         X++;
                         Y = ymin;
                     }
-                    p = getPositionFromCoordinates_board2D(b->b2D,X,Y);
-                    b->b2D->c[p] = NULL; 
-                    b->b2D->f[p] = NULL;
+                    addCard_board2D(b->b2D, NULL, NULL, X, Y);
                     break;
 
                 case Kevin_Goilard:
@@ -994,23 +991,21 @@ int flipCard(board b, card *c){
                         currentCard_boucle2 = getCard_board2D(b->b2D,r,Y);
                         if (currentCard_boucle2 != NULL)
                         {
-                            p = getPositionFromCoordinates_board2D(b->b2D,r,Y);
-                            b->b2D->c[p] = NULL; 
-                            b->b2D->f[p] = NULL;
-                            setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 2);
+                            addCard_board2D(b->b2D, NULL, NULL, r, Y);
+                            setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 2);
                         }
                     }
                     break;
                 
                 case Massinissa_Merabet:
                     f = getFaction_board2D(b->b2D,x,y);
-                    boolean = 1;
+                    boolean = 1; // we haven't found a card yet
                     X = x;
                     Y = y - 1;
                     
-                    while (boolean || X >= xmin)
+                    while (boolean && X >= xmin)
                     {
-                        while (boolean || Y >= ymin)
+                        while (boolean && Y >= ymin)
                         {
                             currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
                             if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2))
@@ -1024,7 +1019,10 @@ int flipCard(board b, card *c){
                                 p = getPositionFromCoordinates_board2D(b->b2D,X,Y);
                                 b->b2D->f[p] = f2;
                             }
+                            Y--;
                         }
+                        X--;
+                        Y = ymax;
                     }
                     break;
 
@@ -1037,11 +1035,11 @@ int flipCard(board b, card *c){
                     s2 = getFactionDdrsPoints(f2);
                     if (s >= s2)
                     {
-                        setFactionDdrsPoints(f2, getFactionDdrsPoints(f2) + 3);
+                        setFactionDdrsPointsLEGIT(f2, getFactionDdrsPoints(f2) + 3);
                     }
                     if (s <= s2)
                     {
-                        setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 3);
+                        setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 3);
                     }
                     break;
 
@@ -1053,9 +1051,7 @@ int flipCard(board b, card *c){
                             currentCard_boucle2 = getCard_board2D(b->b2D,x,y);
                             if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2) == 1 && (getCardEnumName(currentCard_boucle2) == Heures_supplementaires))
                             {
-                                p = getPositionFromCoordinates_board2D(b->b2D,X,Y);
-                                b->b2D->c[p] = NULL; 
-                                b->b2D->f[p] = NULL;
+                                addCard_board2D(b->b2D, NULL, NULL, X, Y);
                             }
                         }
                     }
@@ -1082,22 +1078,18 @@ int flipCard(board b, card *c){
                     if (boolean)
                     {
                         f = getFaction_board2D(b->b2D,x,y);
-                        setFactionDdrsPoints(f, getFactionDdrsPoints(f) + s);
+                        setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + s);
                     }
                     else
                     {
                         for (X = xmin; X <= xmax; X++)
                         {
-                            p = getPositionFromCoordinates_board2D(b->b2D,X,y);
-                            b->b2D->c[p] = NULL; 
-                            b->b2D->f[p] = NULL;
+                            addCard_board2D(b->b2D, NULL, NULL, X, y);
                         }
 
                         for (Y = ymin; Y <= ymax; Y++)
                         {
-                            p = getPositionFromCoordinates_board2D(b->b2D,x,Y);
-                            b->b2D->c[p] = NULL;
-                            b->b2D->f[p] = NULL;
+                            addCard_board2D(b->b2D, NULL, NULL, x, Y);
                         }
                     }
                     break;
@@ -1110,55 +1102,47 @@ int flipCard(board b, card *c){
                     bool_gauche = 1;
                     bool_droit = 1;
                     // Left card
-                    while (X <= xmax || bool_left)
+                    while (X <= xmax && bool_left)
                     {
                         currentCard_boucle2 = getCard_board2D(b->b2D,X,y);
                         if (currentCard_boucle2 != NULL)
                         {
-                            p = getPositionFromCoordinates_board2D(b->b2D,X,y);
-                            b->b2D->c[p] = NULL; 
-                            b->b2D->f[p] = NULL;
+                            addCard_board2D(b->b2D, NULL, NULL, X, y);
                             bool_left = 0;
                         }
                         X++;
                     }
                     X = xmax;
                     // Right card
-                    while (X >= xmin || bool_right)
+                    while (X >= xmin && bool_right)
                     {
                         currentCard_boucle2 = getCard_board2D(b->b2D,X,y);
                         if (currentCard_boucle2 != NULL)
                         {
-                            p = getPositionFromCoordinates_board2D(b->b2D,X,y);
-                            b->b2D->c[p] = NULL; 
-                            b->b2D->f[p] = NULL;
+                            addCard_board2D(b->b2D, NULL, NULL, X, y);
                             bool_right = 0;
                         }
                         X--;
                     }
                     // Top card
-                    while (Y <= ymax || bool_top)
+                    while (Y <= ymax && bool_top)
                     {
                         currentCard_boucle2 = getCard_board2D(b->b2D,x,Y);
                         if (currentCard_boucle2 != NULL)
                         {
-                            p = getPositionFromCoordinates_board2D(b->b2D,x,Y);
-                            b->b2D->c[p] = NULL; 
-                            b->b2D->f[p] = NULL;
+                            addCard_board2D(b->b2D, NULL, NULL, x, Y);
                             bool_top = 0;
                         }
                         Y++;
                     }
                     Y = ymax;
                     // Bottom card
-                    while (Y >= ymin || bool_bottom)
+                    while (Y >= ymin && bool_bottom)
                     {
                         currentCard_boucle2 = getCard_board2D(b->b2D,x,Y);
                         if (currentCard_boucle2 != NULL)
                         {
-                            p = getPositionFromCoordinates_board2D(b->b2D,x,Y);
-                            b->b2D->c[p] = NULL; 
-                            b->b2D->f[p] = NULL;
+                            addCard_board2D(b->b2D, NULL, NULL, x, Y);
                             bool_bottom = 0;
                         }
                         Y--;
@@ -1179,7 +1163,7 @@ int flipCard(board b, card *c){
                         }
                     }
                     f = getFaction_board2D(b->b2D,x,y);
-                    setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 3*s);
+                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 3*s);
                     ///TODO: Supprimer la dernière carte non retournée du board, mais je sais pas si on parle de temporalité ou de coordonnées...
 
                     break;
@@ -1192,8 +1176,8 @@ int flipCard(board b, card *c){
                     // Here we decided to allow the faction f to steal points only when their score is stricly inferior since it seemed to be more in the spirit of the card
                     if (s < s2)
                     {
-                        setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 3);
-                        setFactionDdrsPoints(f2, getFactionDdrsPoints(f2) - 3);
+                        setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 3);
+                        setFactionDdrsPointsLEGIT(f2, getFactionDdrsPoints(f2) - 3);
                     }
                     break;
 
@@ -1201,9 +1185,9 @@ int flipCard(board b, card *c){
                     boolean = 1;
                     X = xmin;
                     Y = ymin;
-                    while (X <= xmax || boolean)
+                    while (X <= xmax && boolean)
                     {
-                        while (Y <= ymax || boolean)
+                        while (Y <= ymax && boolean)
                         {
                             currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
                             if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2) == 1 && (getCardEnumName(currentCard_boucle2) == Heures_supplementaires))
@@ -1224,9 +1208,7 @@ int flipCard(board b, card *c){
                                 currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
                                 if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2) == 1 && getCardEnumName(currentCard_boucle2) != Christophe_Mouilleron && getCardEnumName(currentCard_boucle2) != Heures_supplementaires)
                                 {
-                                    p = getPositionFromCoordinates_board2D(b->b2D,X,Y);
-                                    b->b2D->c[p] = NULL; 
-                                    b->b2D->f[p] = NULL;
+                                    addCard_board2D(b->b2D, NULL, NULL, X, Y);
                                 }
                             }
                         }
@@ -1237,16 +1219,19 @@ int flipCard(board b, card *c){
                     boolean = 1; // boolean = "Forest isn't on the board or isn't flipped"
                     X = xmin;
                     Y = ymin;
-                    while (X <= xmax || boolean)
+                    while (X <= xmax && boolean)
                     {
-                        while (Y <= ymax || boolean)
+                        while (Y <= ymax && boolean)
                         {
                             currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
                             if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2) == 1 && (getCardEnumName(currentCard_boucle2) == Julien_Forest))
                             {
                                 boolean = 0;
                             }
+                            Y ++;
                         }
+                        X ++;
+                        Y = ymin;
                     }
         
                     s = 0;
@@ -1263,12 +1248,12 @@ int flipCard(board b, card *c){
                     f = getFaction_board2D(b->b2D,x,y);
                     if (boolean)
                     {
-                        setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 3*s);
+                        setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 3*s);
                     }
                     else
                     {
                         f2 = getEnemyFaction(b, f);
-                        setFactionDdrsPoints(f2, getFactionDdrsPoints(f2) - s);
+                        setFactionDdrsPointsLEGIT(f2, getFactionDdrsPoints(f2) - s);
                     }
                     break;
 
@@ -1276,16 +1261,19 @@ int flipCard(board b, card *c){
                     boolean = 1; // Boolean = "Cafe isn't on the board or isn't flipped"
                     X = xmin;
                     Y = ymin;
-                    while (X <= xmax || boolean)
+                    while (X <= xmax && boolean)
                     {
-                        while (Y <= ymax || boolean)
+                        while (Y <= ymax && boolean)
                         {
                             currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
                             if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2) == 1 && (getCardEnumName(currentCard_boucle2) == Cafe))
                             {
                                 boolean = 0;
                             }
+                            Y++;
                         }
+                        X++;
+                        Y = ymin;
                     }
                     if (!boolean)
                     {
@@ -1302,7 +1290,7 @@ int flipCard(board b, card *c){
                             }
                         }
                         f = getFaction_board2D(b->b2D,x,y);
-                        setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 6*s);
+                        setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 6*s);
                     }
                     break;
                 
@@ -1336,7 +1324,7 @@ int flipCard(board b, card *c){
                             }
                         }
                         f = getFaction_board2D(b->b2D,x,y);
-                        setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 3*s);
+                        setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 3*s);
                     }
                     break;
 
@@ -1351,7 +1339,7 @@ int flipCard(board b, card *c){
                         }
                     }
                     f = getFaction_board2D(b->b2D,x,y);
-                    setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 5*(s >= 3)); // The subject didn't precise wether we should count the current card or not, we chose not to.
+                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 5*(s >= 3)); // The subject didn't precise wether we should count the current card or not, we chose not to.
                     break;
 
                 case Eric_Lejeune:///mamamia la galère
@@ -1454,7 +1442,7 @@ int flipCard(board b, card *c){
                     }
 
                     f = getFaction_board2D(b->b2D,x,y);
-                    setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 5*(1 - boolean));
+                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 5*(1 - boolean));
                     break;
                     
 
@@ -1483,7 +1471,7 @@ int flipCard(board b, card *c){
                         }
                     }
                     f = getFaction_board2D(b->b2D,x,y);
-                    setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 10*(bool_left && boolean && bool_right));
+                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 10*(bool_left && boolean && bool_right));
                     break;
 
                 case Laurent_Prevel:
@@ -1500,15 +1488,21 @@ int flipCard(board b, card *c){
                         }
                     }
                     f = getFaction_board2D(b->b2D,x,y);
-                    setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 1000 * (boolean));
+                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 1000 * (boolean));
                     break;            
                 
                 default:
                     break;
                 }
 
+                currentCard = getCard_board2D(x,y);
+                if (currentCard != NULL)
+                {
+                    setCardStatus(currentCard, 1);
+                }
+
                 //return the card flipped and boolean 1
-                *c = currentCard; /// Faut flip la carte un jour par contre
+                *c = currentCard; 
                 return 1;
             }
         }
@@ -1538,7 +1532,7 @@ b2D->f[p] = NULL;
 
 
 f = getFaction_board2D(b->b2D,x,y);
-setFactionDdrsPoints(f, getFactionDdrsPoints(f) + 3*s);
+setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 3*s);
 
 
 for (X = xmin; X <= xmax; X++)
