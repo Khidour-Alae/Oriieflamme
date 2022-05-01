@@ -34,8 +34,9 @@ void reshuffleDeck(faction faction){
 
 void discardHand(faction faction){
     for(int j=0; j<NB_CARDS_IN_HAND; j++){
-        push_deck(pop_hand(&(faction->f_hand)), &(faction->f_deck));
+        push_deck(getCard_hand(getHand(faction),j),getDeck(faction));
     }
+    reset_hand(getHand(faction));
 };
 
 void shuffleDeck(faction faction){
@@ -44,7 +45,7 @@ void shuffleDeck(faction faction){
 
 void drawCards(faction faction){
     for (int i=0;i<NB_CARDS_IN_HAND;i++){
-        push_hand(pop_deck(&(faction->f_deck)),&(faction->f_hand));
+        setCard_hand(getHand(faction),pop_deck(&(faction->f_deck)),i);
     }
 }
 
