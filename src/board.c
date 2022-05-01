@@ -268,6 +268,8 @@ struct board_base
 
 
 
+
+
 board createBoard(){
     board b;
     init_board2D(b->b2D);
@@ -342,6 +344,8 @@ faction getEnemyFaction(board b, faction f)
         return (b->listFactions[0]);
     }
 }
+
+
 
 int reprographie_nbpoints(board2D b2D, int xmin, int xmax, int ymin, int ymax)
 {
@@ -483,10 +487,9 @@ int reprographie_nbpoints(board2D b2D, int xmin, int xmax, int ymin, int ymax)
 setFactionDdrsPointsLEGIT(faction f, int s)
 {
     int fp = getFactionDdrsPoints(f);
-    return((fp - s)*(fp-s>0));
+    setFactionDdrsPoints(f, (fp - s)*(fp-s>0));
 }
 
-setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + s);
 
 
 ///TODO: Verifier les arguments des getFaction_board2D (normalement c'est bon mais on sait jamais)
