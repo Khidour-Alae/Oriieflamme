@@ -14,13 +14,16 @@ struct impl_faction {
     int nbRoundWin; // Number of rounds won by the faction 
 };
 
-void initFaction(faction f, char* factionName){
+faction initFaction(char* factionName){
+    faction f;
+    f = malloc(sizeof(struct impl_faction));
     init_deck(getDeck(f));
     init_hand(getHand(f));
     setFactionName(f, factionName);
     setFactionDdrsPoints(f, 0);
     setNbRoundWin(f, 0);
     f->hasBeenReshuffled = 0;
+    return f;
 }
 
 int hasTheDeckBeenShuffled(faction faction){
@@ -28,7 +31,7 @@ int hasTheDeckBeenShuffled(faction faction){
 };
 
 void reshuffleDeck(faction faction){
-    shuffle_deck(&(faction->f_deck));
+    shuffle_deck(faction->f_deck);
     faction->hasBeenReshuffled = 1;
 };
 
@@ -40,12 +43,12 @@ void discardHand(faction faction){
 };
 
 void shuffleDeck(faction faction){
-    shuffle_deck(&(faction->f_deck));
+    shuffle_deck(faction->f_deck);
 };
 
 void drawCards(faction faction){
     for (int i=0;i<NB_CARDS_IN_HAND;i++){
-        setCard_hand(getHand(faction),pop_deck(&(faction->f_deck)),i);
+        setCard_hand(getHand(faction),pop_deck(faction->f_deck),i);
     }
 }
 
