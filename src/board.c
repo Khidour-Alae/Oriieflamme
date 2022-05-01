@@ -1398,3 +1398,13 @@ for (X = xmin; X <= xmax; X++)
     bool bool_gauche;
     bool bool_droit;
 */
+
+void getBoundingBoxOfTheBoardToPrint(board b, int *xmin, int *ymin, int *xmax, int *ymax) {
+    getBoundingBox(b->b2D,xmin,ymin,xmax,ymax);
+}
+
+int isCardPlacedAt(board b, int x, int y) {
+    int p = getPositionFromCoordinates_board2D(b->b2D,x,y);
+    if (p < b->b2D->sizeBoard2D && p >= 0 && getCard_board2D(b->b2D,x,y) != NULL) return 1;
+    else return 0;
+}

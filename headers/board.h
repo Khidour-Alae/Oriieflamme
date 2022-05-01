@@ -67,5 +67,23 @@ void putDownCard(board b, card c, faction f, int x, int y);
 **/
 int flipCard(board b, card *c);
 
+/**
+ * \brief returns a rectangle that covers just the card on the placed on the board 
+ * \param xmin the x coordinate of the bottom left point of the rectangle
+ * \param ymin the y coordinate of the bottom left point of the rectangle
+ * \param xmax the x coordinate of the top right point of the rectangle
+ * \param ymax the y coordinate of the top right point of the rectangle
+ */
+void getBoundingBoxOfTheBoardToPrint(board b, int *xmin, int *ymin, int *xmax, int *ymax);
+
+/**
+ * \brief returns 1 if there is a card, 0 otherwise
+ * 
+ * \param b the board
+ * \param x the x coordinate
+ * \param y the y coordinate
+ * \return 1 if there is a card, 0 otherwise
+ */
+int isCardPlacedAt(board b, int x, int y);
 
 #endif 
