@@ -1866,53 +1866,6 @@ int flipCard(board b, card * c){
     return 0;
 }
 
-/* Trucs utiles
-
-p = getPositionFromCoordinates_board2D(b->b2D,x,Y);
-b2D->c[p] = NULL; 
-b2D->f[p] = NULL;
-
-
-
-f = getFaction_board2D(b->b2D,x,y);
-setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 3*s);
-
-
-for (X = xmin; X <= xmax; X++)
-{
-    for (Y = ymin; Y < ymax; Y++)
-    {
-        currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
-        if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2) == 1 && (getCardEnumName(currentCard_boucle2) == Name_Card))
-        {
-        }
-    }
-}
-
-
-    card currentCard_boucle2;
-
-    faction f;
-    faction f2;
-
-    int X, Y;
-    int s;
-    int s2;
-    int p;
-    int r;
-
-    card card_tab[17];
-    faction fac_tab[17];
-    int tab_lenght;
-    int X_C, Y_C;
-    card tmp_card;
-
-    int k;
-
-    bool boolean;
-    bool bool_gauche;
-    bool bool_droit;
-*/ 
 
 void getBoundingBoxOfTheBoardToPrint(board b, int *xmin, int *ymin, int *xmax, int *ymax) {
     getBoundingBox(b->b2D,xmin,ymin,xmax,ymax);
