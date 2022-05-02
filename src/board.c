@@ -158,9 +158,9 @@ int max(int a, int b) {return a < b ? b : a;}
 * \param y is the y-coordinate at which you want to place the card
 **/
 void addCard_board2D(board2D b2D, card c, faction f, int x, int y) {
-    
     //check if we need to resize the board
-    if (x == 0 || x == b2D->sideLength - 1 || y == 0 || y == b2D->sideLength - 1)
+    int p = getPositionFromCoordinates_board2D(b2D,x,y);
+    if (p < 0 || p >= b2D->sizeBoard2D)
     {
         resize_board2D(b2D);
     }
