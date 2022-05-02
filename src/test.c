@@ -182,8 +182,8 @@ void gameTest(void){
 
             //round 1: Communiste starting
 
-            CU_ASSERT_EQUAL(getFactionName(f1)=="Communiste");
-            CU_ASSERT_EQUAL(getFactionName(f2)=="Capitaliste");
+            CU_ASSERT_EQUAL(getFactionName(f1),"Communiste");
+            CU_ASSERT_EQUAL(getFactionName(f2),"Capitaliste");
 
             card fise = const_card("FISE", "La faction qui a posé cette carte gagne 1 point DDRS.", FISE, 4);
             card ecologiie = const_card("EcologIIE", "La faction qui a posé cette carte gagne 1 point DDRS par carte FISE/FISA/FC retournée.", EcologIIE, 2);
@@ -239,8 +239,8 @@ void gameTest(void){
 
             //round 3: Capitaliste starting
 
-            CU_ASSERT_EQUAL(getFactionName(f1)=="Capitaliste");
-            CU_ASSERT_EQUAL(getFactionName(f2)=="Communiste");
+            CU_ASSERT_EQUAL(getFactionName(f1),"Capitaliste");
+            CU_ASSERT_EQUAL(getFactionName(f2),"Communiste");
 
 
             card djibril_aurelien_dembele_cabot = const_card("Djibril_Aurelien_Dembele_Cabot", "S'il y a plus de 3 cartes retournées sur la ligne de cette carte, la faction qui a posé cette carte gagne 5 points DDRS.", Djibril_Aurelien_Dembele_Cabot, 1);
@@ -312,8 +312,8 @@ void gameTest(void){
 
             //round 2: Capitaliste starting
 
-            CU_ASSERT_EQUAL(getFactionName(f1)=="Capitaliste");
-            CU_ASSERT_EQUAL(getFactionName(f2)=="Communiste");
+            CU_ASSERT_EQUAL(getFactionName(f1),"Capitaliste");
+            CU_ASSERT_EQUAL(getFactionName(f2),"Communiste");
 
 
             card vitera_y = const_card("Vitera_Y", "La faction qui a le moins de points DDRS gagne 3 points DDRS.", Vitera_Y, 1);
