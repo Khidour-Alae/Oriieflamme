@@ -93,7 +93,7 @@ void printRoundWinner(faction f, int round);
 * \param f1 is the faction
 * \param f2 is another faction
 */
-void printDdrsPts(faction f1, faction f2)
+void printDdrsPts(faction f1, faction f2);
 
 #endif
 
