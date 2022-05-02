@@ -630,7 +630,6 @@ int reprographie_nbpoints(board2D b2D, int xmin, int xmax, int ymin, int ymax)
 // We want the scores not to remain >=0
 void setFactionDdrsPointsLEGIT(faction f, int s)
 {
-    int fp = getFactionDdrsPoints(f);
     setFactionDdrsPoints(f, s*(s>0));
 }
 
@@ -998,7 +997,7 @@ int flipCard(board b, card * c){
                     s = 1;
                     for (Y = ymax; Y >= ymin; Y--)
                     {
-                        for (X = xmin; X <= xmax; X=+)
+                        for (X = xmin; X <= xmax; X++)
                         {
                             s += 1;
                         }
