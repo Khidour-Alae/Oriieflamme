@@ -1926,3 +1926,20 @@ faction roundWinner(board b, faction f1, faction f2)
     }
     return f1; // never happens
 }
+
+int isValidPlace(board b, int x, int y) {
+    int p = getPositionFromCoordinates_board2D(b->b2D,x,y);
+    if (p < 0 || p >= b->b2D->sizeBoard2D)
+    {
+        return 0;
+    }
+    else if (getCard_board2D(b->b2D,x,y) != NULL)
+    {
+        return 0;
+    }
+    else if (getCard_board2D(b->b2D,x-1,y) != NULL || getCard_board2D(b->b2D,x+1,y) != NULL || getCard_board2D(b->b2D,x,y-1) != NULL || getCard_board2D(b->b2D,x,y+1) != NULL)
+    {
+        return 1;
+    }
+    else return 0;
+}
