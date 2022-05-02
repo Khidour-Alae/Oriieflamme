@@ -50,7 +50,7 @@ void cardCreationTest(void){
     card c = const_card("test", "useless", 2, 3);
     CU_ASSERT_PTR_NOT_NULL(c);
     CU_ASSERT_STRING_EQUAL(getCardName(c),"test");
-    CU_ASSERT_EQUAL(getCardEnum(c),2);
+    CU_ASSERT_EQUAL(getCardEnumName(c),2);
     CU_ASSERT_EQUAL(getNumberOfOccurrence(c),3);
 }
 
@@ -71,7 +71,7 @@ void deckTest(void){
     card c1 = pop_deck(d);
     CU_ASSERT_PTR_NOT_NULL(c1);
     CU_ASSERT_STRING_EQUAL(getCardName(c1),"10");
-    CU_ASSERT_EQUAL(getCardEnum(c1),10);
+    CU_ASSERT_EQUAL(getCardEnumName(c1),10);
     CU_ASSERT_EQUAL(getNumberOfOccurrence(c1),1);
     CU_ASSERT_EQUAL(d->nbOfCards,9);
 
@@ -112,13 +112,13 @@ void handTest(void){
     card c1 = getCard_hand(h,1);
     CU_ASSERT_PTR_NOT_NULL(c1);
     CU_ASSERT_STRING_EQUAL(getCardName(c1),"1");
-    CU_ASSERT_EQUAL(getCardEnum(c1),1);
+    CU_ASSERT_EQUAL(getCardEnumName(c1),1);
     CU_ASSERT_EQUAL(getNumberOfOccurrence(c1),1);    
 
     card c2 = getCard_hand(h,2);
     CU_ASSERT_PTR_NOT_NULL(c2);
     CU_ASSERT_STRING_EQUAL(getCardName(c2),"2");
-    CU_ASSERT_EQUAL(getCardEnum(c2),2);
+    CU_ASSERT_EQUAL(getCardEnumName(c2),2);
     CU_ASSERT_EQUAL(getNumberOfOccurrence(c2),1);  
 
     discardCard_hand(h,4);
@@ -165,6 +165,7 @@ void gameTest(void){
     
     while (1) 
     {
+        clearBoard(b);//gets rid of any cards placed on the board if there are any
         if (!(newRound(roundCounter,f1,f2))) //if game finished we leave the wile loop
         {
             break;
@@ -296,17 +297,6 @@ void gameTest(void){
             break;
         }
 
-        
-        reset_board2D(b->b2D);
-        //Call newRound
-
-        
-
-
-
-
-
-
 
 
 
@@ -320,7 +310,105 @@ void gameTest(void){
 }
 
 
+int main(){
+    CU_pSuite pSuite = NULL;
 
+    /* initialize the CUnit test registry */
+   if (CUE_SUCCESS != CU_initialize_registry()){
+      return CU_get_error();
+   }
+
+
+    /* add a suite to the registry */
+   pSuite = CU_add_suite("Suite_Of_Card",const_card,getCardName,getCardEnumName,getNumberOfOccurrence);
+   if (NULL == pSuite) {
+      CU_cleanup_registry();
+      return CU_get_error();
+   }
+
+    /* add the tests to the suite */
+   if (NULL == CU_add_test(pSuite, "test of card creation", cardCreationTest)) 
+   {
+      CU_cleanup_registry();
+      return CU_get_error();
+   }
+
+
+
+
+    /* add a suite to the registry */
+   pSuite = CU_add_suite("Suite_Of_Deck",init_deck,isEmpty_deck,push_deck,pop_deck,shuffle_deck,reset_deck,delete_deck);
+   if (NULL == pSuite) {
+      CU_cleanup_registry();
+      return CU_get_error();
+   }
+
+    /* add the tests to the suite */
+   if (NULL == CU_add_test(pSuite, "test of deck use", deckTest)) 
+   {
+      CU_cleanup_registry();
+      return CU_get_error();
+   }
+
+
+
+
+    /* add a suite to the registry */
+   pSuite = CU_add_suite("Suite_Of_Hand",init_hand,numberOfCards,isEmpty_hand,setCard_hand,getCard_hand);
+   if (NULL == pSuite) {
+      CU_cleanup_registry();
+      return CU_get_error();
+   }
+
+    /* add the tests to the suite */
+   if (NULL == CU_add_test(pSuite, "test of hand use", handTest)) 
+   {
+      CU_cleanup_registry();
+      return CU_get_error();
+   }
+
+
+
+
+   /* add a suite to the registry */
+   pSuite = CU_add_suite("Suite_Of_Faction",initFaction,hasTheDeckBeenShuffled,getNbRoundWin,getFactionDdrsPoints,getDeck,drawCards,discardHand,reshuffleDeck);
+   if (NULL == pSuite) {
+      CU_cleanup_registry();
+      return CU_get_error();
+   }
+
+   /* add the tests to the suite */
+   if (NULL == CU_add_test(pSuite, "test of faction", factionTest)) 
+   {
+      CU_cleanup_registry();
+      return CU_get_error();
+   }
+
+
+
+
+   /* add a suite to the registry */
+   pSuite = CU_add_suite("Suite_Of_Game",createBoard,listFactions,newRound,putDownCard,getCard_board2D,flipCard);
+   if (NULL == pSuite) {
+      CU_cleanup_registry();
+      return CU_get_error();
+   }
+
+   /* add the tests to the suite */
+   if (NULL == CU_add_test(pSuite, "test of the game and cards' effects", gameTest)) 
+   {
+      CU_cleanup_registry();
+      return CU_get_error();
+   }
+
+
+
+    /* Run all tests using the CUnit Basic interface */
+   CU_basic_set_mode(CU_BRM_VERBOSE);
+   CU_basic_run_tests();
+   CU_cleanup_registry();
+   return CU_get_error();
+}
 
 
 
