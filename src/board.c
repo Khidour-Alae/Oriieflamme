@@ -173,17 +173,8 @@ void addCard_board2D(board2D b2D, card c, faction f, int x, int y) {
     b2D->box.xmax = max(x,b2D->box.xmax);
     b2D->box.ymax = max(y,b2D->box.ymax);
 
-    //check if we can place the card in the board
-    if (getCard_board2D(b2D,x,y) != NULL)
-    {
-        printf("Error there already is a card there\n");
-        //raise error
-    }
-    else //we place the card
-    {
-        //place the card
-        b2D->c[p] = c; b2D->f[p] = f;
-    }
+    //place the card on the board
+    b2D->c[p] = c; b2D->f[p] = f;
 }
 
 /**
