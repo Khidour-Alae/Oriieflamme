@@ -1862,7 +1862,7 @@ for (X = xmin; X <= xmax; X++)
     bool boolean;
     bool bool_gauche;
     bool bool_droit;
-*/
+*/ 
 
 void getBoundingBoxOfTheBoardToPrint(board b, int *xmin, int *ymin, int *xmax, int *ymax) {
     getBoundingBox(b->b2D,xmin,ymin,xmax,ymax);
@@ -1924,4 +1924,5 @@ faction roundWinner(board b, faction f1, faction f2)
             y--; 
         }
     }
+    return f1; // never happens
 }
