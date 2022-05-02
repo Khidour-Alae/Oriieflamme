@@ -75,15 +75,14 @@ void print_pts(faction f1, faction f2){
 }
 
 int askReshuffle(faction f){
-    char buffer[2];
-
     print_nom_faction(f);
     printf("\n");
     printf("Voulez vous vider votre main, mélanger votre pioche et repiocher une main?\nVous ne pourrez effectuez cette action qu'une fois au cours de la partie.\n\n");
     printf("-Oui: [o]\n-Non: [n]\n\n");
 
     printf( "Veuillez saisir votre réponse : " );
-    scanf( "%[^\n]", buffer);
+    char buffer[150];
+    fgets(buffer, 150, stdin);
 
     return (buffer[0] == 'o');
 }

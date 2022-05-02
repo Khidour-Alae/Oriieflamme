@@ -71,12 +71,12 @@ int main()
         //drawphase
         drawCards(f1);
         showHand(f1);
-        sleep(1);
         if (!(hasTheDeckBeenShuffled(f1)) && (askReshuffle(f1)))
         {
             discardHand(f1);
             reshuffleDeck(f1);
             drawCards(f1);
+            showHand(f1);
         }
 
         drawCards(f2);
@@ -86,7 +86,10 @@ int main()
             discardHand(f2);
             reshuffleDeck(f2);
             drawCards(f2);
+            showHand(f2);
         }
+
+        printf("hello there2\n");
         
         //placing cards
         int x,y; card cardToPlay;
