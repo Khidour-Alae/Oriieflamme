@@ -1,7 +1,6 @@
 #include "../headers/cards.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
 
 #define SIZE_NAME 150
 #define EFFECT_DESCRIPTION 1000
@@ -73,9 +72,14 @@ void setCardName(card card, char* name){
 }
 
 void setCardEffectDescription(card card, char* effectDescription){
-    if (strlen(effectDescription) < strlen(card->c_effectDescription)){    
-        strcpy(card->c_effectDescription, effectDescription);
+    int i = 0;
+    while (i < EFFECT_DESCRIPTION - 1 && effectDescription[i] != '\0')
+    {
+
+        card->c_effectDescription[i] = effectDescription[i];
+        i++;
     }
+    card->c_effectDescription[i] = '\0';
 }
 
 void setNumberOfOccurrence(card card, int numberOfOccurrence){
