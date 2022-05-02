@@ -39,9 +39,10 @@ void freeBoard(board b);
 * \param counterRoundNumber is the number of round played
 * \param f1 is the faction 1
 * \param f2 is the faction 2
+* \param b  is the board
 * \return 0 if the game is finished, 1 otherwise
 **/
-int newRound(int counterRoundNumber, faction f1, faction f2);
+int newRound(int counterRoundNumber, board b, faction f1, faction f2);
 
 /**
 * \brief show the list of the factions
@@ -104,5 +105,15 @@ int isFlipped(board b, int x, int y);
  * @param b the board
  */
 void clearBoard(board b);
+
+/**
+ * \brief returns the round winner
+ * 
+ * \param b the board
+ * \param x f1 first faction
+ * \param y f2 second faction
+ * \return the round winner
+ */
+faction roundWinner(board b, faction f1, faction f2);
 
 #endif 
