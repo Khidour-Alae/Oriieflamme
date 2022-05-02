@@ -14,7 +14,7 @@ void showBoard(board b) {
     int xmin,ymin,xmax,ymax;
     getBoundingBoxOfTheBoardToPrint(b,&xmin,&ymin,&xmax,&ymax);
 
-    
+    printf("--- Voici le plateau ---\n\n");
     for (int y = ymax; y >= ymin; y--)
     {
         printf("%3i | ",y);
@@ -44,7 +44,7 @@ void showBoard(board b) {
     {
         printf("%3i | ",x);
     }
-    printf("\n");
+    printf("\n\n");
 }
 
 void print_nom_faction(faction f){
@@ -58,8 +58,8 @@ void print_nom_faction(faction f){
 }
 
 void print_pts(faction f1, faction f2){
-    int f1_pts = getFactionDdrsPoints(f1);
-    int f2_pts = getFactionDdrsPoints(f2);
+    int f1_pts = getNbRoundWin(f1);
+    int f2_pts = getNbRoundWin(f2);
     
     printf("Faction : ");
     print_nom_faction(f1);
@@ -77,8 +77,8 @@ void print_pts(faction f1, faction f2){
 int askReshuffle(faction f){
     printf("--- Faction ");
     print_nom_faction(f);
-    printf(" ---\n");
-    printf("Voulez vous vider votre main, mélanger votre pioche et repiocher une main?\nVous ne pourrez effectuez cette action qu'une fois au cours de la partie.\n\n");
+    printf(" ---\n\n");
+    printf("Voulez vous vider votre main, mélanger votre pioche et repiocher une main?\nVous ne pourrez effectuer cette action qu'une fois au cours de la partie.\n\n");
     printf("-Oui: [o]\n-Non: [n]\n\n");
 
     printf( "Veuillez saisir votre réponse : " );
@@ -92,7 +92,6 @@ void showWinner(faction f1,faction f2) {
     int f1_pts = getNbRoundWin(f1);
     int f2_pts = getNbRoundWin(f2);
 
-    system("clear");
     if (f1_pts > f2_pts) {
         printf("Félicitations à la faction ");
         print_nom_faction(f1);
@@ -111,6 +110,12 @@ void showWinner(faction f1,faction f2) {
 
 
 void print_cardName(card c){
+    if (c == NULL)
+    {
+        printf("Error, you'are trying to print the name of a NULL card");
+        exit(1);
+    }
+    
     int i = 0;
     char *cname;
     cname = getCardName(c);
@@ -125,7 +130,7 @@ void showHand(faction f) {
     //system("clear");
     printf("--- Faction ");
     print_nom_faction(f);
-    printf(" ---\nVoici votre main\n");
+    printf(" ---\n\n  Voici votre main\n\n");
 
     hand h = getHand(f);
     card cardToShow;
@@ -146,17 +151,18 @@ void showHand(faction f) {
         print_cardName(cardToShow);
         printf(" (%i)",NB_CARDS_IN_HAND - 1);
     }
-    printf(" ||\n");
+    printf(" ||\n\n");
 }
 
 card askCardWantToPlay(faction f) {
-    printf("Qu'elle carte souhaitez-vous jouer ? (le numéro) \n");
-    int index;
+    printf("Quelle carte souhaitez-vous jouer ? (le numéro) \n");
+    int index; char buffer[150];
     while (1)
     {
-        scanf("%i", &index);
-        printf("Vous avez choisie de jouer la carte %i\n",index);
-        if (index >= 0 && index < NB_CARDS_IN_HAND)
+        fgets(buffer, 150, stdin);
+        sscanf(buffer,"%i", &index);
+        printf("Vous avez choisi de jouer la carte %i\n\n",index);
+        if (index >= 0 && index < NB_CARDS_IN_HAND && getCard_hand(getHand(f), index) != NULL)
         {
             card res = getCard_hand(getHand(f), index);
             discardCard_hand(getHand(f),index); //deletes the card from the hand
@@ -164,21 +170,23 @@ card askCardWantToPlay(faction f) {
         }
         else
         {
-            printf("Vous avez entrer un mauvais numéro, essayez de nouveau\n");
+            printf("Vous avez entré un mauvais numéro, essayez de nouveau\n");
         }
     }
 }
 
 void askWhereWantToPlaceCard(card c, int *x, int *y) {
+    char buffer[150];
     printf("Où souhaitez-vous jouer la carte ");
     print_cardName(c);
     printf(" ? (Coordonnées x y)\n");
-    printf("On rapelle quel doit être jouer à côté d'une autre carte.\n");
+    printf("On rappelle qu'elle doit être jouée à côté d'une autre carte.\n");
     printf("x : ");
-    scanf("%i", x);
-    printf("\n");
+    fgets(buffer, 150, stdin);
+    sscanf(buffer,"%i", x);
     printf("y : ");
-    scanf("%i", y);
+    fgets(buffer, 150, stdin);
+    sscanf(buffer,"%i", y);
     printf("\n");
 }
 
@@ -194,7 +202,7 @@ void showCardEffect(card c) {
         printf("%c", cdes[i]);
         i++;
     }
-    printf("\n");
+    printf("\n\n");
 }
 
 void printRoundWinner(faction f, int round)

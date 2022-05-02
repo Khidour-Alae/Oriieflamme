@@ -319,7 +319,7 @@ int clean_suite(){
 }
 
 
-int test(){
+int main(){
     CU_pSuite pSuite = NULL;
 
     /* initialize the CUnit test registry */
