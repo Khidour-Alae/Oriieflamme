@@ -1462,6 +1462,10 @@ void applyEricEffect(board b, int xmin, int xmax, int ymin, int ymax)
     int s2 = -1; //s number of flipped cards.
     int k;
     faction f;
+
+    
+    int boolean = 0;
+    // boolean = we found such card
     for (X = xmin; X <= xmax; X++)
     {
         for (Y = ymin; Y < ymax; Y++)
@@ -1474,9 +1478,55 @@ void applyEricEffect(board b, int xmin, int xmax, int ymin, int ymax)
                 {
                     if (s2 == rep[k])
                     {
-                        f = getFaction_board2D(b->b2D, X, Y);
-                        addCard_board2D(b->b2D, currentCard_boucle2, f, X_C - k, Y_C);
-                        addCard_board2D(b->b2D, NULL, NULL, X, Y);
+                        if (getCardEnumName(currentCard_boucle2) == Catherine_Dubois || getCardEnumName(currentCard_boucle2) == Anne_Laure_Ligozat || Guillaume_Burel || getCardEnumName(currentCard_boucle2) == Christophe_Mouilleron || getCardEnumName(currentCard_boucle2) ==Thomas_Lim || getCardEnumName(currentCard_boucle2) == Julien_Forest || getCardEnumName(currentCard_boucle2) == Dimitri_Watel)
+                        {
+                            boolean = 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if (boolean)
+    {
+        for (X = xmin; X <= xmax; X++)
+        {
+            for (Y = ymin; Y < ymax; Y++)
+            {
+                currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
+                if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2))
+                {
+                    s2 ++;
+                    for (k = 0; k < min_int(5,s); k++)
+                    {
+                        if (s2 == rep[k])
+                        {
+                            f = getFaction_board2D(b->b2D, X, Y);
+                            addCard_board2D(b->b2D, currentCard_boucle2, f, X_C - k, Y_C);
+                            addCard_board2D(b->b2D, NULL, NULL, X, Y);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    else
+    {
+        for (X = xmin; X <= xmax; X++)
+        {
+            for (Y = ymin; Y < ymax; Y++)
+            {
+                currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
+                if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2))
+                {
+                    s2 ++;
+                    for (k = 0; k < min_int(5,s); k++)
+                    {
+                        if (s2 == rep[k])
+                        {
+                            addCard_board2D(b->b2D, NULL, NULL, X, Y);
+                        }
                     }
                 }
             }
