@@ -72,7 +72,6 @@ int getYFromPosition_board2D(board2D b2D, int p);
 board2D init_board2D() {
     board2D b2D = malloc(sizeof(struct board2DBase));
     b2D->sizeBoard2D = SIZE_2DBOARD;
-    printf("Bonjour sanotehu\n");
     b2D->c = malloc(sizeof(card)*(b2D->sizeBoard2D));
     b2D->f = malloc(sizeof(faction)*(b2D->sizeBoard2D));
     for (int i = 0; i < b2D->sizeBoard2D; i++)
@@ -291,15 +290,11 @@ struct board_base
 board createBoard(){
     board b;
     b = malloc(sizeof(struct board_base));
-    printf("Bonjour2\n");
     b->b2D = init_board2D();
     faction f1 = initFaction("Communiste");
     faction f2 = initFaction("Capitaliste");
-    printf("nom faction f1 : %s\n", getFactionName(f1));
-    printf("nom faction f2 : %s\n", getFactionName(f2));
     b->listFactions[0] = f1;
     b->listFactions[1] = f2;
-    printf("Bonjour3\n");
     //set up deck of factions
     card fise = const_card("FISE", "La faction qui a posé cette carte gagne 1 point DDRS.", FISE, 4);
     card fisa = const_card("FISA", "La faction qui a posé cette carte gagne 2 points DDRS si le nombre de cartes retournées sur le plateau (y compris celle-ci) est pair, et 0 sinon.", FISA, 4);
@@ -337,7 +332,6 @@ board createBoard(){
     deck d_f1 = getDeck(f1);
     deck d_f2 = getDeck(f2);
     push_deck(fise,d_f1);
-    printf("Bonjour4\n");
     push_deck(copy(fise),d_f1);
     push_deck(copy(fise),d_f1);
     push_deck(copy(fise),d_f1);

@@ -62,9 +62,14 @@ int getCardStatus(card card){
 //SETTERS
 
 void setCardName(card card, char* name){
-    if (strlen(name) < strlen(card->c_name)){    
-        strcpy(card->c_name, name);
+    int i = 0;
+    while (i < SIZE_NAME - 1 && name[i] != '\0')
+    {
+
+        card->c_name[i] = name[i];
+        i++;
     }
+    card->c_name[i] = '\0';
 }
 
 void setCardEffectDescription(card card, char* effectDescription){

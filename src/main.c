@@ -22,13 +22,10 @@ int main()
 
     board b; faction* f;
     faction f1; faction f2;
-    printf("Bonjour\n");
     b = createBoard();
     f = listFactions(b);
     f1 = f[0]; f2 = f[1];
 
-    printf("Bonjour\n");
-    printf("nom faction f1 : %s\n",getFactionName(f1));
     int roundCounter = 0;
     while (1)
     {
