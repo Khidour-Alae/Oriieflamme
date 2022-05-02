@@ -1,4 +1,4 @@
-#include <CUnit/CUnit.h>
+//#include <CUnit/CUnit.h>
 #include "board.c"
 #include "structure.c"
 #include "cards.c"
@@ -47,7 +47,7 @@ Functions to test:
 
 
 void cardCreationTest(void){
-    card c = const_card("test", 2, 3);
+    card c = const_card("test", "useless", 2, 3);
     CU_ASSERT_PTR_NOT_NULL(c);
     CU_ASSERT_STRING_EQUAL(getCardName(c),"test");
     CU_ASSERT_EQUAL(getCardEnum(c),2);
@@ -57,7 +57,7 @@ void cardCreationTest(void){
 void deckTest(void){
     deck d;
     
-    init_deck(d);
+    d=init_deck();
     CU_ASSERT_PTR_NOT_NULL(d);
     CU_ASSERT(isEmpty_deck(d));
 
@@ -69,10 +69,10 @@ void deckTest(void){
     }
 
     card c1 = pop_deck(d);
-    CU_ASSERT_PTR_NOT_NULL(c);
-    CU_ASSERT_STRING_EQUAL(getCardName(c),"10");
-    CU_ASSERT_EQUAL(getCardEnum(c),10);
-    CU_ASSERT_EQUAL(getNumberOfOccurrence(c),1);
+    CU_ASSERT_PTR_NOT_NULL(c1);
+    CU_ASSERT_STRING_EQUAL(getCardName(c1),"10");
+    CU_ASSERT_EQUAL(getCardEnum(c1),10);
+    CU_ASSERT_EQUAL(getNumberOfOccurrence(c1),1);
     CU_ASSERT_EQUAL(d->nbOfCards,9);
 
     deck d2=d;
@@ -96,7 +96,7 @@ void deckTest(void){
 
 void handTest(void){
     hand h;
-    init_hand(h);
+    h=init_hand();
     CU_ASSERT_EQUAL(numberOfCards(h),0);
     CU_ASSERT_PTR_NOT_NULL(h);
     CU_ASSERT(isEmpty_hand(h));
@@ -104,7 +104,7 @@ void handTest(void){
     int i;
     for ( i = 0; i < NB_CARDS_IN_HAND; i++){ // Add 8 different cards
         card c = const_card((char) i,"useless",i,1); // Check this later
-        setCard_hand(h,c,i)
+        setCard_hand(h,c,i);
         CU_ASSERT_FALSE(isEmpty_hand(h));
         CU_ASSERT_EQUAL(numberOfCards(h),(i+1));
     }
@@ -126,12 +126,12 @@ void handTest(void){
 
     reset_hand(h);
     CU_ASSERT_PTR_NOT_NULL(h);
-    CU_ASSERT(isEmpty_hand(h))
+    CU_ASSERT(isEmpty_hand(h));
 }
 
 void factionTest(void){
     faction f;
-    initFaction(f);
+    f=initFaction("f");
 
     CU_ASSERT_EQUAL(hasTheDeckBeenShuffled(f),0);
     CU_ASSERT_EQUAL(getNbRoundWin(f),0);
@@ -192,19 +192,19 @@ void gameTest(void){
             card dimitri_watel = const_card("Dimitri_Watel", "La faction qui a posé cette carte gagne 3 points DDRS par carte FISA ou FC retournée sur le plateau si au moins une carte Thé est retournée sur le plateau.", Dimitri_Watel, 1);
             card ecocup = const_card("Ecocup", "Cette carte est sans effet.", Ecocup, 1);
             setCard_hand(f2->f_hand,fisa,0);
-            setCard_hand(f2->f_hand,liiens,1);
+            setCard_hand(f2->f_hand,ecocup,1);
             setCard_hand(f2->f_hand,dimitri_watel,2);
 
                 
-            putDownCard(b,(f1->f_hand)[0],f1,0,0); // fise put
+            putDownCard(b,getCard_hand(f1->f_hand,0),f1,0,0); // fise put
             CU_ASSERT_TRUE(getCard_board2D(b->b2D,0,0)==fise); //Test putDownCard
-            putDownCard(b,(f2->f_hand)[0],f2,1,0); // fisa put
+            putDownCard(b,getCard_hand(f2->f_hand,0),f2,1,0); // fisa put
 
-            putDownCard(b,(f1->f_hand)[1],f1,2,0); // the put
-            putDownCard(b,(f2->f_hand)[1],f2,1,-1); // ecocup put
+            putDownCard(b,getCard_hand(f1->f_hand,1),f1,2,0); // the put
+            putDownCard(b,getCard_hand(f2->f_hand,1),f2,1,-1); // ecocup put
 
-            putDownCard(b,(f1->f_hand)[2],f1,1,-2); // ecologiie put
-            putDownCard(b,(f2->f_hand)[2],f2,2,-1); // dimitri_watel put
+            putDownCard(b,getCard_hand(f1->f_hand,2),f1,1,-2); // ecologiie put
+            putDownCard(b,getCard_hand(f2->f_hand,2),f2,2,-1); // dimitri_watel put
 
             //reveal phase 1
             card cardFlipped;
@@ -246,7 +246,7 @@ void gameTest(void){
 
             //phase 2
 
-            card fisa = const_card("FISA", "La faction qui a posé cette carte gagne 2 points DDRS si le nombre de cartes retournées sur le plateau (y compris celle-ci) est pair, et 0 sinon.", FISA, 4);
+            
             card heures_supplementaires = const_card("Heures_supplementaires", "La faction adverse de celle qui a posé cette carte perd 3 points DDRS par carte Heures supplémentaires retournée sur le plateau (y compris celle-ci).", Heures_supplementaires, 1);
             card christophe_mouilleron = const_card("Christophe_Mouilleron", "Si la carte Heures supplémentaires est retournée sur le plateau, supprimez toutes les cartes retournées du plateau sauf les cartes Christophe Mouilleron et Heures supplémentaires.", Christophe_Mouilleron, 1);
             setCard_hand(f1->f_hand,fisa,0);
@@ -254,25 +254,25 @@ void gameTest(void){
             setCard_hand(f1->f_hand,christophe_mouilleron,2);
 
 
-            card fise = const_card("FISE", "La faction qui a posé cette carte gagne 1 point DDRS.", FISE, 4);
+            
             card vitera_y = const_card("Vitera_Y", "La faction qui a le moins de points DDRS gagne 3 points DDRS.", Vitera_Y, 1);
             card jonas_senizergues = const_card("Jonas_Senizergues", "Supprimez toutes les cartes Heures supplémentaires retournées du plateau.", Jonas_Senizergues, 1);
             setCard_hand(f2->f_hand,fise,0);
             setCard_hand(f2->f_hand,vitera_y,1);
             setCard_hand(f2->f_hand,jonas_senizergues,2);
 
+            
+            putDownCard(b,getCard_hand(f1->f_hand,0),f1,0,0); // fisa put
+            putDownCard(b,getCard_hand(f2->f_hand,0),f2,0,-1); // fise put
 
-            putDownCard(b,(f1->f_hand)[0],f1,0,0); // fisa put
-            putDownCard(b,(f2->f_hand)[0],f2,0,-1); // fise put
+            putDownCard(b,getCard_hand(f1->f_hand,1),f1,0,-2); // heures_supplementaires put
+            putDownCard(b,getCard_hand(f2->f_hand,1),f2,1,-1); // vitera_y put
 
-            putDownCard(b,(f1->f_hand)[1],f1,0,-2); // heures_supplementaires put
-            putDownCard(b,(f2->f_hand)[1],f2,1,-1); // vitera_y put
-
-            putDownCard(b,(f1->f_hand)[2],f1,1,-2); // christophe_mouilleron put
-            putDownCard(b,(f2->f_hand)[2],f2,0,-3); // jonas_senizergues put
+            putDownCard(b,getCard_hand(f1->f_hand,2),f1,1,-2); // christophe_mouilleron put
+            putDownCard(b,getCard_hand(f2->f_hand,2),f2,0,-3); // jonas_senizergues put
 
             //reveal phase 2
-            card cardFlipped;
+            
             flipCard(b, &cardFlipped); // fisa flipped
             CU_ASSERT_TRUE(f1->f_ddrsPoints==0);
 
