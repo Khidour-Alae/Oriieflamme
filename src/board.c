@@ -295,6 +295,8 @@ board createBoard(){
     b->b2D = init_board2D();
     faction f1 = initFaction("Communiste");
     faction f2 = initFaction("Capitaliste");
+    printf("nom faction f1 : %s\n", getFactionName(f1));
+    printf("nom faction f2 : %s\n", getFactionName(f2));
     b->listFactions[0] = f1;
     b->listFactions[1] = f2;
     printf("Bonjour3\n");
