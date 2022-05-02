@@ -158,9 +158,9 @@ int max(int a, int b) {return a < b ? b : a;}
 * \param y is the y-coordinate at which you want to place the card
 **/
 void addCard_board2D(board2D b2D, card c, faction f, int x, int y) {
-    
     //check if we need to resize the board
-    if (x == 0 || x == b2D->sideLength - 1 || y == 0 || y == b2D->sideLength - 1)
+    int p = getPositionFromCoordinates_board2D(b2D,x,y);
+    if (p < 0 || p >= b2D->sizeBoard2D)
     {
         resize_board2D(b2D);
     }
@@ -174,7 +174,8 @@ void addCard_board2D(board2D b2D, card c, faction f, int x, int y) {
     //check if we can place the card in the board
     if (getCard_board2D(b2D,x,y) != NULL)
     {
-        //there already is a card there
+        printf("ERROR there already is a card there\n");
+        exit(1);
         //raise error
     }
     else //we place the card
@@ -630,7 +631,6 @@ int reprographie_nbpoints(board2D b2D, int xmin, int xmax, int ymin, int ymax)
 // We want the scores not to remain >=0
 void setFactionDdrsPointsLEGIT(faction f, int s)
 {
-    int fp = getFactionDdrsPoints(f);
     setFactionDdrsPoints(f, s*(s>0));
 }
 
@@ -689,9 +689,9 @@ int flipCard(board b, card * c){
     int bool_left;
     int bool_right;
 
-    for (int x = xmin; x <= xmax; x++)
+    for (int y = ymax; y >= ymin; y--)
     {
-        for (int y = ymax; y >= ymin; y--)
+        for (int x = xmin; x <= xmax; x++)
         {
             currentCard = getCard_board2D(b->b2D,x,y);
             if (currentCard != NULL && !getCardStatus(currentCard)) //if there is a card and it is face down /// TODO: Soit je me fais int soit jsp comment les int marchent, à demander

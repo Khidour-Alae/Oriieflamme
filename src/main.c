@@ -88,14 +88,13 @@ int main()
             drawCards(f2);
             showHand(f2);
         }
-
-        printf("hello there2\n");
         
         //placing cards
         int x,y; card cardToPlay;
 
         showHand(f1);
         cardToPlay = askCardWantToPlay(f1);
+        printf("Votre carte a été placé au centre du plateau\n\n");
         putDownCard(b,cardToPlay,f1,0,0); //the first card is placed in the center of board
 
         showHand(f2);

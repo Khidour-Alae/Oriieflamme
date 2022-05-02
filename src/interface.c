@@ -40,7 +40,7 @@ void showBoard(board b) {
         printf("\n");
     }
     printf("    | ");
-    for (int x = 0; x < xmax+1; x++)
+    for (int x = xmin; x < xmax+1; x++)
     {
         printf("%3i | ",x);
     }
@@ -75,8 +75,9 @@ void print_pts(faction f1, faction f2){
 }
 
 int askReshuffle(faction f){
+    printf("--- Faction ");
     print_nom_faction(f);
-    printf("\n");
+    printf(" ---\n");
     printf("Voulez vous vider votre main, mélanger votre pioche et repiocher une main?\nVous ne pourrez effectuez cette action qu'une fois au cours de la partie.\n\n");
     printf("-Oui: [o]\n-Non: [n]\n\n");
 
@@ -123,9 +124,9 @@ void print_cardName(card c){
 
 void showHand(faction f) {
     //system("clear");
-
+    printf("--- Faction ");
     print_nom_faction(f);
-    printf("\n");
+    printf(" ---\nVoici votre main\n");
 
     hand h = getHand(f);
     card cardToShow;
@@ -155,6 +156,7 @@ card askCardWantToPlay(faction f) {
     while (1)
     {
         scanf("%i", &index);
+        printf("Vous avez choisie de jouer la carte %i\n",index);
         if (index >= 0 && index < NB_CARDS_IN_HAND)
         {
             card res = getCard_hand(getHand(f), index);
@@ -169,7 +171,7 @@ card askCardWantToPlay(faction f) {
 }
 
 void askWhereWantToPlaceCard(card c, int *x, int *y) {
-    printf("Où souhaitez-vous la carte ");
+    printf("Où souhaitez-vous jouer la carte ");
     print_cardName(c);
     printf(" ? (Coordonnées x y)\n");
     printf("On rapelle quel doit être jouer à côté d'une autre carte.\n");
