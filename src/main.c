@@ -29,6 +29,7 @@ int main()
     int roundCounter = 0;
     while (1)
     {
+        clearBoard(b);//gets rid of any cards placed on the board if there are any
         if (!(newRound(roundCounter,f1,f2))) //if game finished we leave the wile loop
         {
             break;
@@ -103,20 +104,6 @@ int main()
         askWhereWantToPlaceCard(cardToPlay,&x,&y);
         putDownCard(b,cardToPlay,f2,x,y);
 
-        for (int i = 0; i < 7; i++)
-        {
-            showHand(f1);
-            cardToPlay = askCardWantToPlay(f1);
-            showBoard(b);
-            askWhereWantToPlaceCard(cardToPlay,&x,&y);
-            putDownCard(b,cardToPlay,f1,x,y);
-
-            showHand(f2);
-            cardToPlay = askCardWantToPlay(f2);
-            showBoard(b);
-            askWhereWantToPlaceCard(cardToPlay,&x,&y);
-            putDownCard(b,cardToPlay,f2,x,y);
-        }
         
 
         //reveal

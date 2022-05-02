@@ -1,5 +1,6 @@
 #include "../headers/board.h"
 #include "../headers/structure.h"
+#include "../headers/interface.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h> //for time()
@@ -434,8 +435,46 @@ void freeBoard(board b) {
 }
 
 int newRound(int counterRoundNumber, faction f1, faction f2){
-    if (counterRoundNumber == 3) return 0;
-    if (getNbRoundWin(f1) == 2 || getNbRoundWin(f2) == 2) return 0;
+    switch (counterRoundNumber)
+    {
+    case 3:
+        return 0;
+        break;
+    case 2:
+        //check who won the round
+        if (getFactionDdrsPoints(f1) > getFactionDdrsPoints(f2))
+        {
+            setNbRoundWin(f1,1); setNbRoundWin(f2,0);
+            printRoundWinner(f1,2);
+        }
+        else
+        {
+            setNbRoundWin(f1,0); setNbRoundWin(f2,1);
+            printRoundWinner(f2,2);
+        }
+        setFactionDdrsPoints(f1,0);
+        setFactionDdrsPoints(f2,0);
+
+        if (getNbRoundWin(f1) == 2 || getNbRoundWin(f2) == 2) return 0;
+        break;
+    case 1:
+        //check who won the round
+        if (getFactionDdrsPoints(f1) > getFactionDdrsPoints(f2))
+        {
+            setNbRoundWin(f1,1); setNbRoundWin(f2,0);
+            printRoundWinner(f1,1);
+        }
+        else
+        {
+            setNbRoundWin(f1,0); setNbRoundWin(f2,1);
+            printRoundWinner(f2,1);
+        }
+        setFactionDdrsPoints(f1,0);
+        setFactionDdrsPoints(f2,0);
+        break;
+    default:
+        return 1;
+    }
     return 1;
 }
 
@@ -1047,7 +1086,7 @@ int flipCard(board b, card * c){
                     r = rand()%(ymax - ymin + 1);
                     for (X = xmin; X < xmax; X++)
                     {
-                        currentCard_boucle2 = getCard_board2D(b->b2D,r,Y);
+                        currentCard_boucle2 = getCard_board2D(b->b2D,X,r);
                         if (currentCard_boucle2 != NULL)
                         {
                             addCard_board2D(b->b2D, NULL, NULL, X, r);
@@ -1210,6 +1249,7 @@ int flipCard(board b, card * c){
 
                 case Anne_Laure_Ligozat:
                     s = 0;
+                    s2 = 0;
                     for (X = xmin; X <= xmax; X++)
                     {
                         for (Y = ymin; Y < ymax; Y++)
@@ -1219,12 +1259,29 @@ int flipCard(board b, card * c){
                             {
                                 s ++;
                             }
+                            if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2) == 0)
+                            {
+                                s2++;
+                            }
                         }
                     }
+                    for (Y = ymax; Y >= ymin; Y--)
+                    {
+                        for (X = xmin; Y <= ymax; X++)
+                        {
+                            if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2) == 0)
+                            {
+                                s2 += 1;
+                                if (s == s2)
+                                {
+                                    addCard_board2D(b->b2D, NULL, NULL, X, Y);
+                                }
+                            }
+                        }
+                    }
+
                     f = getFaction_board2D(b->b2D,x,y);
                     setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 3*s);
-                    ///TODO: Supprimer la dernière carte non retournée du board, mais je sais pas si on parle de temporalité ou de coordonnées...
-
                     break;
 
                 case Guillaume_Burel:
@@ -1235,8 +1292,16 @@ int flipCard(board b, card * c){
                     // Here we decided to allow the faction f to steal points only when their score is stricly inferior since it seemed to be more in the spirit of the card
                     if (s < s2)
                     {
-                        setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 3);
-                        setFactionDdrsPointsLEGIT(f2, getFactionDdrsPoints(f2) - 3);
+                        if (s2 < 3)
+                        {
+                            setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + getFactionDdrsPoints(f2));
+                            setFactionDdrsPointsLEGIT(f2, 0);
+                        }
+                        else
+                        {
+                            setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 3);
+                            setFactionDdrsPointsLEGIT(f2, getFactionDdrsPoints(f2) - 3);
+                        }
                     }
                     break;
 
@@ -1389,16 +1454,16 @@ int flipCard(board b, card * c){
 
                 case Djibril_Aurelien_Dembele_Cabot:
                     s = 0;
-                    for (Y = ymin; Y <= ymax; Y++)
+                    for (X = xmin; X <= xmax; X++)
                     {
-                        currentCard_boucle2 = getCard_board2D(b->b2D,x,Y);
+                        currentCard_boucle2 = getCard_board2D(b->b2D,X,y);
                         if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2) == 1)
                         {
                             s += 1;
                         }
                     }
                     f = getFaction_board2D(b->b2D,x,y);
-                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 5*(s >= 3)); // The subject didn't precise wether we should count the current card or not, we chose not to.
+                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 5*(s >= 2)); // Since we count currentCard
                     break;
 
                 case Eric_Lejeune:///mamamia la galère
@@ -1441,16 +1506,16 @@ int flipCard(board b, card * c){
                     Y_C = 0;
 
                     X = xmin;
-                    Y = ymin;
-                    while (currentCard_boucle2 == NULL && X < xmax)
+                    Y = ymax;
+                    while (Y >= ymin && currentCard_boucle2 == NULL)
                     {
-                        while (Y < ymax && currentCard_boucle2 == NULL)
+                        while (currentCard_boucle2 == NULL && X <= xmax)
                         {
                             currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
                             Y ++;     
                         }
-                        X ++;
-                        Y = ymin;
+                        Y --;
+                        X = xmin;
                     }
                     X_C = X;
                     Y_C = Y;
@@ -1470,7 +1535,7 @@ int flipCard(board b, card * c){
                                     if (s2 == rep[k])
                                     {
                                         f = getFaction_board2D(b->b2D, X, Y);
-                                        addCard_board2D(b->b2D, currentCard_boucle2, f, X_C, Y_C - k);
+                                        addCard_board2D(b->b2D, currentCard_boucle2, f, X_C - k, Y_C);
                                         addCard_board2D(b->b2D, NULL, NULL, X, Y);
                                     }
                                 }
@@ -1531,6 +1596,17 @@ int flipCard(board b, card * c){
                     }
                     f = getFaction_board2D(b->b2D,x,y);
                     setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 10*(bool_left && boolean && bool_right));
+                    if (!(bool_left && boolean && bool_right))
+                    {
+                        for (X = xmin; X <= xmax; X++)
+                        {
+                            currentCard_boucle2 = getCard_board2D(b->b2D,X,y);
+                            if (currentCard_boucle2 != NULL)
+                            {
+                                setCardStatus(currentCard_boucle2, 1);
+                            }
+                        }
+                    }
                     break;
 
                 case Laurent_Prevel:
@@ -1633,4 +1709,8 @@ int isFlipped(board b, int x, int y)
     board2D b2D = b->b2D;
     card c = getCard_board2D(b2D, x, y);
     return getCardStatus(c);
+}
+
+void clearBoard(board b) {
+    reset_board2D(b->b2D);
 }

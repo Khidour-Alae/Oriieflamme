@@ -98,4 +98,11 @@ int isCardPlacedAt(board b, int x, int y);
  */
 int isFlipped(board b, int x, int y);
 
+/**
+ * @brief clears the board of any cards
+ * 
+ * @param b the board
+ */
+void clearBoard(board b);
+
 #endif 
