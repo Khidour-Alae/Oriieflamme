@@ -122,6 +122,7 @@ void print_cardName(card c){
     }
 }
 
+
 void showHand(faction f) {
     //system("clear");
     printf("--- Faction ");
@@ -196,4 +197,11 @@ void showCardEffect(card c) {
         i++;
     }
     printf("\n");
+}
+
+void printRoundWinner(faction f, int round)
+{
+    printf("\nLa faction ");
+    print_nom_faction(f);
+    printf(" a gagné le round %i\n", round);
 }

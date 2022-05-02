@@ -3,7 +3,7 @@
 *
 * This file describes the functions we need to make the interface. 
 * The interface (at least until Task C) is coded on the console.
-* There are 7 fonctions:
+* There are 8 fonctions:
 * - showBoard prints the given board
 * - showHand prints the given hand
 * - asfkReshuffle asks the faction if they want to change their cards. They can only do it once during the game.
@@ -11,6 +11,7 @@
 * - askWhereWantToPlaceCard aks the player where they want to put the card given as argument.
 * - showCardEffect prints the card given as argument.
 * - showWinner prints the faction given as argument to show the player they won the game.
+* - printRoundWinner prints the given faction as the winner of a given round.
 
 */
 
@@ -77,6 +78,13 @@ void showCardEffect(card c);
 * \return nothing.
 */
 void showWinner(faction f1, faction f2);
+
+/**
+* \brief print the given faction as the winner of a given round
+* \param f is the faction
+* \param round is the round number
+*/
+void printRoundWinner(faction f, int round);
 
 #endif
 
