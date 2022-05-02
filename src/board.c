@@ -1194,7 +1194,7 @@ void applyCatherineEffect(board b, int xmin, int xmax, int ymin, int ymax, int x
     }
 }
 
-applyAnneEffect(board b, int xmin, int xmax, int ymin, int ymax, int x, int y)
+void applyAnneEffect(board b, int xmin, int xmax, int ymin, int ymax, int x, int y)
 {
     int X; int Y;
     card currentCard_boucle2;
@@ -1496,7 +1496,7 @@ void applyEricEffect(board b, int xmin, int xmax, int ymin, int ymax)
 }
 
 
-applyLucienneEffect(board b, int xmin, int xmax, int ymin, int ymax, int x, int y)
+void applyLucienneEffect(board b, int xmin, int xmax, int ymin, int ymax, int x, int y)
 {
     int X; int Y;
     card currentCard_boucle2;
@@ -1582,21 +1582,10 @@ int flipCard(board b, card * c){
     int X, Y;
     int s;
     int s2;
-    int p;
-    int r;
 
-    card card_tab[17];
-    faction fac_tab[17];
-    int tab_lenght;
-    int X_C, Y_C;
-
-    int k;
 
     int boolean;
-    int bool_top;
-    int bool_bottom;
-    int bool_left;
-    int bool_right;
+
 
     for (int y = ymax; y >= ymin; y--)
     {
@@ -1703,11 +1692,11 @@ int flipCard(board b, card * c){
                     break;
 
                 case Kevin_Goilard:
-                    applyKevinEffect(board b, int xmin, int xmax, int ymin, int ymax, int x, int y);
+                    applyKevinEffect(b, xmin, xmax, ymin, ymax, x, y);
                     break;
                 
                 case Massinissa_Merabet:
-                    applyMassinissa(b, xmin, xmax, ymin, ymax, x, y);
+                    applyMassinissaEffect(b, xmin, xmax, ymin, ymax, x, y);
                     break;
 
 
