@@ -1047,7 +1047,7 @@ int flipCard(board b, card * c){
                     r = rand()%(ymax - ymin + 1);
                     for (X = xmin; X < xmax; X++)
                     {
-                        currentCard_boucle2 = getCard_board2D(b->b2D,r,Y);
+                        currentCard_boucle2 = getCard_board2D(b->b2D,X,r);
                         if (currentCard_boucle2 != NULL)
                         {
                             addCard_board2D(b->b2D, NULL, NULL, X, r);
