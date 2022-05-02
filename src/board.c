@@ -1026,7 +1026,7 @@ void applyHeuresSupEffect(board b, int xmin, int xmax, int ymin, int ymax, int x
 
 void applyKevinEffect(board b, int xmin, int xmax, int ymin, int ymax, int x, int y)
 {
-    int X; int Y;
+    int X;
     card currentCard_boucle2;
     faction f = getFaction_board2D(b->b2D,x,y);
     int r = rand()%(ymax - ymin + 1);
@@ -1042,7 +1042,7 @@ void applyKevinEffect(board b, int xmin, int xmax, int ymin, int ymax, int x, in
 }
 
 
-void applyMassinissaEffect(board b, int xmin, int xmax, int ymin, int ymax, int x, int y)
+void applyMassinissaEffect(board b, int xmin, int xmax, int ymax, int x, int y)
 {
     faction f = getFaction_board2D(b->b2D,x,y); faction f2;
     int boolean = 1; // we haven't found a card yet
@@ -1394,9 +1394,9 @@ void applyWatelEffect(board b, int xmin, int xmax, int ymin, int ymax, int x, in
 
 }
 
-void applyDjibrilEffect(board b, int xmin, int xmax, int ymin, int ymax, int x, int y)
+void applyDjibrilEffect(board b, int xmin, int xmax, int x, int y)
 {
-    int X; int Y;
+    int X; 
     card currentCard_boucle2;
     int s = 0;
     for (X = xmin; X <= xmax; X++)
@@ -1695,7 +1695,7 @@ int flipCard(board b, card * c){
                     break;
                 
                 case Massinissa_Merabet:
-                    applyMassinissaEffect(b, xmin, xmax, ymin, ymax, x, y);
+                    applyMassinissaEffect(b, xmin, xmax, ymax, x, y);
                     break;
 
 
@@ -1769,7 +1769,7 @@ int flipCard(board b, card * c){
                     break;
 
                 case Djibril_Aurelien_Dembele_Cabot:
-                    applyDjibrilEffect(b, xmin, xmax, ymin, ymax, x, y);
+                    applyDjibrilEffect(b, xmin, xmax, x, y);
                     break;
 
                 case Eric_Lejeune:///mamamia la galère
