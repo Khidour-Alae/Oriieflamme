@@ -1,5 +1,6 @@
 #include "../headers/board.h"
 #include "../headers/structure.h"
+#include "../headers/interface.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h> //for time()
@@ -444,10 +445,12 @@ int newRound(int counterRoundNumber, faction f1, faction f2){
         if (getFactionDdrsPoints(f1) > getFactionDdrsPoints(f2))
         {
             setNbRoundWin(f1,1); setNbRoundWin(f2,0);
+            printRoundWinner(f1,2);
         }
         else
         {
             setNbRoundWin(f1,0); setNbRoundWin(f2,1);
+            printRoundWinner(f2,2);
         }
         setFactionDdrsPoints(f1,0);
         setFactionDdrsPoints(f2,0);
@@ -459,10 +462,12 @@ int newRound(int counterRoundNumber, faction f1, faction f2){
         if (getFactionDdrsPoints(f1) > getFactionDdrsPoints(f2))
         {
             setNbRoundWin(f1,1); setNbRoundWin(f2,0);
+            printRoundWinner(f1,1);
         }
         else
         {
             setNbRoundWin(f1,0); setNbRoundWin(f2,1);
+            printRoundWinner(f2,1);
         }
         setFactionDdrsPoints(f1,0);
         setFactionDdrsPoints(f2,0);
