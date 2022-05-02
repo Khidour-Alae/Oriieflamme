@@ -804,7 +804,6 @@ void applySoiree_sans_alcoolEffect(board b, int xmin, int xmax, int ymin, int ym
     if (boolean)
     {
         // If boolean, delete all FISE / FISA / FC cards
-        int p;
         for (Y = ymax; Y >= ymin; Y--)
         {
             for (X = xmin; X <= xmax; X++)
@@ -813,7 +812,6 @@ void applySoiree_sans_alcoolEffect(board b, int xmin, int xmax, int ymin, int ym
 
                 if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2) && (getCardEnumName(currentCard_boucle2) == FC || getCardEnumName(currentCard_boucle2) == FISE || getCardEnumName(currentCard_boucle2) == FISA))
                 {
-                    p = getPositionFromCoordinates_board2D(b->b2D,X,Y);
                     addCard_board2D(b->b2D, NULL, NULL, X, Y);
                 }
             }
