@@ -15,7 +15,7 @@ void showBoard(board b) {
     getBoundingBoxOfTheBoardToPrint(b,&xmin,&ymin,&xmax,&ymax);
 
     
-    for (int y = ymin; y < ymax+1; y++)
+    for (int y = ymax; y >= ymin; y--)
     {
         printf("%3i | ",y);
         for (int x = xmin; x < xmax+1; x++)
@@ -77,7 +77,6 @@ void print_pts(faction f1, faction f2){
 int askReshuffle(faction f){
     char buffer[2];
 
-    system("clear");
     print_nom_faction(f);
     printf("\n");
     printf("Voulez vous vider votre main, mélanger votre pioche et repiocher une main?\nVous ne pourrez effectuez cette action qu'une fois au cours de la partie.\n\n");
@@ -124,7 +123,7 @@ void print_cardName(card c){
 }
 
 void showHand(faction f) {
-    system("clear");
+    //system("clear");
 
     print_nom_faction(f);
     printf("\n");

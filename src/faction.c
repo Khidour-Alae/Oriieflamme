@@ -81,9 +81,14 @@ int getNbRoundWin(faction faction){
 //SETTERS
 
 void setFactionName(faction faction, char* name){
-    if (strlen(name) < strlen(faction->f_name)){    
-        strcpy(faction->f_name, name);
+    int i = 0;
+    while (i < SIZE_NAME - 1 && name[i] != '\0')
+    {
+
+        faction->f_name[i] = name[i];
+        i++;
     }
+    faction->f_name[i] = '\0';
 }
 
 void setFactionDdrsPoints(faction faction, int DDRS_Points){

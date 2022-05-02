@@ -13,6 +13,7 @@
 #include <stdlib.h> //for rand()
 #include <time.h> //for time()
 #include <stdio.h>
+#include <unistd.h> //for sleep()
 
 int main()
 {
@@ -26,6 +27,8 @@ int main()
     f = listFactions(b);
     f1 = f[0]; f2 = f[1];
 
+    printf("Bonjour\n");
+    printf("nom faction f1 : %s\n",getFactionName(f1));
     int roundCounter = 0;
     while (1)
     {
@@ -71,6 +74,7 @@ int main()
         //drawphase
         drawCards(f1);
         showHand(f1);
+        sleep(10);
         if (!(hasTheDeckBeenShuffled(f1)) && (askReshuffle(f1)))
         {
             discardHand(f1);
