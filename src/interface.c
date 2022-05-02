@@ -75,17 +75,34 @@ void print_pts(faction f1, faction f2){
 }
 
 int askReshuffle(faction f){
+
     printf("--- Faction ");
     print_nom_faction(f);
     printf(" ---\n\n");
     printf("Voulez vous vider votre main, mélanger votre pioche et repiocher une main?\nVous ne pourrez effectuer cette action qu'une fois au cours de la partie.\n\n");
-    printf("-Oui: [o]\n-Non: [n]\n\n");
 
+
+    printf("-Oui: [o]\n-Non: [n]\n\n");
     printf( "Veuillez saisir votre réponse : " );
     char buffer[150];
     fgets(buffer, 150, stdin);
+    if (buffer[0] == 'o' || (buffer[0] == 'n'))
+    {
+        return (buffer[0] == 'o');
+    }
+    while (1)
+    {
+        printf("Mauvais input, veuillez réessayer\n\n");
+        printf("-Oui: [o]\n-Non: [n]\n\n");
+        printf( "Veuillez saisir votre réponse : " );
+        char buffer[150];
+        fgets(buffer, 150, stdin);
+        if (buffer[0] == 'o' || (buffer[0] == 'n'))
+        {
+            return (buffer[0] == 'o');
+        }
+    }
 
-    return (buffer[0] == 'o');
 }
 
 void showWinner(faction f1,faction f2) {
