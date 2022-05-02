@@ -1593,6 +1593,15 @@ int flipCard(board b, card * c){
             currentCard = getCard_board2D(b->b2D,x,y);
             if (currentCard != NULL && !getCardStatus(currentCard)) //if there is a card and it is face down 
             {
+                currentCard = getCard_board2D(b->b2D,x,y);
+                if (currentCard != NULL)
+                {
+                    setCardStatus(currentCard, 1);
+                }
+
+                //return the card flipped and boolean 1
+                *c = currentCard; 
+
                 //applies the effect
                 switch (getCardEnumName(currentCard))
                 {
@@ -1808,14 +1817,6 @@ int flipCard(board b, card * c){
                     break;
                 }
 
-                currentCard = getCard_board2D(b->b2D,x,y);
-                if (currentCard != NULL)
-                {
-                    setCardStatus(currentCard, 1);
-                }
-
-                //return the card flipped and boolean 1
-                *c = currentCard; 
                 return 1;
             }
         }
