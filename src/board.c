@@ -631,7 +631,7 @@ int reprographie_nbpoints(board2D b2D, int xmin, int xmax, int ymin, int ymax)
 void setFactionDdrsPointsLEGIT(faction f, int s)
 {
     int fp = getFactionDdrsPoints(f);
-    setFactionDdrsPoints(f, (fp - s)*(fp-s>0));
+    setFactionDdrsPoints(f, s*(s>0));
 }
 
 
