@@ -162,7 +162,7 @@ card askCardWantToPlay(faction f) {
         fgets(buffer, 150, stdin);
         sscanf(buffer,"%i", &index);
         printf("Vous avez choisi de jouer la carte %i\n\n",index);
-        if (index >= 0 && index < NB_CARDS_IN_HAND)
+        if (index >= 0 && index < NB_CARDS_IN_HAND && getCard_hand(getHand(f), index) != NULL)
         {
             card res = getCard_hand(getHand(f), index);
             discardCard_hand(getHand(f),index); //deletes the card from the hand
