@@ -139,7 +139,9 @@ int main()
         while (flipCard(b, &cardFlipped))
         {
             showCardEffect(cardFlipped); sleep(4);
-            showBoard(b); sleep(2);
+            showBoard(b); 
+            printDdrsPts(f1,f2);
+            sleep(2);
         }
         sleep(3);
         system("clear");
