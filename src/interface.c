@@ -158,7 +158,9 @@ card askCardWantToPlay(faction f) {
         scanf("%i", &index);
         if (index >= 0 && index < NB_CARDS_IN_HAND)
         {
-            return getCard_hand(getHand(f), index);
+            card res = getCard_hand(getHand(f), index);
+            discardCard_hand(getHand(f),index); //deletes the card from the hand
+            return res;
         }
         else
         {
