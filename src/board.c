@@ -804,6 +804,7 @@ void applySoiree_sans_alcoolEffect(board b, int xmin, int xmax, int ymin, int ym
     if (boolean)
     {
         // If boolean, delete all FISE / FISA / FC cards
+        int p;
         for (Y = ymax; Y >= ymin; Y--)
         {
             for (X = xmin; X <= xmax; X++)
