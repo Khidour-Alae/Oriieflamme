@@ -158,9 +158,9 @@ int max(int a, int b) {return a < b ? b : a;}
 * \param y is the y-coordinate at which you want to place the card
 **/
 void addCard_board2D(board2D b2D, card c, faction f, int x, int y) {
+    
     //check if we need to resize the board
-    int p = getPositionFromCoordinates_board2D(b2D,x,y);
-    if (p < 0 || p >= b2D->sizeBoard2D)
+    if (x == 0 || x == b2D->sideLength - 1 || y == 0 || y == b2D->sideLength - 1)
     {
         resize_board2D(b2D);
     }
@@ -174,8 +174,7 @@ void addCard_board2D(board2D b2D, card c, faction f, int x, int y) {
     //check if we can place the card in the board
     if (getCard_board2D(b2D,x,y) != NULL)
     {
-        printf("ERROR there already is a card there\n");
-        exit(1);
+        //there already is a card there
         //raise error
     }
     else //we place the card
@@ -631,6 +630,7 @@ int reprographie_nbpoints(board2D b2D, int xmin, int xmax, int ymin, int ymax)
 // We want the scores not to remain >=0
 void setFactionDdrsPointsLEGIT(faction f, int s)
 {
+    int fp = getFactionDdrsPoints(f);
     setFactionDdrsPoints(f, s*(s>0));
 }
 
@@ -917,7 +917,7 @@ int flipCard(board b, card * c){
                     boolean = 0; // boolean = "flipped Ecocup card found"
                     for (Y = ymax; Y >= ymin; Y--)
                     {
-                        for (Y = ymin; Y < ymax; Y++)
+                        for (X = xmin; X < xmax; X++)
                         {
                             currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
                             if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2) && (getCardEnumName(currentCard_boucle2) == Alcool || getCardEnumName(currentCard_boucle2) == Cafe))
@@ -980,25 +980,32 @@ int flipCard(board b, card * c){
                             }
                             X++;
                         }
-                        X = xmin;
-                        while (bool_right && X <= xmax)
+                        X = xmax;
+                        while (bool_right && X >= xmin)
                         {
-                            currentCard_boucle2 = getCard_board2D(b->b2D,x, ymax - Y);
+                            currentCard_boucle2 = getCard_board2D(b->b2D,X, Y);
                             if (currentCard_boucle2 != NULL && !getCardStatus(currentCard_boucle2))
                             {
                                 setCardStatus(currentCard_boucle2, 1);
                                 bool_right = 0;
                             }
-                            Y ++;
+                            Y --;
                         }
                     }
                     break;
 
                 case Heures_supplementaires:
-                    // The subject wants us to make the other faction lose 3 points * number of "Heure_supplementaires" cards, 
-                    // but there is only one such card so the other faction always lose the same amount of points which is 3.
+                    s = 1;
+                    for (Y = ymax; Y >= ymin; Y--)
+                    {
+                        for (X = xmin; X <= xmax; X=+)
+                        {
+                            s += 1;
+                        }
+                    }
+
                     f = getEnemyFaction(b, getFaction_board2D(b->b2D,x,y));
-                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) - 3);
+                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) - 3*s);
                     break;
 
                 case Kahina_Bouchama:
@@ -1038,13 +1045,13 @@ int flipCard(board b, card * c){
 
                 case Kevin_Goilard:
                     f = getFaction_board2D(b->b2D,x,y);
-                    r = rand()%(xmax - xmin + 1);
-                    for (Y = ymin; Y < ymax; Y++)
+                    r = rand()%(ymax - ymin + 1);
+                    for (X = xmin; X < xmax; X++)
                     {
                         currentCard_boucle2 = getCard_board2D(b->b2D,r,Y);
                         if (currentCard_boucle2 != NULL)
                         {
-                            addCard_board2D(b->b2D, NULL, NULL, r, Y);
+                            addCard_board2D(b->b2D, NULL, NULL, X, r);
                             setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 2);
                         }
                     }
@@ -1053,12 +1060,12 @@ int flipCard(board b, card * c){
                 case Massinissa_Merabet:
                     f = getFaction_board2D(b->b2D,x,y);
                     boolean = 1; // we haven't found a card yet
-                    X = x;
-                    Y = y - 1;
+                    X = x - 1;
+                    Y = y;
                     
-                    while (boolean && X >= xmin)
+                    while (boolean && Y <= ymax)
                     {
-                        while (boolean && Y >= ymin)
+                        while (boolean && X >= xmin)
                         {
                             currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
                             if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2))
@@ -1072,10 +1079,10 @@ int flipCard(board b, card * c){
                                 p = getPositionFromCoordinates_board2D(b->b2D,X,Y);
                                 b->b2D->f[p] = f2;
                             }
-                            Y--;
+                            X--;
                         }
-                        X--;
-                        Y = ymax;
+                        Y++;
+                        X = xmax;
                     }
                     break;
 
