@@ -367,10 +367,9 @@ void gameTest(void){
             //end round 2: Communiste Win
             break;
         }
-
     }    
 
-
+    CU_ASSERT_EQUAL(getNbRoundWin(f1),2); // Check that Capitaliste won round 3
 
 
 
