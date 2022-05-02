@@ -424,7 +424,10 @@ void freeBoard(board b) {
     delete_board2D(b->b2D);
 }
 
-int newRound(int counterRoundNumber, faction f1, faction f2){
+
+///TODO: board b consequences
+int newRound(int counterRoundNumber, board b, faction f1, faction f2){
+    faction f;
     switch (counterRoundNumber)
     {
     case 3:
@@ -432,16 +435,10 @@ int newRound(int counterRoundNumber, faction f1, faction f2){
         break;
     case 2:
         //check who won the round
-        if (getFactionDdrsPoints(f1) > getFactionDdrsPoints(f2))
-        {
-            setNbRoundWin(f1,getNbRoundWin(f1) + 1);
-            printRoundWinner(f1,2);
-        }
-        else
-        {
-            setNbRoundWin(f2,getNbRoundWin(f2) + 1);
-            printRoundWinner(f2,2);
-        }
+        f = roundWinner(b, f1, f2);
+        setNbRoundWin(f,getNbRoundWin(f) + 1);
+        printRoundWinner(f,2);
+
         setFactionDdrsPoints(f1,0);
         setFactionDdrsPoints(f2,0);
 
@@ -449,16 +446,10 @@ int newRound(int counterRoundNumber, faction f1, faction f2){
         break;
     case 1:
         //check who won the round
-        if (getFactionDdrsPoints(f1) > getFactionDdrsPoints(f2))
-        {
-            setNbRoundWin(f1,1); setNbRoundWin(f2,0);
-            printRoundWinner(f1,1);
-        }
-        else
-        {
-            setNbRoundWin(f1,0); setNbRoundWin(f2,1);
-            printRoundWinner(f2,1);
-        }
+        f = roundWinner(b, f1, f2);
+        setNbRoundWin(f,getNbRoundWin(f) + 1);
+        printRoundWinner(f,2);
+        
         setFactionDdrsPoints(f1,0);
         setFactionDdrsPoints(f2,0);
         break;

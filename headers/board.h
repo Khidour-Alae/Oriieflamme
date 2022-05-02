@@ -39,9 +39,10 @@ void freeBoard(board b);
 * \param counterRoundNumber is the number of round played
 * \param f1 is the faction 1
 * \param f2 is the faction 2
+* \param b  is the board
 * \return 0 if the game is finished, 1 otherwise
 **/
-int newRound(int counterRoundNumber, faction f1, faction f2);
+int newRound(int counterRoundNumber, board b, faction f1, faction f2);
 
 /**
 * \brief show the list of the factions
