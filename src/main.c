@@ -71,7 +71,7 @@ int main()
         //drawphase
         drawCards(f1);
         showHand(f1);
-        sleep(10);
+        sleep(1);
         if (!(hasTheDeckBeenShuffled(f1)) && (askReshuffle(f1)))
         {
             discardHand(f1);
