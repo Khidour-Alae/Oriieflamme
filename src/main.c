@@ -151,6 +151,5 @@ int main()
     showWinner(f1,f2);
 
     freeBoard(b);
-
     return 0;
 }
