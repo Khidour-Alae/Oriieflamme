@@ -110,26 +110,26 @@ int main()
         printf("Votre carte a été placé\n\n"); 
         showBoard(b); sleep(2);
 
-        // for (int i = 0; i < 7; i++)
-        // {
-        //     system("clear");
-        //     showHand(f1); sleep(1);
-        //     cardToPlay = askCardWantToPlay(f1);
-        //     showBoard(b);
-        //     askWhereWantToPlaceCard(b,cardToPlay,&x,&y);
-        //     putDownCard(b,cardToPlay,f1,x,y);
-        //     printf("Votre carte a été placé\n\n"); 
-        //     showBoard(b); sleep(2);
+        for (int i = 0; i < 7; i++)
+        {
+            system("clear");
+            showHand(f1); sleep(1);
+            cardToPlay = askCardWantToPlay(f1);
+            showBoard(b);
+            askWhereWantToPlaceCard(b,cardToPlay,&x,&y);
+            putDownCard(b,cardToPlay,f1,x,y);
+            printf("Votre carte a été placé\n\n"); 
+            showBoard(b); sleep(2);
 
-        //     system("clear");
-        //     showHand(f2); sleep(1);
-        //     cardToPlay = askCardWantToPlay(f2);
-        //     showBoard(b);
-        //     askWhereWantToPlaceCard(b,cardToPlay,&x,&y);
-        //     putDownCard(b,cardToPlay,f2,x,y);
-        //     printf("Votre carte a été placé\n\n"); 
-        //     showBoard(b); sleep(2);
-        // }
+            system("clear");
+            showHand(f2); sleep(1);
+            cardToPlay = askCardWantToPlay(f2);
+            showBoard(b);
+            askWhereWantToPlaceCard(b,cardToPlay,&x,&y);
+            putDownCard(b,cardToPlay,f2,x,y);
+            printf("Votre carte a été placé\n\n"); 
+            showBoard(b); sleep(2);
+        }
 
 
         //reveal
