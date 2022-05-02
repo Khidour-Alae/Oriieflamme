@@ -176,13 +176,15 @@ void gameTest(void){
         switch (roundCounter)
         {
         case 1:
-            if (rand() % 2){
-                faction tmp;
-                tmp = f1;
-                f1 = f2;
-                f2 = tmp;
-            }
-            //phase 1
+
+            CU_ASSERT_EQUAL(getNbRoundWin(f1),0);
+            CU_ASSERT_EQUAL(getNbRoundWin(f2),0);
+
+            //round 1: Communiste starting
+
+            CU_ASSERT_EQUAL(getFactionName(f1)=="Communiste");
+            CU_ASSERT_EQUAL(getFactionName(f2)=="Capitaliste");
+
             card fise = const_card("FISE", "La faction qui a posé cette carte gagne 1 point DDRS.", FISE, 4);
             card ecologiie = const_card("EcologIIE", "La faction qui a posé cette carte gagne 1 point DDRS par carte FISE/FISA/FC retournée.", EcologIIE, 2);
             card the = const_card("The", "Supprimez toutes les cartes Café et Alcool retournées sur le plateau. Si une carte Ecocup est retournée sur le plateau, la faction qui a posé cette carte gagne 1 point DDRS. Sinon elle perd 1 point DDRS.", The, 3);
@@ -208,7 +210,7 @@ void gameTest(void){
             putDownCard(b,getCard_hand(f1->f_hand,2),f1,1,-2); // ecologiie put
             putDownCard(b,getCard_hand(f2->f_hand,2),f2,2,-1); // dimitri_watel put
 
-            //reveal phase 1
+            //reveal round 1
             card cardFlipped;
             flipCard(b, &cardFlipped); // fise flipped
             CU_ASSERT_TRUE(f1->f_ddrsPoints==1);
@@ -227,17 +229,74 @@ void gameTest(void){
 
             flipCard(b, &cardFlipped); // ecologiie flipped
             CU_ASSERT_TRUE(f1->f_ddrsPoints==2);
-              
+             
+            //end round 1: Capitaliste Win
             break;
         case 3:
-            if (rand() % 2)
-            {
-                faction tmp;
-                tmp = f1;
-                f1 = f2;
-                f2 = tmp;
-            }
+
+            CU_ASSERT_EQUAL(getNbRoundWin(f1),1);
+            CU_ASSERT_EQUAL(getNbRoundWin(f2),1); // Check that Communiste won round 2
+
+            //round 3: Capitaliste starting
+
+            CU_ASSERT_EQUAL(getFactionName(f1)=="Capitaliste");
+            CU_ASSERT_EQUAL(getFactionName(f2)=="Communiste");
+
+
+            card djibril_aurelien_dembele_cabot = const_card("Djibril_Aurelien_Dembele_Cabot", "S'il y a plus de 3 cartes retournées sur la ligne de cette carte, la faction qui a posé cette carte gagne 5 points DDRS.", Djibril_Aurelien_Dembele_Cabot, 1);
+            card laurent_prevel = const_card("Laurent_Prevel", "Si Laurent Prével est la dernière carte retournée du plateau, la faction qui a posé cette carte gagne la manche, quel que soit le nombre de points DDRS des deux factions.", Laurent_Prevel, 1);
+            setCard_hand(f1->f_hand,fise,0);
+            setCard_hand(f1->f_hand,fise,1);
+            setCard_hand(f1->f_hand,djibril_aurelien_dembele_cabot,2);
+            setCard_hand(f1->f_hand,laurent_prevel,3);
+
             
+            card cafe = const_card("Cafe", "Supprimez toutes les cartes Thé et Alcool retournées sur le plateau. Si une carte Ecocup est retournée sur le plateau, la faction qui a posé cette carte gagne 1 point DDRS. Sinon elle perd 1 point DDRS.", Cafe, 3);
+            card julien_forest = const_card("Julien_Forest", "La faction qui a posé cette carte gagne 6 points DDRS par carte FISE retournée sur le plateau si au moins une carte Café est retournée sur le plateau.", Julien_Forest, 1);
+            card guillaume_burel = const_card("Guillaume_Burel", "Si la faction adverse de celle qui a posé cette carte a plus de points DDRS, la seconde lui vole 3 points DDRS.", Guillaume_Burel, 1);
+            setCard_hand(f2->f_hand,cafe,0);
+            setCard_hand(f2->f_hand,julien_forest,1);
+            setCard_hand(f2->f_hand,ecocup,2);
+            setCard_hand(f2->f_hand,guillaume_burel,3);
+
+            putDownCard(b,getCard_hand(f1->f_hand,0),f1,0,0); // fise put
+            putDownCard(b,getCard_hand(f2->f_hand,0),f2,1,0); // cafe put
+
+            putDownCard(b,getCard_hand(f1->f_hand,1),f1,0,1); // fise put
+            putDownCard(b,getCard_hand(f2->f_hand,1),f2,1,-1); // julien_forest put
+
+            putDownCard(b,getCard_hand(f1->f_hand,2),f1,2,0); // djibril_aurelien_dembele_cabot put
+            putDownCard(b,getCard_hand(f2->f_hand,2),f2,-1,1); // ecocup put
+
+            putDownCard(b,getCard_hand(f1->f_hand,3),f1,1,-2); // laurent_prevel put
+            putDownCard(b,getCard_hand(f2->f_hand,3),f2,2,-1); // guillaume_burel put
+
+
+            //reveal round 3
+            flipCard(b, &cardFlipped); // ecocup flipped
+            CU_ASSERT_TRUE(f2->f_ddrsPoints==0);
+
+            flipCard(b, &cardFlipped); // fise flipped
+            CU_ASSERT_TRUE(f1->f_ddrsPoints==1);
+
+            flipCard(b, &cardFlipped); // fise flipped
+            CU_ASSERT_TRUE(f1->f_ddrsPoints==2);
+
+            flipCard(b, &cardFlipped); // cafe flipped
+            CU_ASSERT_TRUE(f2->f_ddrsPoints==0);
+
+            flipCard(b, &cardFlipped); // djibril_aurelien_dembele_cabot flipped
+            CU_ASSERT_TRUE(f1->f_ddrsPoints==7);
+
+            flipCard(b, &cardFlipped); // julien_forest flipped
+            CU_ASSERT_TRUE(f2->f_ddrsPoints==12);
+
+            flipCard(b, &cardFlipped); // guillaume_burel flipped
+            CU_ASSERT_TRUE(f2->f_ddrsPoints==12);
+
+            flipCard(b, &cardFlipped); // laurent_prevel flipped
+            CU_ASSERT_TRUE(f1->f_ddrsPoints>=999);
+
             break;
         default:
             ; // a declaration can't follow "default" in the c99 standart, only statement : ";" is an empty statement 
@@ -246,46 +305,55 @@ void gameTest(void){
             f1 = f2;
             f2 = tmp;
 
-            //phase 2
 
-            
-            card heures_supplementaires = const_card("Heures_supplementaires", "La faction adverse de celle qui a posé cette carte perd 3 points DDRS par carte Heures supplémentaires retournée sur le plateau (y compris celle-ci).", Heures_supplementaires, 1);
-            card christophe_mouilleron = const_card("Christophe_Mouilleron", "Si la carte Heures supplémentaires est retournée sur le plateau, supprimez toutes les cartes retournées du plateau sauf les cartes Christophe Mouilleron et Heures supplémentaires.", Christophe_Mouilleron, 1);
-            setCard_hand(f1->f_hand,fisa,0);
-            setCard_hand(f1->f_hand,heures_supplementaires,1);
-            setCard_hand(f1->f_hand,christophe_mouilleron,2);
+            CU_ASSERT_EQUAL(getNbRoundWin(f1),1); // Check that Capitaliste won round 1
+            CU_ASSERT_EQUAL(getNbRoundWin(f2),0);
 
 
-            
+            //round 2: Capitaliste starting
+
+            CU_ASSERT_EQUAL(getFactionName(f1)=="Capitaliste");
+            CU_ASSERT_EQUAL(getFactionName(f2)=="Communiste");
+
+
             card vitera_y = const_card("Vitera_Y", "La faction qui a le moins de points DDRS gagne 3 points DDRS.", Vitera_Y, 1);
             card jonas_senizergues = const_card("Jonas_Senizergues", "Supprimez toutes les cartes Heures supplémentaires retournées du plateau.", Jonas_Senizergues, 1);
-            setCard_hand(f2->f_hand,fise,0);
-            setCard_hand(f2->f_hand,vitera_y,1);
-            setCard_hand(f2->f_hand,jonas_senizergues,2);
+            setCard_hand(f1->f_hand,fise,0);
+            setCard_hand(f1->f_hand,vitera_y,1);
+            setCard_hand(f1->f_hand,jonas_senizergues,2);
+
+
+            card heures_supplementaires = const_card("Heures_supplementaires", "La faction adverse de celle qui a posé cette carte perd 3 points DDRS par carte Heures supplémentaires retournée sur le plateau (y compris celle-ci).", Heures_supplementaires, 1);
+            card christophe_mouilleron = const_card("Christophe_Mouilleron", "Si la carte Heures supplémentaires est retournée sur le plateau, supprimez toutes les cartes retournées du plateau sauf les cartes Christophe Mouilleron et Heures supplémentaires.", Christophe_Mouilleron, 1);
+            setCard_hand(f2->f_hand,fisa,0);
+            setCard_hand(f2->f_hand,heures_supplementaires,1);
+            setCard_hand(f2->f_hand,christophe_mouilleron,2);
+
 
             
-            putDownCard(b,getCard_hand(f1->f_hand,0),f1,0,0); // fisa put
-            putDownCard(b,getCard_hand(f2->f_hand,0),f2,0,-1); // fise put
+            putDownCard(b,getCard_hand(f1->f_hand,0),f1,0,0); // fise put
+            putDownCard(b,getCard_hand(f2->f_hand,0),f2,0,1); // fisa put
+            
+            putDownCard(b,getCard_hand(f1->f_hand,1),f1,1,0); // vitera_y put
+            putDownCard(b,getCard_hand(f2->f_hand,1),f2,0,-1); // heures_supplementaires put
+            
+            putDownCard(b,getCard_hand(f1->f_hand,2),f1,1,-1); // jonas_senizergues put
+            putDownCard(b,getCard_hand(f2->f_hand,2),f2,0,-2); // christophe_mouilleron put
+            
 
-            putDownCard(b,getCard_hand(f1->f_hand,1),f1,0,-2); // heures_supplementaires put
-            putDownCard(b,getCard_hand(f2->f_hand,1),f2,1,-1); // vitera_y put
-
-            putDownCard(b,getCard_hand(f1->f_hand,2),f1,1,-2); // christophe_mouilleron put
-            putDownCard(b,getCard_hand(f2->f_hand,2),f2,0,-3); // jonas_senizergues put
-
-            //reveal phase 2
+            //reveal round 2
             
             flipCard(b, &cardFlipped); // fisa flipped
-            CU_ASSERT_TRUE(f1->f_ddrsPoints==0);
+            CU_ASSERT_TRUE(f2->f_ddrsPoints==0);
 
             flipCard(b, &cardFlipped); // fise flipped
-            CU_ASSERT_TRUE(f2->f_ddrsPoints==1);
+            CU_ASSERT_TRUE(f1->f_ddrsPoints==1);
             
             flipCard(b, &cardFlipped); // vitera_y flipped
-            CU_ASSERT_TRUE(f1->f_ddrsPoints==3);
+            CU_ASSERT_TRUE(f2->f_ddrsPoints==3);
             
             flipCard(b, &cardFlipped); // heures_supplementaires flipped
-            CU_ASSERT_TRUE(f2->f_ddrsPoints==0);
+            CU_ASSERT_TRUE(f1->f_ddrsPoints==0);
             
             flipCard(b, &cardFlipped); // christophe_mouilleron flipped
             CU_ASSERT_PTR_NULL(getCard_board2D(b->b2D,0,0)); // check that fise is removed
@@ -295,15 +363,14 @@ void gameTest(void){
             flipCard(b, &cardFlipped); // jonas_senizergues flipped
             CU_ASSERT_PTR_NULL(getCard_board2D(b->b2D,0,-2)); // check that heures_supplementaires is removed
 
+
+            //end round 2: Communiste Win
             break;
         }
 
-
-
-
     }    
 
-
+    
 
 
 
