@@ -1534,6 +1534,7 @@ int flipCard(board b, card * c){
                                 {
                                     if (s2 == rep[k])
                                     {
+                                        f = getFaction_board2D(b->b2D, X, Y);
                                         addCard_board2D(b->b2D, currentCard_boucle2, f, X_C - k, Y_C);
                                         addCard_board2D(b->b2D, NULL, NULL, X, Y);
                                     }
