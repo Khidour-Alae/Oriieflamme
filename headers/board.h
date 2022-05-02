@@ -105,4 +105,14 @@ int isFlipped(board b, int x, int y);
  */
 void clearBoard(board b);
 
+/**
+ * \brief returns the round winner
+ * 
+ * \param b the board
+ * \param x f1 first faction
+ * \param y f2 second faction
+ * \return the round winner
+ */
+faction roundWinner(board b, faction f1, faction f2);
+
 #endif 

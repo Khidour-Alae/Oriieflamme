@@ -1893,3 +1893,43 @@ void clearBoard(board b) {
     reset_board2D(b->b2D);
 }
 
+
+faction roundWinner(board b, faction f1, faction f2)
+{
+    int f1_pts = getNbRoundWin(f1);
+    int f2_pts = getNbRoundWin(f2);
+
+    if (f1_pts > f2_pts)
+    {
+        return f1;
+    }
+    else if (f2_pts > f1_pts)
+    {
+        return f2;
+    }
+    else
+    {
+        int xmin, ymin, xmax, ymax;
+        getBoundingBox(b->b2D,&xmin,&ymin,&xmax,&ymax);
+        card currentCard;
+        int x = xmin; 
+        int y = ymax;
+        int boolean = 1; //boolean = we haven't found a card yet
+
+        while ( y >= ymin && boolean)
+        {
+            while ( x <= xmax && boolean)
+            {
+                currentCard = getCard_board2D(b->b2D, x, y);
+                if (currentCard != NULL)
+                {
+                    faction f = getFaction_board2D(b->b2D, x, y);
+                    return f;
+                }
+                x++;
+            }
+            x = xmin;
+            y--; 
+        }
+    }
+}
