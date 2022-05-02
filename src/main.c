@@ -12,6 +12,8 @@
 
 #include <stdlib.h> //for rand()
 #include <time.h> //for time()
+#include <stdio.h>
+#include <unistd.h> //for sleep()
 
 int main()
 {
@@ -74,6 +76,7 @@ int main()
             discardHand(f1);
             reshuffleDeck(f1);
             drawCards(f1);
+            showHand(f1);
         }
 
         drawCards(f2);
@@ -83,6 +86,7 @@ int main()
             discardHand(f2);
             reshuffleDeck(f2);
             drawCards(f2);
+            showHand(f2);
         }
         
         //placing cards
@@ -90,6 +94,7 @@ int main()
 
         showHand(f1);
         cardToPlay = askCardWantToPlay(f1);
+        printf("Votre carte a été placé au centre du plateau\n\n");
         putDownCard(b,cardToPlay,f1,0,0); //the first card is placed in the center of board
 
         showHand(f2);

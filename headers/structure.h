@@ -19,9 +19,8 @@ typedef struct deckBase * deck;
 
 /**
 * \brief Initializes the deck (mostly memory allocation)
-* \param d is the deck
 **/
-void init_deck(deck d);
+deck init_deck();
 
 /**
 * \brief Check if there are cards in the deck
@@ -74,9 +73,8 @@ typedef struct handBase * hand;
 
 /**
 * \brief Initializes the hand to the empty hand
-* \param h is the hand
 **/
-void init_hand(hand h);
+hand init_hand();
 
 /**
 * \brief Check if there are cards in the hand
