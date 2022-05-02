@@ -12,6 +12,7 @@
 
 #include <stdlib.h> //for rand()
 #include <time.h> //for time()
+#include <stdio.h>
 
 int main()
 {
@@ -20,6 +21,7 @@ int main()
 
     board b; faction* f;
     faction f1; faction f2;
+    printf("Bonjour\n");
     b = createBoard();
     f = listFactions(b);
     f1 = f[0]; f2 = f[1];

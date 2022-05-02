@@ -77,7 +77,7 @@ void print_pts(faction f1, faction f2){
 int askReshuffle(faction f){
     char buffer[2];
 
-    system("cls");
+    system("clear");
     print_nom_faction(f);
     printf("\n");
     printf("Voulez vous vider votre main, mélanger votre pioche et repiocher une main?\nVous ne pourrez effectuez cette action qu'une fois au cours de la partie.\n\n");
@@ -93,7 +93,7 @@ void showWinner(faction f1,faction f2) {
     int f1_pts = getFactionDdrsPoints(f1);
     int f2_pts = getFactionDdrsPoints(f2);
 
-    system("cls");
+    system("clear");
     if (f1_pts > f2_pts) {
         printf("Félicitations à la faction ");
         print_nom_faction(f1);
@@ -124,7 +124,7 @@ void print_cardName(card c){
 }
 
 void showHand(faction f) {
-    system("cls");
+    system("clear");
 
     print_nom_faction(f);
     printf("\n");

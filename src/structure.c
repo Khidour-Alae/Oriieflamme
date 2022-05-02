@@ -1,6 +1,7 @@
 #include "../headers/structure.h"
 #include <stdlib.h>
 #include <time.h>
+#include <stdio.h>
 
 struct deckBase
 {
@@ -10,9 +11,11 @@ struct deckBase
 
 
 //deck structure
-void init_deck(deck d) {
+deck init_deck() {
+    deck d = malloc(sizeof(struct deckBase));
     d->c = malloc(sizeof(card)*NB_CARDS_IN_DECK);
     d->top = -1;
+    return d;
 }
 
 int isEmpty_deck(deck d) {
@@ -51,7 +54,8 @@ void shuffle_deck(deck d) {
 
 void reset_deck(deck d) {
     free(d->c);
-    init_deck(d);
+    d->c = malloc(sizeof(card)*NB_CARDS_IN_DECK);
+    d->top = -1;
 }
 
 void delete_deck(deck d) {
@@ -66,11 +70,13 @@ struct handBase
     card c[NB_CARDS_IN_HAND];
 };
 
-void init_hand(hand h) {
+hand init_hand() {
+    hand h = malloc(sizeof(struct handBase));
     for (int i = 0; i < NB_CARDS_IN_HAND; i++)
     {
         h->c[i] = NULL;
     }
+    return h;
 }
 int isEmpty_hand(hand h) {
     for (int i = 0; i < NB_CARDS_IN_HAND; i++)
@@ -94,5 +100,8 @@ void discardCard_hand(hand h, int index) {
 }
 
 void reset_hand(hand h) {
-    init_hand(h);
+    for (int i = 0; i < NB_CARDS_IN_HAND; i++)
+    {
+        h->c[i] = NULL;
+    }
 }

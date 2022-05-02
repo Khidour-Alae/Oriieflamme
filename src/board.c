@@ -69,10 +69,12 @@ int getYFromPosition_board2D(board2D b2D, int p);
 * \brief Initializes the board (mostly memory allocation)
 * \param b2D is the board2D
 **/
-void init_board2D(board2D b2D) {
+board2D init_board2D() {
+    board2D b2D = malloc(sizeof(struct board2DBase));
     b2D->sizeBoard2D = SIZE_2DBOARD;
-    b2D->c = malloc(sizeof(card)*b2D->sizeBoard2D);
-    b2D->f = malloc(sizeof(faction)*b2D->sizeBoard2D);
+    printf("Bonjour sanotehu\n");
+    b2D->c = malloc(sizeof(card)*(b2D->sizeBoard2D));
+    b2D->f = malloc(sizeof(faction)*(b2D->sizeBoard2D));
     for (int i = 0; i < b2D->sizeBoard2D; i++)
     {
         b2D->c[i] = NULL;
@@ -84,6 +86,7 @@ void init_board2D(board2D b2D) {
     b2D->box.ymin = -1;
     b2D->box.xmax = 1;
     b2D->box.ymax = 1;
+    return b2D;
 }
 
 /**
@@ -190,7 +193,21 @@ void addCard_board2D(board2D b2D, card c, faction f, int x, int y) {
 void reset_board2D(board2D b2D) {
     free(b2D->c);
     free(b2D->f);
-    init_board2D(b2D);
+    
+    b2D->sizeBoard2D = SIZE_2DBOARD;
+    b2D->c = malloc(sizeof(card)*(b2D->sizeBoard2D));
+    b2D->f = malloc(sizeof(faction)*(b2D->sizeBoard2D));
+    for (int i = 0; i < b2D->sizeBoard2D; i++)
+    {
+        b2D->c[i] = NULL;
+        b2D->f[i] = NULL;
+    }
+    b2D->sideLength = 4*NB_CARDS_IN_HAND + 1;
+    
+    b2D->box.xmin = -1;
+    b2D->box.ymin = -1;
+    b2D->box.xmax = 1;
+    b2D->box.ymax = 1;
 }
 
 /**
@@ -274,12 +291,13 @@ struct board_base
 board createBoard(){
     board b;
     b = malloc(sizeof(struct board_base));
-    init_board2D(b->b2D);
+    printf("Bonjour2\n");
+    b->b2D = init_board2D();
     faction f1 = initFaction("Communiste");
     faction f2 = initFaction("Capitaliste");
     b->listFactions[0] = f1;
     b->listFactions[1] = f2;
-
+    printf("Bonjour3\n");
     //set up deck of factions
     card fise = const_card("FISE", "La faction qui a posé cette carte gagne 1 point DDRS.", FISE, 4);
     card fisa = const_card("FISA", "La faction qui a posé cette carte gagne 2 points DDRS si le nombre de cartes retournées sur le plateau (y compris celle-ci) est pair, et 0 sinon.", FISA, 4);
@@ -313,10 +331,11 @@ board createBoard(){
     card lucienne_pacave = const_card("Lucienne_Pacave", "S'il y a une carte FISA retournée dans la même ligne ou la même colonne que cette carte, la faction qui a posé cette carte gagne 5 points DDRS.", Lucienne_Pacave, 1);
     card katrin_salhab = const_card("Katrin_Salhab", "Si les cartes Djibril-Aurélien Djembele-Cabeau, Eric Lejeune et Lucienne Pacavé sont retournées, la faction qui a posé cette carte gagne 10 points DDRS. Sinon, retournez toutes les cartes dans la même ligne de cette carte sans appliquer leurs effets.", Katrin_Salhab, 1);
     card laurent_prevel = const_card("Laurent_Prevel", "Si Laurent Prével est la dernière carte retournée du plateau, la faction qui a posé cette carte gagne la manche, quel que soit le nombre de points DDRS des deux factions.", Laurent_Prevel, 1);
-    
+
     deck d_f1 = getDeck(f1);
     deck d_f2 = getDeck(f2);
     push_deck(fise,d_f1);
+    printf("Bonjour4\n");
     push_deck(copy(fise),d_f1);
     push_deck(copy(fise),d_f1);
     push_deck(copy(fise),d_f1);

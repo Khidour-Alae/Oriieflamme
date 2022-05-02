@@ -17,8 +17,8 @@ struct impl_faction {
 faction initFaction(char* factionName){
     faction f;
     f = malloc(sizeof(struct impl_faction));
-    init_deck(getDeck(f));
-    init_hand(getHand(f));
+    f->f_deck = init_deck();
+    f->f_hand = init_hand();
     setFactionName(f, factionName);
     setFactionDdrsPoints(f, 0);
     setNbRoundWin(f, 0);
