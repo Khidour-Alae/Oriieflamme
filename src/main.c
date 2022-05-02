@@ -124,8 +124,8 @@ int main()
         card cardFlipped;
         while (flipCard(b, &cardFlipped))
         {
-            showBoard(b);
             showCardEffect(cardFlipped);
+            showBoard(b);
         }
     }
     
