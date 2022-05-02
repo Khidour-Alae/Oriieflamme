@@ -167,7 +167,7 @@ void gameTest(void){
     while (1) 
     {
         clearBoard(b);//gets rid of any cards placed on the board if there are any
-        if (!(newRound(roundCounter,f1,f2))) //if game finished we leave the wile loop
+        if (!(newRound(roundCounter,b,f1,f2))) //if game finished we leave the wile loop
         {
             break;
         }
@@ -370,7 +370,7 @@ void gameTest(void){
 
     }    
 
-    
+
 
 
 
