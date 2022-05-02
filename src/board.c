@@ -434,8 +434,42 @@ void freeBoard(board b) {
 }
 
 int newRound(int counterRoundNumber, faction f1, faction f2){
-    if (counterRoundNumber == 3) return 0;
-    if (getNbRoundWin(f1) == 2 || getNbRoundWin(f2) == 2) return 0;
+    switch (counterRoundNumber)
+    {
+    case 3:
+        return 0;
+        break;
+    case 2:
+        //check who won the round
+        if (getFactionDdrsPoints(f1) > getFactionDdrsPoints(f2))
+        {
+            setNbRoundWin(f1,1); setNbRoundWin(f2,0);
+        }
+        else
+        {
+            setNbRoundWin(f1,0); setNbRoundWin(f2,1);
+        }
+        setFactionDdrsPoints(f1,0);
+        setFactionDdrsPoints(f2,0);
+
+        if (getNbRoundWin(f1) == 2 || getNbRoundWin(f2) == 2) return 0;
+        break;
+    case 1:
+        //check who won the round
+        if (getFactionDdrsPoints(f1) > getFactionDdrsPoints(f2))
+        {
+            setNbRoundWin(f1,1); setNbRoundWin(f2,0);
+        }
+        else
+        {
+            setNbRoundWin(f1,0); setNbRoundWin(f2,1);
+        }
+        setFactionDdrsPoints(f1,0);
+        setFactionDdrsPoints(f2,0);
+        break;
+    default:
+        return 1;
+    }
     return 1;
 }
 
@@ -1633,4 +1667,8 @@ int isFlipped(board b, int x, int y)
     board2D b2D = b->b2D;
     card c = getCard_board2D(b2D, x, y);
     return getCardStatus(c);
+}
+
+void clearBoard(board b) {
+    reset_board2D(b->b2D);
 }
