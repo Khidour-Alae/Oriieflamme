@@ -111,6 +111,12 @@ void showWinner(faction f1,faction f2) {
 
 
 void print_cardName(card c){
+    if (c == NULL)
+    {
+        printf("Error, you'are trying to print the name of a NULL card");
+        exit(1);
+    }
+    
     int i = 0;
     char *cname;
     cname = getCardName(c);
@@ -175,7 +181,7 @@ void askWhereWantToPlaceCard(card c, int *x, int *y) {
     printf("Où souhaitez-vous jouer la carte ");
     print_cardName(c);
     printf(" ? (Coordonnées x y)\n");
-    printf("On rapelle quel doit être jouer à côté d'une autre carte.\n");
+    printf("On rapelle quelle doit être joué à côté d'une autre carte.\n");
     printf("x : ");
     fgets(buffer, 150, stdin);
     sscanf(buffer,"%i", x);
