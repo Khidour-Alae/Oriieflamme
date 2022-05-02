@@ -114,7 +114,6 @@ int main()
             showCardEffect(cardFlipped);
             showBoard(b);
         }
-        printf("hello there\n");
     }
     
     showWinner(f1,f2);
