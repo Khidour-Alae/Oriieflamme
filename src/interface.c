@@ -58,8 +58,8 @@ void print_nom_faction(faction f){
 }
 
 void print_pts(faction f1, faction f2){
-    int f1_pts = getFactionDdrsPoints(f1);
-    int f2_pts = getFactionDdrsPoints(f2);
+    int f1_pts = getNbRoundWin(f1);
+    int f2_pts = getNbRoundWin(f2);
     
     printf("Faction : ");
     print_nom_faction(f1);
@@ -151,10 +151,11 @@ void showHand(faction f) {
 
 card askCardWantToPlay(faction f) {
     printf("Qu'elle carte souhaitez-vous jouer ? (le numéro) \n");
-    int index;
+    int index; char buffer[150];
     while (1)
     {
-        scanf("%i", &index);
+        fgets(buffer, 150, stdin);
+        sscanf(buffer,"%i", &index);
         printf("Vous avez choisie de jouer la carte %i\n",index);
         if (index >= 0 && index < NB_CARDS_IN_HAND)
         {
@@ -170,15 +171,18 @@ card askCardWantToPlay(faction f) {
 }
 
 void askWhereWantToPlaceCard(card c, int *x, int *y) {
+    char buffer[150];
     printf("Où souhaitez-vous jouer la carte ");
     print_cardName(c);
     printf(" ? (Coordonnées x y)\n");
     printf("On rapelle quel doit être jouer à côté d'une autre carte.\n");
     printf("x : ");
-    scanf("%i", x);
+    fgets(buffer, 150, stdin);
+    sscanf(buffer,"%i", x);
     printf("\n");
     printf("y : ");
-    scanf("%i", y);
+    fgets(buffer, 150, stdin);
+    sscanf(buffer,"%i", y);
     printf("\n");
 }
 

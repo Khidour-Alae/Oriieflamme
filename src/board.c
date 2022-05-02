@@ -444,12 +444,12 @@ int newRound(int counterRoundNumber, faction f1, faction f2){
         //check who won the round
         if (getFactionDdrsPoints(f1) > getFactionDdrsPoints(f2))
         {
-            setNbRoundWin(f1,1); setNbRoundWin(f2,0);
+            setNbRoundWin(f1,getNbRoundWin(f1) + 1);
             printRoundWinner(f1,2);
         }
         else
         {
-            setNbRoundWin(f1,0); setNbRoundWin(f2,1);
+            setNbRoundWin(f2,getNbRoundWin(f2) + 1);
             printRoundWinner(f2,2);
         }
         setFactionDdrsPoints(f1,0);
