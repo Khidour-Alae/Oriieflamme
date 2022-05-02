@@ -18,6 +18,7 @@
 int main()
 {
     //init
+    system("clear");
     srand(time(NULL));
 
     board b; faction* f;
@@ -77,8 +78,9 @@ int main()
             discardHand(f1);
             reshuffleDeck(f1);
             drawCards(f1);
-            showHand(f1);
+            showHand(f1); sleep(1);
         }
+        system("clear");
 
         drawCards(f2);
         showHand(f2);
@@ -87,49 +89,63 @@ int main()
             discardHand(f2);
             reshuffleDeck(f2);
             drawCards(f2);
-            showHand(f2);
+            showHand(f2); sleep(1);
         }
+        system("clear");
         
         //placing cards
         int x,y; card cardToPlay;
 
-        showHand(f1);
+        showHand(f1); sleep(1);
         cardToPlay = askCardWantToPlay(f1);
-        printf("Votre carte a été placé au centre du plateau\n\n");
         putDownCard(b,cardToPlay,f1,0,0); //the first card is placed in the center of board
+        printf("Votre carte a été placé au centre du plateau\n\n"); sleep(2);
 
-        showHand(f2);
+        system("clear");
+        showHand(f2); sleep(1);
         cardToPlay = askCardWantToPlay(f2);
         showBoard(b);
         askWhereWantToPlaceCard(cardToPlay,&x,&y);
         putDownCard(b,cardToPlay,f2,x,y);
+        printf("Votre carte a été placé\n\n"); 
+        showBoard(b); sleep(2);
 
         // for (int i = 0; i < 7; i++)
         // {
-        //     showHand(f1);
+        //     system("clear");
+        //     showHand(f1); sleep(1);
         //     cardToPlay = askCardWantToPlay(f1);
         //     showBoard(b);
         //     askWhereWantToPlaceCard(cardToPlay,&x,&y);
         //     putDownCard(b,cardToPlay,f1,x,y);
+        //     printf("Votre carte a été placé\n\n"); 
+        //     showBoard(b); sleep(2);
 
-        //     showHand(f2);
+        //     system("clear");
+        //     showHand(f2); sleep(1);
         //     cardToPlay = askCardWantToPlay(f2);
         //     showBoard(b);
         //     askWhereWantToPlaceCard(cardToPlay,&x,&y);
         //     putDownCard(b,cardToPlay,f2,x,y);
+        //     printf("Votre carte a été placé\n\n"); 
+        //     showBoard(b); sleep(2);
         // }
 
 
         //reveal
-        showBoard(b);
+        system("clear");
+        showBoard(b); sleep(2);
         card cardFlipped;
         while (flipCard(b, &cardFlipped))
         {
-            showCardEffect(cardFlipped);
-            showBoard(b);
+            showCardEffect(cardFlipped); sleep(4);
+            showBoard(b); sleep(2);
         }
+        sleep(3);
+        system("clear");
     }
     
+    system("clear");
     showWinner(f1,f2);
 
     freeBoard(b);
