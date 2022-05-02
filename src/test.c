@@ -1,4 +1,5 @@
-//#include <CUnit/CUnit.h>
+#include <CUnit/CUnit.h>
+#include "CUnit/Basic.h"
 #include "board.c"
 #include "structure.c"
 #include "cards.c"
@@ -16,7 +17,7 @@ Functions to test:
             1) init_deck
             2) Check that it's empty
             3) Push some cards (10 cards) in the deck to test push_deck
-            4) Check that it's not empty
+            4) Check that it's not emptys
             5) Draw some cards to test pop_deck
             6) Shuffle the deck
             7) Drawn again
@@ -62,7 +63,7 @@ void deckTest(void){
     CU_ASSERT(isEmpty_deck(d));
 
     for (int i = 1; i < 11; i++){ // Add 10 different cards
-        card c = const_card((char) i,"useless",i,1); // Check this later
+        card c = const_card((i+'0'),"useless",i,1); // Check this later
         push_deck(c,d);
         CU_ASSERT_FALSE(isEmpty_deck(d));
         CU_ASSERT_EQUAL(d->nbOfCards,i);
@@ -103,7 +104,7 @@ void handTest(void){
 
     int i;
     for ( i = 0; i < NB_CARDS_IN_HAND; i++){ // Add 8 different cards
-        card c = const_card((char) i,"useless",i,1); // Check this later
+        card c = const_card((i+'0'),"useless",i,1); // Check this later
         setCard_hand(h,c,i);
         CU_ASSERT_FALSE(isEmpty_hand(h));
         CU_ASSERT_EQUAL(numberOfCards(h),(i+1));
@@ -138,7 +139,7 @@ void factionTest(void){
     CU_ASSERT_EQUAL(getFactionDdrsPoints(f),0);
     
     for (int i = 1; i < 11; i++){ // Add 10 different cards
-        card c = const_card((char) i,"useless",i,1);
+        card c = const_card((i+'0'),"useless",i,1);
         push_deck(c,getDeck(f));
     }
 
@@ -309,8 +310,16 @@ void gameTest(void){
         
 }
 
+int init_suite(){
+    return 0;
+}
 
-int main(){
+int clean_suite(){
+    return 0;
+}
+
+
+int test(){
     CU_pSuite pSuite = NULL;
 
     /* initialize the CUnit test registry */
@@ -320,88 +329,23 @@ int main(){
 
 
     /* add a suite to the registry */
-   pSuite = CU_add_suite("Suite_Of_Card",const_card,getCardName,getCardEnumName,getNumberOfOccurrence);
+   pSuite = CU_add_suite("Suite_Of_Initialisation",init_suite,clean_suite);
    if (NULL == pSuite) {
       CU_cleanup_registry();
       return CU_get_error();
    }
 
     /* add the tests to the suite */
-   if (NULL == CU_add_test(pSuite, "test of card creation", cardCreationTest)) 
+   if ((NULL == CU_add_test(pSuite, "test of card creation", cardCreationTest)) || 
+        (NULL == CU_add_test(pSuite, "test of deck use", deckTest))  ||
+        (NULL == CU_add_test(pSuite, "test of hand use", handTest))   ||
+        (NULL == CU_add_test(pSuite, "test of faction", factionTest)) ||
+        (NULL == CU_add_test(pSuite, "test of the game and cards' effects", gameTest))
+        )
    {
       CU_cleanup_registry();
       return CU_get_error();
    }
-
-
-
-
-    /* add a suite to the registry */
-   pSuite = CU_add_suite("Suite_Of_Deck",init_deck,isEmpty_deck,push_deck,pop_deck,shuffle_deck,reset_deck,delete_deck);
-   if (NULL == pSuite) {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
-
-    /* add the tests to the suite */
-   if (NULL == CU_add_test(pSuite, "test of deck use", deckTest)) 
-   {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
-
-
-
-
-    /* add a suite to the registry */
-   pSuite = CU_add_suite("Suite_Of_Hand",init_hand,numberOfCards,isEmpty_hand,setCard_hand,getCard_hand);
-   if (NULL == pSuite) {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
-
-    /* add the tests to the suite */
-   if (NULL == CU_add_test(pSuite, "test of hand use", handTest)) 
-   {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
-
-
-
-
-   /* add a suite to the registry */
-   pSuite = CU_add_suite("Suite_Of_Faction",initFaction,hasTheDeckBeenShuffled,getNbRoundWin,getFactionDdrsPoints,getDeck,drawCards,discardHand,reshuffleDeck);
-   if (NULL == pSuite) {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
-
-   /* add the tests to the suite */
-   if (NULL == CU_add_test(pSuite, "test of faction", factionTest)) 
-   {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
-
-
-
-
-   /* add a suite to the registry */
-   pSuite = CU_add_suite("Suite_Of_Game",createBoard,listFactions,newRound,putDownCard,getCard_board2D,flipCard);
-   if (NULL == pSuite) {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
-
-   /* add the tests to the suite */
-   if (NULL == CU_add_test(pSuite, "test of the game and cards' effects", gameTest)) 
-   {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
-
-
 
     /* Run all tests using the CUnit Basic interface */
    CU_basic_set_mode(CU_BRM_VERBOSE);

@@ -17,7 +17,7 @@
 
 int main()
 {
-    //init
+  /*  //init
     srand(time(NULL));
 
     board b; faction* f;
@@ -119,6 +119,7 @@ int main()
     showWinner(f1,f2);
 
     freeBoard(b);
-
+*/
+    test();
     return 0;
 }
