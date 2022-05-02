@@ -12,6 +12,8 @@
 
 #include <stdlib.h> //for rand()
 #include <time.h> //for time()
+#include <stdio.h>
+#include <unistd.h> //for sleep()
 
 int main()
 {
@@ -27,6 +29,7 @@ int main()
     int roundCounter = 0;
     while (1)
     {
+        clearBoard(b);//gets rid of any cards placed on the board if there are any
         if (!(newRound(roundCounter,f1,f2))) //if game finished we leave the wile loop
         {
             break;
@@ -74,6 +77,7 @@ int main()
             discardHand(f1);
             reshuffleDeck(f1);
             drawCards(f1);
+            showHand(f1);
         }
 
         drawCards(f2);
@@ -83,6 +87,7 @@ int main()
             discardHand(f2);
             reshuffleDeck(f2);
             drawCards(f2);
+            showHand(f2);
         }
         
         //placing cards
@@ -90,6 +95,7 @@ int main()
 
         showHand(f1);
         cardToPlay = askCardWantToPlay(f1);
+        printf("Votre carte a été placé au centre du plateau\n\n");
         putDownCard(b,cardToPlay,f1,0,0); //the first card is placed in the center of board
 
         showHand(f2);
@@ -98,20 +104,6 @@ int main()
         askWhereWantToPlaceCard(cardToPlay,&x,&y);
         putDownCard(b,cardToPlay,f2,x,y);
 
-        for (int i = 0; i < 7; i++)
-        {
-            showHand(f1);
-            cardToPlay = askCardWantToPlay(f1);
-            showBoard(b);
-            askWhereWantToPlaceCard(cardToPlay,&x,&y);
-            putDownCard(b,cardToPlay,f1,x,y);
-
-            showHand(f2);
-            cardToPlay = askCardWantToPlay(f2);
-            showBoard(b);
-            askWhereWantToPlaceCard(cardToPlay,&x,&y);
-            putDownCard(b,cardToPlay,f2,x,y);
-        }
         
 
         //reveal
@@ -119,8 +111,8 @@ int main()
         card cardFlipped;
         while (flipCard(b, &cardFlipped))
         {
-            showBoard(b);
             showCardEffect(cardFlipped);
+            showBoard(b);
         }
     }
     

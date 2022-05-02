@@ -1,3 +1,18 @@
+/**
+* \file board.h
+*
+* This file describes the functions we need to manage the board. 
+* There are 7 fonctions and 1 type :
+* - the type \a board define the structure of the board.
+* - createBoard allow to create the board and the two factions.
+* - freeBoard allow to free the memory allocated to the board and the two factions.
+* - newRound it creates a new round, or indicates if the game is finished.
+* - listFactions shows the list of the factions.
+* - putDownCard it allows to put a card on the board.
+* - flipCard return the card selected and activate its effect.
+* - isFlipped returns 1 if there the card is flipped, 0 otherwise
+*/
+
 #ifndef _BOARD_H
 #define _BOARD_H
 #include "faction.h"
@@ -5,21 +20,6 @@
 
 
 typedef struct board_base * board;
-
-/*--------------------------------------------------------------------------*/
-
-//SETTERS
-
-/**
-* \brief get the name of the card
-* \param b a board
-* \param listFactions list of factions
-*/
-void setFactionInBoard(board b, faction* listFactions);
-
-/*--------------------------------------------------------------------------*/
-
-
 
 /**
 * \brief Create a board and the two factions
@@ -69,10 +69,40 @@ void putDownCard(board b, card c, faction f, int x, int y);
 int flipCard(board b, card *c);
 
 /**
-* \brief Get the center of the board
-* \param b the board of which we wants the center
-* \return the index of the center of the board
-**/
-int getCenterOfBoard(board b);
+ * \brief returns a rectangle that covers just the card on the placed on the board 
+ * \param xmin the x coordinate of the bottom left point of the rectangle
+ * \param ymin the y coordinate of the bottom left point of the rectangle
+ * \param xmax the x coordinate of the top right point of the rectangle
+ * \param ymax the y coordinate of the top right point of the rectangle
+ */
+void getBoundingBoxOfTheBoardToPrint(board b, int *xmin, int *ymin, int *xmax, int *ymax);
+
+/**
+ * \brief returns 1 if there is a card, 0 otherwise
+ * 
+ * \param b the board
+ * \param x the x coordinate
+ * \param y the y coordinate
+ * \return 1 if there is a card, 0 otherwise
+ */
+int isCardPlacedAt(board b, int x, int y);
+
+
+/**
+ * \brief returns 1 if there the card is flipped, 0 otherwise
+ * 
+ * \param b the board
+ * \param x the x coordinate
+ * \param y the y coordinate
+ * \return 1 if there the card is flipped, 0 otherwise
+ */
+int isFlipped(board b, int x, int y);
+
+/**
+ * @brief clears the board of any cards
+ * 
+ * @param b the board
+ */
+void clearBoard(board b);
 
 #endif 

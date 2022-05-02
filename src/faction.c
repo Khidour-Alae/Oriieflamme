@@ -1,6 +1,7 @@
 #include "../headers/faction.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #define SIZE_NAME 150
 
@@ -13,9 +14,16 @@ struct impl_faction {
     int nbRoundWin; // Number of rounds won by the faction 
 };
 
-void initFaction(faction f){
-    init_deck(getDeck(f));
-    init_hand(getHand(f));
+faction initFaction(char* factionName){
+    faction f;
+    f = malloc(sizeof(struct impl_faction));
+    f->f_deck = init_deck();
+    f->f_hand = init_hand();
+    setFactionName(f, factionName);
+    setFactionDdrsPoints(f, 0);
+    setNbRoundWin(f, 0);
+    f->hasBeenReshuffled = 0;
+    return f;
 }
 
 int hasTheDeckBeenShuffled(faction faction){
@@ -23,23 +31,24 @@ int hasTheDeckBeenShuffled(faction faction){
 };
 
 void reshuffleDeck(faction faction){
-    shuffle_deck(&(faction->f_deck));
+    shuffle_deck(faction->f_deck);
     faction->hasBeenReshuffled = 1;
 };
 
 void discardHand(faction faction){
     for(int j=0; j<NB_CARDS_IN_HAND; j++){
-        push_deck(pop_hand(&(faction->f_hand)), &(faction->f_deck));
+        push_deck(getCard_hand(getHand(faction),j),getDeck(faction));
     }
+    reset_hand(getHand(faction));
 };
 
 void shuffleDeck(faction faction){
-    shuffle_deck(&(faction->f_deck));
+    shuffle_deck(faction->f_deck);
 };
 
 void drawCards(faction faction){
     for (int i=0;i<NB_CARDS_IN_HAND;i++){
-        push_hand(pop_deck(&(faction->f_deck)),&(faction->f_hand));
+        setCard_hand(getHand(faction),pop_deck(faction->f_deck),i);
     }
 }
 
@@ -72,9 +81,14 @@ int getNbRoundWin(faction faction){
 //SETTERS
 
 void setFactionName(faction faction, char* name){
-    if (strlen(name) < strlen(faction->f_name)){    
-        strcpy(faction->f_name, name);
+    int i = 0;
+    while (i < SIZE_NAME - 1 && name[i] != '\0')
+    {
+
+        faction->f_name[i] = name[i];
+        i++;
     }
+    faction->f_name[i] = '\0';
 }
 
 void setFactionDdrsPoints(faction faction, int DDRS_Points){

@@ -12,8 +12,9 @@ typedef struct impl_faction * faction;
 /**
 * \brief Initializes the faction (mostly memory allocation)
 * \param f is the faction
+* \param factionName is the name of the faction
 **/
-void initFaction(faction f);
+faction initFaction(char* factionName);
 
 /**
 * \brief Allows to know if the shuffle option was used

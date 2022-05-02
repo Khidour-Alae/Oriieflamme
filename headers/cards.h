@@ -1,4 +1,22 @@
 /**
+* \file cards.h
+*
+* This file describes the functions we need to manipulate the cards. 
+* There are 8 fonctions, 1 type and 1 enum :
+* - the type \a *card define the structure of a card.
+* - the enum \a cardName that contains all the name of available cards.
+* - getCardName allow to get the name of the card.
+* - getCardEffectDescription allow to get the descripion of a card's effect.
+* - getNumberOfOccurrence allow to get the number of occurrence of a card.
+* - getCardStatus allow to get the state of the card (flipped or not).
+* - setCardName allow to set the name of the card.
+* - setCardEffectDescription allow to set the descripion of a card's effect.
+* - setNumberOfOccurrence allow to set the number of occurrence of a card.
+* - setCardStatus allow to set the state of the card (flipped or not).
+*/
+
+
+/**
 * To avoid multiple inclusions 
 */
 #ifndef _CARDS_H  
@@ -41,6 +59,22 @@ enum cardName {
     Laurent_Prevel
 };
 
+/**
+* \brief initialize the different cards of the deck
+* \param nameCard the name of the card
+* \param descCard the description of the card
+* \param enumCard the name of the card in the enum
+* \param numberOccurence the number of occurence of the card
+* \return the card
+*/
+card const_card(char* nameCard, char* descCard, cardName enumCard, int numberOccurence);
+
+/**
+* \brief makes a copy of the card
+* \param c the card to copy
+* \return a copy of the card
+*/
+card copy(card c1);
 
 //GETTERS
 
@@ -51,6 +85,12 @@ enum cardName {
 */
 char* getCardName(card card); //DONE
 
+/**
+* \brief get the id of the card
+* \param card a card
+* \return the id of the card
+*/
+cardName getCardEnumName(card card); //DONE
 
 /**
 * \brief get the descripion of a card's effect
@@ -68,7 +108,7 @@ int getNumberOfOccurrence(card card); //DONE
 
 
 /**
-* \brief get the state of the card (fliped or not)
+* \brief get the state of the card (flipped or not)
 * \param card a card
 * \return the state of the card
 */
@@ -104,9 +144,9 @@ void setNumberOfOccurrence(card card, int numberOfOccurrence); //DONE
 
 
 /**
-* \brief set the state of the card (fliped or not)
+* \brief set the state of the card (flipped or not)
 * \param card a card
-* \param status state of the card (fliped or not)
+* \param status state of the card (flipped or not)
 */
 void setCardStatus(card card, int status);//DONE
 
