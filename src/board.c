@@ -691,6 +691,63 @@ int fc_wasFlipped = 0;
 int nb_FiseFisaFc_flipped = 0;
 int nb_heuresSup_flipped = 0;
 
+
+ 
+// CARD EFFECTS //////////////////////////////
+void applyLIIensEffect(board b, int xmin, int xmax, int ymin, int ymax)
+{
+    int tab_lenght; int Y; int X; int X_C; int Y_C;
+    card card_tab[16];
+    faction fac_tab[16];
+    tab_lenght = 0;
+    card currentCard_boucle2; 
+    for (Y = ymax; Y >= ymin; Y--)
+    {
+        for (X = xmin; X <= xmax; X++)
+        {
+            currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
+            
+            if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2) && (getCardEnumName(currentCard_boucle2) == FC || getCardEnumName(currentCard_boucle2) == FISE || getCardEnumName(currentCard_boucle2) == FISA))
+            {
+                setCardStatus(currentCard_boucle2, 0);
+                card_tab[tab_lenght] = currentCard_boucle2;
+                fac_tab[tab_lenght] = getFaction_board2D(b->b2D, X, Y);
+                addCard_board2D(b->b2D, NULL, NULL, X, Y);
+                tab_lenght++;
+            }
+        }
+    }
+    // Now we need to find the top leftmost card of the board. 
+    currentCard_boucle2 = NULL; 
+    X_C = 0;
+    Y_C = 0;
+
+    X = xmin;
+    Y = ymax;
+    while (currentCard_boucle2 == NULL && Y >= ymin)
+    {
+        while (X <= xmax && currentCard_boucle2 == NULL)
+        {
+            currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
+            X ++;     
+        }
+        Y ++;
+        X = xmin;
+    }
+    X_C = X;
+    Y_C = Y;
+    X = xmin;
+    Y = ymax;
+
+                    
+
+    for (int k = 1; k < tab_lenght; k ++)
+    {
+        addCard_board2D(b->b2D, card_tab[k-1], fac_tab[k-1], X_C - k, Y_C);
+    }
+}
+// FIN CARD EFFECT ///////////////////
+
 int flipCard(board b, card * c){
     /* Récupérer le bounding box de b avec la fonction getBoundingBox
     Il faudra ensuite parcourir le tableau de en haut à gauche jusqu'à en bas à droite, et utiliser la fonction getCard_board2D. 
@@ -729,7 +786,7 @@ int flipCard(board b, card * c){
         for (int x = xmin; x <= xmax; x++)
         {
             currentCard = getCard_board2D(b->b2D,x,y);
-            if (currentCard != NULL && !getCardStatus(currentCard)) //if there is a card and it is face down /// TODO: Soit je me fais int soit jsp comment les int marchent, à demander
+            if (currentCard != NULL && !getCardStatus(currentCard)) //if there is a card and it is face down 
             {
                 nb_cardFlipped++;
                 //applies the effect
@@ -777,57 +834,7 @@ int flipCard(board b, card * c){
                     break;
 
                 case lIIEns:
-                    tab_lenght = 0;
-                    for (Y = ymax; Y >= ymin; Y--)
-                    {
-                        for (X = xmin; X <= xmax; X++)
-                        {
-                            currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
-                            
-                            if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2) && (getCardEnumName(currentCard_boucle2) == FC || getCardEnumName(currentCard_boucle2) == FISE || getCardEnumName(currentCard_boucle2) == FISA))
-                            {
-                                setCardStatus(currentCard_boucle2, 0);
-                                card_tab[tab_lenght] = currentCard_boucle2;
-                                fac_tab[tab_lenght] = getFaction_board2D(b->b2D, X, Y);
-                                addCard_board2D(b->b2D, NULL, NULL, X, Y);
-                                tab_lenght++;
-
-                                ///DONE: Remettre ces cartes à gauche de la carte le plus en haut à gauche du tableau.
-                                
-
-                            }
-                        }
-                    }
-                    // Now we need to find the top leftmost card of the board. 
-                    currentCard_boucle2 = NULL; 
-                    X_C = 0;
-                    Y_C = 0;
-
-                    X = xmin;
-                    Y = ymax;
-                    while (currentCard_boucle2 == NULL && Y >= ymin)
-                    {
-                        while (X <= xmax && currentCard_boucle2 == NULL)
-                        {
-                            currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
-                            X ++;     
-                        }
-                        Y ++;
-                        x = xmin;
-                    }
-                    X_C = X;
-                    Y_C = Y;
-                    X = xmin;
-                    Y = ymax;
-
-                    
-
-                    for (int k = 1; k < tab_lenght; k ++)
-                    {
-                        addCard_board2D(b->b2D, card_tab[k-1], fac_tab[k-1], X_C - k, Y_C);
-                    }
-                    /// TODO: Ces cartes sont à nouveau cachées et doivent être les premières à être retournées par la suite.
-                    
+                    applyLIIensEffect(b, xmin, xmax, ymin, ymax);
                     break;
 
                 case Soiree_sans_alcool:
@@ -1683,3 +1690,4 @@ int isFlipped(board b, int x, int y)
 void clearBoard(board b) {
     reset_board2D(b->b2D);
 }
+
