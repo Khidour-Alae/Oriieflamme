@@ -92,7 +92,7 @@ void showWinner(faction f1,faction f2) {
     int f1_pts = getNbRoundWin(f1);
     int f2_pts = getNbRoundWin(f2);
 
-    system("clear");
+    //system("clear");
     if (f1_pts > f2_pts) {
         printf("Félicitations à la faction ");
         print_nom_faction(f1);

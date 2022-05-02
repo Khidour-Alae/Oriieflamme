@@ -114,7 +114,8 @@ int isEmpty_board2D(board2D b2D) {
 * \return NULL if there are no card placed at at coordinates ( \a x, \a y); return the card otherwise
 **/
 card getCard_board2D(board2D b2D, int x, int y) {
-    return b2D->c[getPositionFromCoordinates_board2D(b2D,x,y)];
+    int p = getPositionFromCoordinates_board2D(b2D,x,y);
+    return b2D->c[p];
 }
 
 /**
@@ -175,13 +176,12 @@ void addCard_board2D(board2D b2D, card c, faction f, int x, int y) {
     //check if we can place the card in the board
     if (getCard_board2D(b2D,x,y) != NULL)
     {
-        //there already is a card there
+        printf("Error there already is a card there\n");
         //raise error
     }
     else //we place the card
     {
         //place the card
-        int p = getPositionFromCoordinates_board2D(b2D,x,y);
         b2D->c[p] = c; b2D->f[p] = f;
     }
 }
@@ -245,8 +245,7 @@ int getPositionFromCoordinates_board2D(board2D b2D, int x, int y) {
     int xcenter = b2D->sideLength / 2;
     int ycenter = b2D->sideLength / 2;
     int xshifted = xcenter + x;
-    int yshifted = ycenter + y;
-
+    int yshifted = ycenter - y;
     return b2D->sideLength * yshifted + xshifted;
 }
 
@@ -694,6 +693,13 @@ int min_int(int a, int b)
     }
 }
 
+
+//global constant
+int nb_cardFlipped = 0;
+int fc_wasFlipped = 0;
+int nb_FiseFisaFc_flipped = 0;
+int nb_heuresSup_flipped = 0;
+
 int flipCard(board b, card * c){
     /* Récupérer le bounding box de b avec la fonction getBoundingBox
     Il faudra ensuite parcourir le tableau de en haut à gauche jusqu'à en bas à droite, et utiliser la fonction getCard_board2D. 
@@ -734,6 +740,7 @@ int flipCard(board b, card * c){
             currentCard = getCard_board2D(b->b2D,x,y);
             if (currentCard != NULL && !getCardStatus(currentCard)) //if there is a card and it is face down /// TODO: Soit je me fais int soit jsp comment les int marchent, à demander
             {
+                nb_cardFlipped++;
                 //applies the effect
                 switch (getCardEnumName(currentCard))
                 {
@@ -741,63 +748,42 @@ int flipCard(board b, card * c){
                     /* La faction qui a posé cette carte gagne 1 point DDRS. */
                     f = getFaction_board2D(b->b2D,x,y); 
                     setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 1);
-                    
+
+                    nb_FiseFisaFc_flipped++;
                     break;
 
                 case FISA:
+                    /* La faction qui a posé cette carte gagne 2 points DDRS si le nombre de cartes retournées sur le plateau (y compris celle-ci) est pair, et 0 sinon. */
                     f = getFaction_board2D(b->b2D,x,y);
-                    for (Y = ymax; Y >= ymin; Y--)
+                    if (nb_cardFlipped % 2 == 0)
                     {
-                        for (X = xmin; X <= xmax; X++)
-                        {
-                            currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
-                            s = 1; // We haven't flipped currentCard yet but we have to count it
-                            if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2) && getCardEnumName(currentCard_boucle2) == FISA) 
-                            {
-                                s += 1;
-                            }
-                        }
+                        setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 2);
                     }
-                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 2 * (s%2 == 0));
-                    
+
+                    nb_FiseFisaFc_flipped++;
                     break;
 
                 case FC:
+                    /* La faction qui a posé cette carte gagne 4 points DDRS si au moins une autre carte FC est retournée sur le plateau et 0 sinon */
                     f = getFaction_board2D(b->b2D,x,y);
-                    for (Y = ymax; Y >= ymin; Y--)
-                        {
-                        for (X = xmin; X <= xmax; X++)
-                        {
-                            currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
-                            s = 0;
-                            if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2) && getCardEnumName(currentCard_boucle2) == FC)
-                            {
-                                s += 1;
-                            }
-                        }
+                    if (fc_wasFlipped)
+                    {
+                        setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 4);
                     }
-                    
-                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + 4 * (s > 0));
+                    else
+                    {
+                        fc_wasFlipped = 1;
+                    }
+
+                    nb_FiseFisaFc_flipped++;
                     break;
 
                 case EcologIIE:
+                    /* La faction qui a posé cette carte gagne 1 point DDRS par carte FISE/FISA/FC retournée. */
                     f = getFaction_board2D(b->b2D,x,y);
-                    s = 0;
-                    for (Y = ymax; Y >= ymin; Y--)
-                    {
-                        for (X = xmin; X <= xmax; X++)
-                        {
-                            currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
-                            if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2) && (getCardEnumName(currentCard_boucle2) == FC || getCardEnumName(currentCard_boucle2) == FISE || getCardEnumName(currentCard_boucle2) == FISA))
-                            {
-                                s += 1;
-                            }
-                        }
-                    }
-                    
-                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + s);
-                    break;
+                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) + nb_FiseFisaFc_flipped);
 
+                    break;
 
                 case lIIEns:
                     tab_lenght = 0;
@@ -1033,17 +1019,9 @@ int flipCard(board b, card * c){
                     break;
 
                 case Heures_supplementaires:
-                    s = 1;
-                    for (Y = ymax; Y >= ymin; Y--)
-                    {
-                        for (X = xmin; X <= xmax; X++)
-                        {
-                            s += 1;
-                        }
-                    }
-
+                    nb_heuresSup_flipped++;
                     f = getEnemyFaction(b, getFaction_board2D(b->b2D,x,y));
-                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) - 3*s);
+                    setFactionDdrsPointsLEGIT(f, getFactionDdrsPoints(f) - 3*nb_heuresSup_flipped);
                     break;
 
                 case Kahina_Bouchama:
@@ -1128,7 +1106,7 @@ int flipCard(board b, card * c){
                 // If both team happen to have the same score, they both win 3 points since they both have the lowest score (that's the way we decided to see it)
                 case Vitera_Y:
                     f = b->listFactions[0];
-                    f2 = b->listFactions[0];
+                    f2 = b->listFactions[1];
                     s = getFactionDdrsPoints(f);
                     s2 = getFactionDdrsPoints(f2);
                     if (s >= s2)
