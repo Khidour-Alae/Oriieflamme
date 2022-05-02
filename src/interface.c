@@ -228,3 +228,20 @@ void printRoundWinner(faction f, int round)
     print_nom_faction(f);
     printf(" a gagné le round %i\n", round);
 }
+
+void printDdrsPts(faction f1, faction f2){
+    int f1_pts = getFactionDdrsPoints(f1);
+    int f2_pts = getFactionDdrsPoints(f2);
+    
+    printf("Faction : ");
+    print_nom_faction(f1);
+    printf("\n");
+    printf("Score:");
+    printf(": %i\n\n", f1_pts);
+
+    printf("Faction : ");
+    print_nom_faction(f2);
+    printf("\n");
+    printf("Score:");
+    printf(": %i\n\n", f2_pts);
+}
