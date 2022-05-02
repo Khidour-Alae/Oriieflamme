@@ -105,7 +105,7 @@ int main()
         showHand(f2); sleep(1);
         cardToPlay = askCardWantToPlay(f2);
         showBoard(b);
-        askWhereWantToPlaceCard(cardToPlay,&x,&y);
+        askWhereWantToPlaceCard(b,cardToPlay,&x,&y);
         putDownCard(b,cardToPlay,f2,x,y);
         printf("Votre carte a été placé\n\n"); 
         showBoard(b); sleep(2);
@@ -116,7 +116,7 @@ int main()
         //     showHand(f1); sleep(1);
         //     cardToPlay = askCardWantToPlay(f1);
         //     showBoard(b);
-        //     askWhereWantToPlaceCard(cardToPlay,&x,&y);
+        //     askWhereWantToPlaceCard(b,cardToPlay,&x,&y);
         //     putDownCard(b,cardToPlay,f1,x,y);
         //     printf("Votre carte a été placé\n\n"); 
         //     showBoard(b); sleep(2);
@@ -125,7 +125,7 @@ int main()
         //     showHand(f2); sleep(1);
         //     cardToPlay = askCardWantToPlay(f2);
         //     showBoard(b);
-        //     askWhereWantToPlaceCard(cardToPlay,&x,&y);
+        //     askWhereWantToPlaceCard(b,cardToPlay,&x,&y);
         //     putDownCard(b,cardToPlay,f2,x,y);
         //     printf("Votre carte a été placé\n\n"); 
         //     showBoard(b); sleep(2);

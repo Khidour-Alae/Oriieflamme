@@ -111,10 +111,20 @@ void clearBoard(board b);
  * \brief returns the round winner
  * 
  * \param b the board
+ * \param f1 first faction
+ * \param f2 second faction
+ * \return the round winner
+ */
+faction roundWinner(board b, faction f1, faction f2);
+
+/**
+ * \brief returns 1 if we can place a card at (x,y)
+ * that is if there is no card on (x,y) and if there is a card next to (x,y)
+ * \param b the board
  * \param x f1 first faction
  * \param y f2 second faction
  * \return the round winner
  */
-faction roundWinner(board b, faction f1, faction f2);
+int isValidPlace(board b, int x, int y);
 
 #endif 

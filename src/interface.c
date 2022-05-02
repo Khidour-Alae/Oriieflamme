@@ -192,7 +192,7 @@ card askCardWantToPlay(faction f) {
     }
 }
 
-void askWhereWantToPlaceCard(card c, int *x, int *y) {
+void askWhereWantToPlaceCard(board b, card c, int *x, int *y) {
     char buffer[150];
     printf("Où souhaitez-vous jouer la carte ");
     print_cardName(c);
@@ -205,6 +205,21 @@ void askWhereWantToPlaceCard(card c, int *x, int *y) {
     fgets(buffer, 150, stdin);
     sscanf(buffer,"%i", y);
     printf("\n");
+    while (!isValidPlace(b,*x,*y))
+    {
+        printf("Vous ne pouvez pas placer une carte en (%i,%i). Veuillez réessayer.\n",*x,*y);
+        printf("Où souhaitez-vous jouer la carte ");
+        print_cardName(c);
+        printf(" ? (Coordonnées x y)\n");
+        printf("On rappelle qu'elle doit être jouée à côté d'une autre carte.\n");
+        printf("x : ");
+        fgets(buffer, 150, stdin);
+        sscanf(buffer,"%i", x);
+        printf("y : ");
+        fgets(buffer, 150, stdin);
+        sscanf(buffer,"%i", y);
+        printf("\n");
+    }   
 }
 
 void showCardEffect(card c) {
