@@ -89,8 +89,8 @@ int askReshuffle(faction f){
 }
 
 void showWinner(faction f1,faction f2) {
-    int f1_pts = getFactionDdrsPoints(f1);
-    int f2_pts = getFactionDdrsPoints(f2);
+    int f1_pts = getNbRoundWin(f1);
+    int f2_pts = getNbRoundWin(f2);
 
     system("clear");
     if (f1_pts > f2_pts) {
@@ -99,16 +99,14 @@ void showWinner(faction f1,faction f2) {
         printf(" qui remporte la partie !\n\n");
         print_pts(f1, f2);
     }
-    else if (f1_pts < f2_pts) {
+    else 
+    {
         printf("Félicitations à la faction ");
         print_nom_faction(f2);
         printf(" qui remporte la partie !\n\n");
         print_pts(f1, f2);
     }
-    else {
-        printf("Egalité, bravo aux deux factions pour cette palpitante partie !\n\n");
-        print_pts(f1, f2);
-    }
+
 }
 
 
