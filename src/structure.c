@@ -61,6 +61,7 @@ void reset_deck(deck d) {
     free(d->c);
     d->c = malloc(sizeof(card)*NB_CARDS_IN_DECK);
     d->top = -1;
+    d->nbOfCards = 0;
 }
 
 void delete_deck(deck d) {

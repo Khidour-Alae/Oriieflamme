@@ -5,7 +5,8 @@
 #include "cards.c"
 #include "faction.c"
 #include "interface.c"
-#include <stdlib.h>	
+#include <stdlib.h>
+#include <stdio.h>	
 /* 
 Functions to test:
     In cards.c:
@@ -48,10 +49,10 @@ Functions to test:
 
 
 void cardCreationTest(void){
-    card c = const_card("test", "useless", 2, 3);
+    card c = const_card("test", "useless", FISE, 3);
     CU_ASSERT_PTR_NOT_NULL(c);
     CU_ASSERT_STRING_EQUAL(getCardName(c),"test");
-    CU_ASSERT_EQUAL(getCardEnumName(c),2);
+    CU_ASSERT_EQUAL(getCardEnumName(c),FISE);
     CU_ASSERT_EQUAL(getNumberOfOccurrence(c),3);
 }
 
@@ -65,7 +66,8 @@ void deckTest(){
     CU_ASSERT(isEmpty_deck(d));
 
     for (int i = 1; i < 11; i++){ // Add 10 different cards
-        card c = const_card(i+'0',"useless",i,1); 
+        card c = const_card("test","useless",FISE,1); 
+        //printf(getCardName(c));
         push_deck(c,d);
         CU_ASSERT_FALSE(isEmpty_deck(d));
         CU_ASSERT_EQUAL(d->nbOfCards,i);
@@ -73,12 +75,20 @@ void deckTest(){
 
     card c1 = pop_deck(d);
     CU_ASSERT_PTR_NOT_NULL(c1);
-    CU_ASSERT_STRING_EQUAL(getCardName(c1),"10");
-    CU_ASSERT_EQUAL(getCardEnumName(c1),10);
+    CU_ASSERT_STRING_EQUAL(getCardName(c1),"test");
+    CU_ASSERT_EQUAL(getCardEnumName(c1),FISE);
     CU_ASSERT_EQUAL(getNumberOfOccurrence(c1),1);
     CU_ASSERT_EQUAL(d->nbOfCards,9);
 
-    deck d2=d;
+    deck d2;
+    d2=init_deck();
+    CU_ASSERT_PTR_NOT_NULL(d2);
+    CU_ASSERT(isEmpty_deck(d2));
+
+    for (int i = 1; i < 11; i++){ // Add 10 different cards
+        card c = const_card("test","useless",FISE,1); 
+        push_deck(c,d2);
+    }
     shuffle_deck(d2);
     CU_ASSERT_PTR_NOT_EQUAL(d,d2);
     CU_ASSERT_PTR_NOT_NULL(d2);
@@ -90,11 +100,9 @@ void deckTest(){
     CU_ASSERT(isEmpty_deck(d));
     CU_ASSERT(isEmpty_deck(d2));
     CU_ASSERT_EQUAL(d->nbOfCards,0);
-
+    
     delete_deck(d);
     delete_deck(d2);
-    CU_ASSERT_PTR_NULL(d);
-    CU_ASSERT_PTR_NULL(d2);
 }
 
 void handTest(){
@@ -106,7 +114,7 @@ void handTest(){
 
     int i;
     for ( i = 0; i < NB_CARDS_IN_HAND; i++){ // Add 8 different cards
-        card c = const_card(i+'0',"useless",i,1); 
+        card c = const_card("test","useless",FISE,1); 
         setCard_hand(h,c,i);
         CU_ASSERT_FALSE(isEmpty_hand(h));
         CU_ASSERT_EQUAL(numberOfCards(h),(i+1));
@@ -114,14 +122,14 @@ void handTest(){
     
     card c1 = getCard_hand(h,1);
     CU_ASSERT_PTR_NOT_NULL(c1);
-    CU_ASSERT_STRING_EQUAL(getCardName(c1),"1");
-    CU_ASSERT_EQUAL(getCardEnumName(c1),1);
+    CU_ASSERT_STRING_EQUAL(getCardName(c1),"test");
+    CU_ASSERT_EQUAL(getCardEnumName(c1),FISE);
     CU_ASSERT_EQUAL(getNumberOfOccurrence(c1),1);    
 
     card c2 = getCard_hand(h,2);
     CU_ASSERT_PTR_NOT_NULL(c2);
-    CU_ASSERT_STRING_EQUAL(getCardName(c2),"2");
-    CU_ASSERT_EQUAL(getCardEnumName(c2),2);
+    CU_ASSERT_STRING_EQUAL(getCardName(c2),"test");
+    CU_ASSERT_EQUAL(getCardEnumName(c2),FISE);
     CU_ASSERT_EQUAL(getNumberOfOccurrence(c2),1);  
 
     discardCard_hand(h,4);
@@ -135,13 +143,12 @@ void handTest(){
 void factionTest(){
     faction f;
     f=initFaction("f");
-
     CU_ASSERT_EQUAL(hasTheDeckBeenShuffled(f),0);
     CU_ASSERT_EQUAL(getNbRoundWin(f),0);
     CU_ASSERT_EQUAL(getFactionDdrsPoints(f),0);
     
     for (int i = 1; i < 11; i++){ // Add 10 different cards
-        card c = const_card(i+'0',"useless",i,1);
+        card c = const_card(i+"0","useless",i,1);
         push_deck(c,getDeck(f));
     }
 
@@ -168,13 +175,15 @@ void gameTest(){
     
     while (1) 
     {
+
         clearBoard(b);//gets rid of any cards placed on the board if there are any
-        if (!(newRound(roundCounter,b,f1,f2))) //if game finished we leave the wile loop
+        if (!(newRound(roundCounter,b,f1,f2))) //if game finished we leave the while loop
         {
+
             break;
         }
         else roundCounter++;
-
+        
         switch (roundCounter)
         {
         case 1:
@@ -201,7 +210,7 @@ void gameTest(){
             setCard_hand(f2->f_hand,ecocup,1);
             setCard_hand(f2->f_hand,dimitri_watel,2);
 
-                
+               
             putDownCard(b,getCard_hand(f1->f_hand,0),f1,0,0); // fise put
             CU_ASSERT_TRUE(getCard_board2D(b->b2D,0,0)==fise); //Test putDownCard
             putDownCard(b,getCard_hand(f2->f_hand,0),f2,1,0); // fisa put
@@ -211,7 +220,7 @@ void gameTest(){
 
             putDownCard(b,getCard_hand(f1->f_hand,2),f1,1,-2); // ecologiie put
             putDownCard(b,getCard_hand(f2->f_hand,2),f2,2,-1); // dimitri_watel put
-
+            
             //reveal round 1
             card cardFlipped;
             flipCard(b, &cardFlipped); // fise flipped
@@ -226,7 +235,7 @@ void gameTest(){
             flipCard(b, &cardFlipped); // ecocup flipped
             //Nothing to test
                 
-            flipCard(b, &cardFlipped); // dimitri_watel flipped
+            flipCard(b, &cardFlipped); // dimitri_watel flipped //this card does not work because it creates an infinit loop
             CU_ASSERT_TRUE(f2->f_ddrsPoints==5);
 
             flipCard(b, &cardFlipped); // ecologiie flipped
@@ -372,11 +381,13 @@ void gameTest(){
     }    
 
     CU_ASSERT_EQUAL(getNbRoundWin(f1),2); // Check that Capitaliste won round 3
-
-
-
-        
+    
 }
+
+
+
+
+
 
 int init_suite(){
     return 0;
