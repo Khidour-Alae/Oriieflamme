@@ -5,7 +5,7 @@
 #include "cards.c"
 #include "faction.c"
 #include "interface.c"
-#include <stdlib.h>
+#include <stdlib.h>	
 /* 
 Functions to test:
     In cards.c:
@@ -55,9 +55,9 @@ void cardCreationTest(void){
     CU_ASSERT_EQUAL(getNumberOfOccurrence(c),3);
 }
 
-char string[20]; // Will be used for itoa function to transform an int to a char*
 
-void deckTest(void){
+
+void deckTest(){
     deck d;
     
     d=init_deck();
@@ -65,7 +65,7 @@ void deckTest(void){
     CU_ASSERT(isEmpty_deck(d));
 
     for (int i = 1; i < 11; i++){ // Add 10 different cards
-        card c = const_card(itoa(i,string,10),"useless",i,1); // Check this later
+        card c = const_card(i+'0',"useless",i,1); 
         push_deck(c,d);
         CU_ASSERT_FALSE(isEmpty_deck(d));
         CU_ASSERT_EQUAL(d->nbOfCards,i);
@@ -97,7 +97,7 @@ void deckTest(void){
     CU_ASSERT_PTR_NULL(d2);
 }
 
-void handTest(void){
+void handTest(){
     hand h;
     h=init_hand();
     CU_ASSERT_EQUAL(numberOfCards(h),0);
@@ -106,7 +106,7 @@ void handTest(void){
 
     int i;
     for ( i = 0; i < NB_CARDS_IN_HAND; i++){ // Add 8 different cards
-        card c = const_card(itoa(i,string,10),"useless",i,1); // Check this later
+        card c = const_card(i+'0',"useless",i,1); 
         setCard_hand(h,c,i);
         CU_ASSERT_FALSE(isEmpty_hand(h));
         CU_ASSERT_EQUAL(numberOfCards(h),(i+1));
@@ -132,7 +132,7 @@ void handTest(void){
     CU_ASSERT(isEmpty_hand(h));
 }
 
-void factionTest(void){
+void factionTest(){
     faction f;
     f=initFaction("f");
 
@@ -141,7 +141,7 @@ void factionTest(void){
     CU_ASSERT_EQUAL(getFactionDdrsPoints(f),0);
     
     for (int i = 1; i < 11; i++){ // Add 10 different cards
-        card c = const_card(itoa(i,string,10),"useless",i,1);
+        card c = const_card(i+'0',"useless",i,1);
         push_deck(c,getDeck(f));
     }
 
@@ -157,7 +157,7 @@ void factionTest(void){
     
 }
 
-void gameTest(void){
+void gameTest(){
     board b; faction* f;
     faction f1; faction f2;
     b = createBoard();
