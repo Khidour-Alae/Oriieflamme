@@ -105,31 +105,31 @@ int main()
         showHand(f2); sleep(1);
         cardToPlay = askCardWantToPlay(f2);
         showBoard(b);
-        askWhereWantToPlaceCard(cardToPlay,&x,&y);
+        askWhereWantToPlaceCard(b,cardToPlay,&x,&y);
         putDownCard(b,cardToPlay,f2,x,y);
         printf("Votre carte a été placé\n\n"); 
         showBoard(b); sleep(2);
 
-        // for (int i = 0; i < 7; i++)
-        // {
-        //     system("clear");
-        //     showHand(f1); sleep(1);
-        //     cardToPlay = askCardWantToPlay(f1);
-        //     showBoard(b);
-        //     askWhereWantToPlaceCard(cardToPlay,&x,&y);
-        //     putDownCard(b,cardToPlay,f1,x,y);
-        //     printf("Votre carte a été placé\n\n"); 
-        //     showBoard(b); sleep(2);
+        for (int i = 0; i < 7; i++)
+        {
+            system("clear");
+            showHand(f1); sleep(1);
+            cardToPlay = askCardWantToPlay(f1);
+            showBoard(b);
+            askWhereWantToPlaceCard(b,cardToPlay,&x,&y);
+            putDownCard(b,cardToPlay,f1,x,y);
+            printf("Votre carte a été placé\n\n"); 
+            showBoard(b); sleep(2);
 
-        //     system("clear");
-        //     showHand(f2); sleep(1);
-        //     cardToPlay = askCardWantToPlay(f2);
-        //     showBoard(b);
-        //     askWhereWantToPlaceCard(cardToPlay,&x,&y);
-        //     putDownCard(b,cardToPlay,f2,x,y);
-        //     printf("Votre carte a été placé\n\n"); 
-        //     showBoard(b); sleep(2);
-        // }
+            system("clear");
+            showHand(f2); sleep(1);
+            cardToPlay = askCardWantToPlay(f2);
+            showBoard(b);
+            askWhereWantToPlaceCard(b,cardToPlay,&x,&y);
+            putDownCard(b,cardToPlay,f2,x,y);
+            printf("Votre carte a été placé\n\n"); 
+            showBoard(b); sleep(2);
+        }
 
 
         //reveal
@@ -139,7 +139,9 @@ int main()
         while (flipCard(b, &cardFlipped))
         {
             showCardEffect(cardFlipped); sleep(4);
-            showBoard(b); sleep(2);
+            showBoard(b); 
+            printDdrsPts(f1,f2);
+            sleep(2);
         }
         sleep(3);
         system("clear");
