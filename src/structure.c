@@ -7,7 +7,6 @@ struct deckBase
 {
     card *c;
     int top;
-    int nbOfCards; //utile pour les tests
 };
 
 
@@ -16,7 +15,6 @@ deck init_deck() {
     deck d = malloc(sizeof(struct deckBase));
     d->c = malloc(sizeof(card)*NB_CARDS_IN_DECK);
     d->top = -1;
-    d->nbOfCards = 0;
     return d;
 }
 
@@ -32,15 +30,13 @@ void push_deck(card c, deck d) {
     else
     {
         d->top += 1;
-        d->c[d->top] = c;  
-        d->nbOfCards += 1;   
+        d->c[d->top] = c;
     }
 
 }
 
 card pop_deck(deck d) {
     d->top -= 1;
-    d->nbOfCards -= 1; 
     return d->c[d->top + 1];
 }
 
