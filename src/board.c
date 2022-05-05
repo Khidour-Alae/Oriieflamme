@@ -448,7 +448,7 @@ int newRound(int counterRoundNumber, board b, faction f1, faction f2){
         //check who won the round
         f = roundWinner(b, f1, f2);
         setNbRoundWin(f,getNbRoundWin(f) + 1);
-        printRoundWinner(f,2);
+        printRoundWinner(f,1);
         
         setFactionDdrsPoints(f1,0);
         setFactionDdrsPoints(f2,0);
@@ -1891,8 +1891,8 @@ void clearBoard(board b) {
 
 faction roundWinner(board b, faction f1, faction f2)
 {
-    int f1_pts = getNbRoundWin(f1);
-    int f2_pts = getNbRoundWin(f2);
+    int f1_pts = getFactionDdrsPoints(f1);
+    int f2_pts = getFactionDdrsPoints(f2);
 
     if (f1_pts > f2_pts)
     {
