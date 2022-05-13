@@ -1,0 +1,62 @@
+[
+    {
+        "id": 0,
+        "name": "FISE",
+        "nb_occurences": 4,
+        "description" : "La faction qui a posé cette carte gagne 1 point DDRS."
+    },
+    {
+        "id": 1,
+        "name": "FISA",
+        "nb_occurences": 4,
+        "description" : "La faction qui a posé cette carte gagne 2 points DDRS si le nombre de cartes retournées sur le plateau (y compris celle-ci) est pair, et 0 sinon."
+    },
+    {
+        "id": 2,
+        "name": "FC",
+        "nb_occurences": 4,
+        "description" : "La faction qui a posé cette carte gagne 4 points DDRS si au moins une autre carte FC est retournée sur le plateau et 0 sinon."
+    },
+    {
+        "id": 3,
+        "name": "EcologIIE",
+        "nb_occurences": 2,
+        "description" : "La faction qui a posé cette carte gagne 1 point DDRS par carte FISE/FISA/FC retournée."
+    },
+    {
+        "id": 4,
+        "name": "lIIEns",
+        "nb_occurences": 2,
+        "description" : "Prenez toutes les cartes FISE/FISA/FC retournées, retirez les du plateau, mélangez les et reposez les face cachées une par une sur la gauche de la carte la plus en haut à gauche du plateau, dans cet ordre. Les prochaines cartes à être retournées sont ces cartes là."
+    },
+    {
+        "id": 5,
+        "name": "Soiree_sans_alcool",
+        "nb_occurences": 1,
+        "description" : "Si au moins une carte alcool est retournée, supprimez toutes les cartes FISE/FISA/FC retournées du plateau. Supprimez ensuite la première et la dernière ligne du plateau. Sinon la faction qui a posé cette carte gagne 5 points DDRS."
+    },
+    {
+        "id": 6,
+        "name": "Alcool",
+        "nb_occurences": 1,
+        "description" : "Supprimez du plateau toutes les cartes qui touchent cette carte-ci (mais laissez la carte Alcool sur le plateau)."
+    },
+    {
+        "id": 7,
+        "name": "Cafe",
+        "nb_occurences": 3,
+        "description" : "Supprimez toutes les cartes Thé et Alcool retournées sur le plateau. Si une carte Ecocup est retournée sur le plateau, la faction qui a posé cette carte gagne 1 point DDRS. Sinon elle perd 1 point DDRS."
+    },
+    {
+        "id": 8,
+        "name": "The",
+        "nb_occurences": 3,
+        "description" : "Supprimez toutes les cartes Café et Alcool retournées sur le plateau. Si une carte Ecocup est retournée sur le plateau, la faction qui a posé cette carte gagne 1 point DDRS. Sinon elle perd 1 point DDRS."
+    },
+    {
+        "id": 9,
+        "name": "Ecocup",
+        "nb_occurences": 1,
+        "description" : "Cette carte est sans effet."
+    }
+]
