@@ -110,7 +110,9 @@ Vous devez coder un jeu de carte à 2 joueurs, chaque joueur ou joueuse représe
             <notes><![CDATA[- Utilisation d'un parser JSON pour importer les cartes du jeu au lieu d'avoir les cartes codées directement dans le code. Cela permettra de modifier les cartes du jeu sans avoir à recompiler le programme.
 - Organisation du lot C : répartition des taches sur ganttproject]]></notes>
         </task>
-        <task id="13" name="task_C.2" color="#8cb6ce" meeting="false" start="2022-05-03" duration="15" complete="0" thirdDate="2022-04-04" thirdDate-constraint="0" expand="true"/>
+        <task id="13" name="task_C.2" color="#8cb6ce" meeting="false" start="2022-05-03" duration="15" complete="0" thirdDate="2022-04-04" thirdDate-constraint="0" expand="true">
+            <notes><![CDATA[Profilage du code afin de contrôler et analyser la liste des fonctions appelées lors de l'exécution du programme. Pour cela, le logiciel utilisé sera gprof.]]></notes>
+        </task>
         <task id="14" name="task_C.3" color="#8cb6ce" meeting="false" start="2022-05-03" duration="15" complete="0" thirdDate="2022-04-04" thirdDate-constraint="0" expand="true"/>
         <task id="15" name="task_C.4" color="#8cb6ce" meeting="false" start="2022-05-03" duration="15" complete="0" thirdDate="2022-04-04" thirdDate-constraint="0" expand="true"/>
     </tasks>
