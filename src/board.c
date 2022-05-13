@@ -1254,7 +1254,7 @@ void applyMouilleronEffect(board b , int xmin, int xmax, int ymin, int ymax)
                 currentCard_boucle2 = getCard_board2D(b->b2D,X,Y);
                 if (currentCard_boucle2 != NULL && getCardStatus(currentCard_boucle2) == 1 && getCardEnumName(currentCard_boucle2) != Christophe_Mouilleron && getCardEnumName(currentCard_boucle2) != Heures_supplementaires)
                 {
-                    addCard_board2D(b->b2D, NULL, NULL, X, Y);
+                    addCard_board2D(b->b2D, NULL, NULL, X, Y); // Remove card
                 }
             }
         }
@@ -1363,7 +1363,9 @@ void applyWatelEffect(board b, int xmin, int xmax, int ymin, int ymax, int x, in
             {
                 boolean = 0;
             }
+            Y++;
         }
+        X++;
     }
     if (!boolean)
     {
