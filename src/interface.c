@@ -366,7 +366,7 @@ int clicked(SDL_Renderer *renderer, SDL_Rect rect, int x, int y, int *menu, int 
     }
 }
 
-void afficheImage(const char *file, int x, int y, int xsize, ysize)
+void afficheImage(const char *file, int x, int y, int xsize, int ysize)
 {
     tmp = SDL_LoadBMP(file);
     if (NULL == tmp)
