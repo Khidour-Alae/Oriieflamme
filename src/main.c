@@ -68,6 +68,7 @@ while (run) {
     afficheJeu();
     print_noms_factionV2();
     print_pointsV2(f1, f2);
+    showBoardV2(b);  
     sleep(2);
 
 
@@ -139,7 +140,7 @@ while (run) {
         showHandV2(f1);
         sleep(2);
 
-        if (!(hasTheDeckBeenShuffled(f1)) && (askReshuffleV3()))
+        if (!(hasTheDeckBeenShuffled(f1)) && (askReshuffleV3(f1)))
         {
             discardHand(f1);
             reshuffleDeck(f1);
@@ -151,12 +152,12 @@ while (run) {
         drawCards(f2);
         showHandV2(f2);
         sleep(2);
-        if (!(hasTheDeckBeenShuffled(f2)) && (askReshuffleV3()))
+        if (!(hasTheDeckBeenShuffled(f2)) && (askReshuffleV3(f2)))
         {
             discardHand(f2);
             reshuffleDeck(f2);
             drawCards(f2);
-            showHand(f2); sleep(2);
+            showHandV2(f2); sleep(2);
         }
         system("clear");
         
@@ -164,8 +165,8 @@ while (run) {
         //placing cards
         int x,y; card cardToPlay;
 
-        showHand(f1); sleep(1);
-        cardToPlay = askCardWantToPlay(f1);
+        showHandV2(f1); sleep(2);
+        cardToPlay = askCardWantToPlayV2(f1);
         putDownCard(b,cardToPlay,f1,0,0); //the first card is placed in the center of board
         printf("Votre carte a été placé au centre du plateau\n\n"); sleep(2);
 
@@ -182,7 +183,7 @@ while (run) {
         {
             system("clear");
             showHand(f1); sleep(1);
-            cardToPlay = askCardWantToPlay(f1);
+            cardToPlay = askCardWantToPlayV2(f1);
             showBoard(b);
             askWhereWantToPlaceCard(b,cardToPlay,&x,&y);
             putDownCard(b,cardToPlay,f1,x,y);

@@ -342,7 +342,8 @@ void afficheJeu(){
     // SDL_Texture *image = SDL_CreateTextureFromSurface(renderer, tmp);
     // SDL_Rect dst = {775, -50, 600, 600};
     // SDL_RenderCopy(renderer, image, NULL, &dst); 
-        
+    // afficheImage("Cards/oriieflamme3.bmp", 650, -50, 600, 600);    
+    
     SDL_RenderPresent(renderer);
 
 }
@@ -462,7 +463,7 @@ int askReshuffleV2(int xs, int ys, int click)
 
 
 
-int askReshuffleV3(){
+int askReshuffleV3(faction f){
     
     int run = 1;
     int j = 0;
@@ -472,6 +473,18 @@ int askReshuffleV3(){
     SDL_Rect rect = afficheImageRectWithoutPresent("Cards/oui0.bmp", 100, 500, 350, 102);
     SDL_Rect rect2 = afficheImageRectWithoutPresent("Cards/non0.bmp", 1400, 500, 350, 102);
     SDL_RenderPresent(renderer);
+    int x = 120;
+    int y = 650;
+    SDL_Rect image1 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 0)), x,  y, 170, 170);
+    SDL_Rect image2 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 1)), x + 180, y, 170, 170);
+    SDL_Rect image3 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 2)), x + 360, y, 170, 170);
+    SDL_Rect image4 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 3)), x + 540, y, 170, 170);
+    SDL_Rect image5 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 4)), x + 720, y, 170, 170);
+    SDL_Rect image6 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 5)), x + 9000, y, 170, 170);
+    SDL_Rect image7 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 6)), x + 1080, y, 170, 170);
+    SDL_Rect image8 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 7)), x + 1260, y, 170, 170);
+    
+
 while (run){
    
     
@@ -537,6 +550,23 @@ void showBoard(board b) {
     }
     printf("\n\n");
 }
+
+
+
+void showBoardV2(board b){
+    // int xmin,ymin,xmax,ymax;
+    // getBoundingBoxOfTheBoardToPrint(b,&xmin,&ymin,&xmax,&ymax);
+
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 250);
+    SDL_RenderDrawLine(renderer, 100, 80, 1750, 50);
+    SDL_RenderDrawLine(renderer, 100, 230, 1750, 230);
+
+    SDL_RenderDrawLine(renderer, 100, 80, 100, 230);
+    SDL_RenderDrawLine(renderer, 270, 80, 270, 230);
+    // SDL_RenderPresent(renderer);
+}
+
+
 
 void print_nom_faction(faction f){
     int i = 0;
