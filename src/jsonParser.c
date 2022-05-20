@@ -1,4 +1,4 @@
-#include "jsonParser.h"
+#include "../headers/jsonParser.h"
 #include <stdio.h>
 #include <json-c/json.h>
 
