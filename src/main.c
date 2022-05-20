@@ -14,14 +14,132 @@
 #include <time.h> //for time()
 #include <stdio.h>
 #include <unistd.h> //for sleep()
+#include <SDL2/SDL.h>
 
-int main()
+
+int main(int argc, char *argv[])
 {
     //init
     system("clear");
     srand(time(NULL));
 
-    board b; faction* f;
+initializeSDL();
+
+
+int mouseOver(SDL_Renderer *renderer, SDL_Rect rect, int x, int y){
+    int xp, yp;
+    SDL_GetMouseState(&xp, &yp);
+    if (xp < x + 100 && xp > x && yp > y && yp < y + 100) {
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+        SDL_RenderFillRect(renderer, &rect); 
+        return 1;
+    }
+    return 0;
+}
+
+void clicked(SDL_Renderer *renderer, SDL_Rect rect, int x, int y, int *menu, int *jeu){
+    if (mouseOver(renderer, rect, x, y)){
+        *menu = 0;
+        *jeu = 1;
+    }
+}
+
+
+SDL_Event events;
+int run = 1;
+int menu = 1;
+int jeu = 0;
+double x = 50;
+double y = 50;
+
+
+
+// Boucle
+
+while (run) {
+    SDL_Rect rect = {x, y, 100, 100};
+
+
+
+    if (menu) {
+            if(0 != SDL_SetRenderDrawColor(renderer, black.r, black.g, black.b, black.a))
+        {
+            fprintf(stderr, "Erreur SDL_SetRenderDrawColor : %s", SDL_GetError());
+            goto Quit;
+        }
+        
+        if(0 != SDL_RenderClear(renderer))
+        {
+            fprintf(stderr, "Erreur SDL_SetRenderDrawColor : %s", SDL_GetError());
+            goto Quit;
+        }
+
+        SDL_SetRenderDrawColor(renderer, 50, 205, 50, 255);
+        SDL_RenderFillRect(renderer, &rect);
+        mouseOver(renderer, rect, x, y);
+        SDL_RenderPresent(renderer);
+    }
+
+    if (jeu) {
+        if(0 != SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255))
+        {
+            fprintf(stderr, "Erreur SDL_SetRenderDrawColor : %s", SDL_GetError());
+            goto Quit;
+        }
+        
+        if(0 != SDL_RenderClear(renderer))
+        {
+            fprintf(stderr, "Erreur SDL_SetRenderDrawColor : %s", SDL_GetError());
+            goto Quit;
+        }
+    }
+
+
+
+
+    //gestion des différents events
+    while (SDL_PollEvent(&events)) {
+        switch(events.type){
+            case SDL_QUIT:
+                    run = 0;
+                    break;
+
+
+            case SDL_KEYDOWN:
+                SDL_Log("+key");
+
+                switch(events.key.keysym.sym){
+                case SDLK_UP: y -= 10; printf("%f\n", y); SDL_Log("Keycode UP");break;
+                case SDLK_DOWN: y += 10; break;
+                case SDLK_LEFT: x -= 10; break;
+                case SDLK_RIGHT: x += 10; break;
+                default: break;}
+
+                if (events.key.keysym.sym == SDLK_z)
+                    SDL_Log("Keycode Z");
+
+                break;
+            
+
+
+            case SDL_KEYUP:// Un événement de type touche relâchée
+                SDL_Log("-key");
+                break;
+            
+            case SDL_MOUSEBUTTONDOWN:
+            SDL_Log("click");
+                clicked(renderer, rect, x, y, &menu, &jeu); printf("menu = %i, jeu = %i\n", menu, jeu); break;
+            default : break;
+        }
+    }
+
+
+
+
+
+
+    board b; 
+    faction* f;
     faction f1; faction f2;
     b = createBoard();
     f = listFactions(b);
@@ -152,4 +270,15 @@ int main()
 
     freeBoard(b);
     return 0;
+
+
+
+}
+    statut = EXIT_SUCCESS;
+    SDL_FreeSurface(tmp);
+    SDL_DestroyWindow(window);
+Quit:
+    SDL_Quit();
+    return statut;
+
 }

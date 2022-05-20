@@ -8,6 +8,46 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <SDL2/SDL.h>
+
+
+void initializeSDL(){
+    SDL_Window *window = NULL;
+    SDL_Renderer *renderer = NULL;
+    SDL_Texture *image = NULL;
+    SDL_Surface *tmp = NULL;
+    tmp = SDL_LoadBMP("Cards/carteFC.bmp");
+    int statut = EXIT_FAILURE;
+    SDL_Color black = {0, 0, 0, 255};
+
+    if(0 != SDL_Init(SDL_INIT_VIDEO))
+    {
+        fprintf(stderr, "Erreur SDL_Init : %s", SDL_GetError());
+        goto Quit;
+    }
+    window = SDL_CreateWindow("Oriieflamme", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                              1850, 900, SDL_WINDOW_SHOWN);
+    if(NULL == window)
+    {
+        fprintf(stderr, "Erreur SDL_CreateWindow : %s", SDL_GetError());
+        goto Quit;
+    }
+
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if(NULL == renderer)
+    {
+        fprintf(stderr, "Erreur SDL_CreateRenderer : %s", SDL_GetError());
+        goto Quit;
+    }
+
+
+
+
+    if (NULL == tmp){
+        fprintf(stderr, "Erreur SDL_LoadBMP : %s", SDL_GetError());
+        goto Quit;
+    }   
+}
 
 
 void showBoard(board b) {
