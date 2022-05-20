@@ -462,9 +462,6 @@ int askReshuffleV2(int xs, int ys, int click)
     return 2;
 }
 
-int askReshuffleV3()
-{
-
 
 int askReshuffleV3(faction f){
     
