@@ -257,7 +257,7 @@ int clicked(SDL_Renderer *renderer, SDL_Rect rect, int x, int y, int *menu, int 
     }
 }
 
-void afficheImage(const char *file, int x, int y, int size)
+void afficheImage(const char *file, int x, int y, int xsize, ysize)
 {
     tmp = SDL_LoadBMP(file);
     if (NULL == tmp)
@@ -265,7 +265,7 @@ void afficheImage(const char *file, int x, int y, int size)
         fprintf(stderr, "ERREUR LOADBMP");
     }
     image = SDL_CreateTextureFromSurface(renderer, tmp);
-    SDL_Rect dst = {x, y, size, size};
+    SDL_Rect dst = {x, y, xsize, ysize};
     SDL_RenderCopy(renderer, image, NULL, &dst);
     SDL_RenderPresent(renderer);
 }
