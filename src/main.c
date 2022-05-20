@@ -224,7 +224,6 @@ while (run) {
 
 }
 
-Quit :
-    quitSDL();
+quitSDL();
 
 }

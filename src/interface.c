@@ -348,37 +348,13 @@ void afficheJeu(){
 }
 
 
-
-// void gestionEvent(SDL_Event events, int run, int cas){
-//     while (SDL_PollEvent(&events)) {
-//         switch(events.type){
-//             case SDL_QUIT:
-//                     run = 0;
-//                     quitSDL();
-//                     break;
-            
-//             case SDL_MOUSEBUTTONDOWN:
-//                 switch(cas){
-//                     case 0 : 
-//                         SDL_Log("click");
-//                             //clicked(renderer, rect, x, y, &menu, &jeu); printf("menu = %i, jeu = %i\n", menu, jeu); break;
-                        
-//                         default : break;
-//                 }
-//             default : break;
-//         }
-//     }
-//     if (run == 0) quitSDL();
-// }
-
-
-
-
 int mouseOver(SDL_Renderer *renderer, SDL_Rect rect, int x, int y, int sizeRectX, int sizeRectY){
     int xp, yp;
     SDL_GetMouseState(&xp, &yp);
     if (xp < x + sizeRectX && xp > x && yp > y && yp < y + sizeRectY) {
-        printf("je suis dessus\n");
+        rect.x = 0;
+        rect.y = 0;
+        SDL_Log("je suis dessus");
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
         SDL_RenderFillRect(renderer, &rect); 
         return 1;
@@ -706,8 +682,8 @@ void showHandV2(faction f){
     SDL_Rect image7 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 6)), x + 1080, y, 170, 170);
     SDL_Rect image8 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 7)), x + 1260, y, 170, 170);
     
-    if (getFactionName(f) == "Communiste") afficheImage("Cards/faction1.bmp", 625, 250, 702, 415);
-    if (getFactionName(f) == "Capitaliste") afficheImage("Cards/faction2.bmp", 625, 250, 702, 415);
+    if (strcmp(getFactionName(f), "Communiste") == 0) afficheImage("Cards/faction2.bmp", 625, 150, 702, 415);
+    if (strcmp(getFactionName(f), "Capitaliste") == 0) afficheImage("Cards/faction1.bmp", 625, 150, 702, 415);
 }
 
 
@@ -755,7 +731,6 @@ while (run){
         }
     }
     if (run == 0) quitSDL();
-
 
     afficheJeu(); 
     int x = 120;
@@ -896,7 +871,7 @@ const char *cardToBmp(card c)
         case Isolation_du_batiment:
             return("Cards/carteIsolation_du_batiment.bmp");
         case Parcours_sobriete_numerique:
-            return("Cards/carteParcours_sobriete_numerique.bmp");
+            return("Cards/carteParcoursSobrieteNumerique.bmp");
         case Heures_supplementaires:
             return("Cards/carteHeures_Sup.bmp");
         case Kahina_Bouchama:
@@ -910,7 +885,7 @@ const char *cardToBmp(card c)
         case Jonas_Senizergues:
             return("Cards/carteJonas.bmp");
         case Fetia_Bannour:
-            return("Cards/carteFetia.bmp");
+            return("Cards/carteFetiabmp.bmp");
         case Catherine_Dubois:
             return("Cards/carteCatherine.bmp");
         case Anne_Laure_Ligozat:
