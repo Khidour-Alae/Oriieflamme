@@ -13,8 +13,8 @@
 
 SDL_Window *window = NULL;
 SDL_Renderer *renderer = NULL;
-//SDL_Texture *image = NULL;
-//SDL_Surface *tmp = NULL;
+SDL_Texture *image = NULL;
+SDL_Surface *tmp = NULL;
 //image = SDL_LoadBMP("Cards/carteFC.bmp");
 int statut = EXIT_FAILURE;
 SDL_Color black = {0, 0, 0, 255};
@@ -112,6 +112,19 @@ int clicked(SDL_Renderer *renderer, SDL_Rect rect, int x, int y, int *menu, int 
         *menu = 0;
         *jeu = 1;
     }
+}
+
+void afficheImage(const char *file, int x, int y, int size)
+{
+    tmp = SDL_LoadBMP(file);
+    if (NULL == tmp)
+    {
+        fprintf(stderr, "ERREUR LOADBMP");
+    }
+    image = SDL_CreateTextureFromSurface(renderer, tmp);
+    SDL_Rect dst = {x, y, size, size};
+    SDL_RenderCopy(renderer, image, NULL, &dst);
+    SDL_RenderPresent(renderer);
 }
  
 
