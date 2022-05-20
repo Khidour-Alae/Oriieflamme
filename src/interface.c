@@ -51,6 +51,11 @@ void initializeSDL(){
         quitSDL();
     }
 
+     if (NULL == tmp){
+        fprintf(stderr, "Erreur SDL_LoadBMP : %s", SDL_GetError());
+        quitSDL();
+    }  
+}
 
 
 void afficheMenu(){
@@ -107,15 +112,8 @@ int clicked(SDL_Renderer *renderer, SDL_Rect rect, int x, int y, int *menu, int 
         *jeu = 1;
     }
 }
+ 
 
-
-
-
-    if (NULL == tmp){
-        fprintf(stderr, "Erreur SDL_LoadBMP : %s", SDL_GetError());
-        quitSDL();
-    }   
-}
 
 
 void showBoard(board b) {
