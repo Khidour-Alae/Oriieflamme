@@ -24,6 +24,11 @@
 #include "faction.h"
 
 
+
+void afficheJeu();
+
+void afficheMenu();
+
 /**
 * \brief prints the board \a b
 * \param b A board
