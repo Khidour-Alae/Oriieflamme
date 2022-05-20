@@ -13,8 +13,8 @@
 
 SDL_Window *window = NULL;
 SDL_Renderer *renderer = NULL;
-SDL_Texture *image = NULL;
-SDL_Surface *tmp = NULL;
+//SDL_Texture *image = NULL;
+//SDL_Surface *tmp = NULL;
 //image = SDL_LoadBMP("Cards/carteFC.bmp");
 int statut = EXIT_FAILURE;
 SDL_Color black = {0, 0, 0, 255};
@@ -24,7 +24,7 @@ SDL_Rect playButton = {725, 400, 400, 100};
 
 void quitSDL(){
     statut = EXIT_SUCCESS;
-    SDL_FreeSurface(tmp);
+    //SDL_FreeSurface(tmp);
     SDL_DestroyWindow(window);
     SDL_Quit();
     return statut;
@@ -51,10 +51,10 @@ void initializeSDL(){
         quitSDL();
     }
 
-     if (NULL == tmp){
-        fprintf(stderr, "Erreur SDL_LoadBMP : %s", SDL_GetError());
-        quitSDL();
-    }  
+    //  if (NULL == tmp){
+    //     fprintf(stderr, "Erreur SDL_LoadBMP : %s", SDL_GetError());
+    //     quitSDL();
+    // }  
 }
 
 
@@ -80,7 +80,7 @@ void afficheMenu(){
 
 
 void afficheJeu(){
-    if(0 != SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255))
+    if(0 != SDL_SetRenderDrawColor(renderer, 46, 134, 193, 255))
         {
             fprintf(stderr, "Erreur SDL_SetRenderDrawColor : %s", SDL_GetError());
             quitSDL();
@@ -91,6 +91,7 @@ void afficheJeu(){
             fprintf(stderr, "Erreur SDL_SetRenderDrawColor : %s", SDL_GetError());
             quitSDL();
         }
+        SDL_RenderPresent(renderer);
 }
 
 

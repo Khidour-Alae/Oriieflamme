@@ -29,8 +29,8 @@ initializeSDL();
 
 SDL_Event events;
 int run = 1;
-int menu = 1;
-int jeu = 0;
+//int menu = 1;
+int jeu = 1;
 double x = 50;
 double y = 50;
 
@@ -40,9 +40,9 @@ double y = 50;
 
 while (run) {
     
-    if (menu) {
-        afficheMenu();
-    }
+    // if (menu) {
+    //     afficheMenu();
+    // }
 
     if (jeu) {
         afficheJeu();
@@ -56,29 +56,8 @@ while (run) {
         switch(events.type){
             case SDL_QUIT:
                     run = 0;
+                    quitSDL();
                     break;
-
-
-            case SDL_KEYDOWN:
-                SDL_Log("+key");
-
-                switch(events.key.keysym.sym){
-                case SDLK_UP: y -= 10; printf("%f\n", y); SDL_Log("Keycode UP");break;
-                case SDLK_DOWN: y += 10; break;
-                case SDLK_LEFT: x -= 10; break;
-                case SDLK_RIGHT: x += 10; break;
-                default: break;}
-
-                if (events.key.keysym.sym == SDLK_z)
-                    SDL_Log("Keycode Z");
-
-                break;
-            
-
-
-            case SDL_KEYUP:// Un événement de type touche relâchée
-                SDL_Log("-key");
-                break;
             
             case SDL_MOUSEBUTTONDOWN:
             SDL_Log("click");
@@ -103,7 +82,7 @@ while (run) {
     while (1)
     {
         clearBoard(b);//gets rid of any cards placed on the board if there are any
-        if (!(newRound(roundCounter,b,f1,f2))) //if game finished we leave the wile loop
+        if (!(newRound(roundCounter,b,f1,f2))) //if game finished we leave the while loop
         {
             break;
         }
