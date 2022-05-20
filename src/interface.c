@@ -540,24 +540,19 @@ void showBoard(board b)
 void showBoardV2(board b){
     int xmin,ymin,xmax,ymax;
     getBoundingBoxOfTheBoardToPrint(b,&xmin,&ymin,&xmax,&ymax);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 250);
 
     int i = 0;
-    for (i=0; i<xmax; i++){
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 250);
-        SDL_RenderDrawLine(renderer, 100, 100, 1750, 100);
-        SDL_RenderDrawLine(renderer, 100, 126, 1750, 126);
-        SDL_RenderDrawLine(renderer, 100, 152, 1750, 152);
-        SDL_RenderDrawLine(renderer, 100, 610, 1750, 610);
-        SDL_RenderDrawLine(renderer, 100, 780, 1750, 780);
-        SDL_RenderDrawLine(renderer, 100, 950, 1750, 950);
+    for (i=0; i<ymax - ymin; i++){
+        SDL_RenderDrawLine(renderer, 100 + 170*i, 100, 100 + 170*i, 1750);
     }
 
-    SDL_RenderDrawLine(renderer, 100, 100, 100, 1750);
-    SDL_RenderDrawLine(renderer, 126, 100, 126, 1750);
-    SDL_RenderDrawLine(renderer, 152, 100, 152, 1750);
-    SDL_RenderDrawLine(renderer, 610, 100, 610, 1750);
-    SDL_RenderDrawLine(renderer, 780, 100, 780, 1750);
-    SDL_RenderDrawLine(renderer, 950, 100, 950, 1750);
+    // SDL_RenderDrawLine(renderer, 100, 100, 100, 1750);
+    // SDL_RenderDrawLine(renderer, 126, 100, 126, 1750);
+    // SDL_RenderDrawLine(renderer, 152, 100, 152, 1750);
+    // SDL_RenderDrawLine(renderer, 610, 100, 610, 1750);
+    // SDL_RenderDrawLine(renderer, 780, 100, 780, 1750);
+    // SDL_RenderDrawLine(renderer, 950, 100, 950, 1750);
     SDL_RenderPresent(renderer);
 }
 
