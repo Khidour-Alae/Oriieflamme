@@ -23,6 +23,8 @@
 #include "cards.h"
 #include "faction.h"
 
+const char *cardToBmp(card c);
+
 int askReshuffleV2(int xs, int ys, int click);
 
 void afficheJeu();
