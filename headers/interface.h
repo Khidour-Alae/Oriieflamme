@@ -23,12 +23,13 @@
 #include "cards.h"
 #include "faction.h"
 
-
+int askReshuffleV2(int xs, int ys, int click);
 
 void afficheJeu();
 
 void afficheMenu();
 
+void afficheImage(const char *file, int x, int y, int xsize, int ysize);
 /**
 * \brief prints the board \a b
 * \param b A board
