@@ -352,11 +352,6 @@ int mouseOver(SDL_Renderer *renderer, SDL_Rect rect, int x, int y, int sizeRectX
     int xp, yp;
     SDL_GetMouseState(&xp, &yp);
     if (xp < x + sizeRectX && xp > x && yp > y && yp < y + sizeRectY) {
-        rect.x = 0;
-        rect.y = 0;
-        SDL_Log("je suis dessus");
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        SDL_RenderFillRect(renderer, &rect); 
         return 1;
     }
     return 0;
@@ -384,6 +379,19 @@ void afficheImage(const char *file, int x, int y, int xsize, int ysize)
     SDL_RenderPresent(renderer);
 }
 
+void afficheImageWithoutPresent(const char *file, int x, int y, int xsize, int ysize)
+{
+    tmp = SDL_LoadBMP(file);
+    if (NULL == tmp)
+    {
+        fprintf(stderr, "ERREUR LOADBMP");
+    }
+    image = SDL_CreateTextureFromSurface(renderer, tmp);
+    SDL_Rect dst = {x, y, xsize, ysize};
+    SDL_RenderCopy(renderer, image, NULL, &dst);
+}
+
+
 SDL_Rect afficheImageRect(const char *file, int x, int y, int xsize, int ysize)
 {
     tmp = SDL_LoadBMP(file);
@@ -395,6 +403,20 @@ SDL_Rect afficheImageRect(const char *file, int x, int y, int xsize, int ysize)
     SDL_Rect dst = {x, y, xsize, ysize};
     SDL_RenderCopy(renderer, image, NULL, &dst);
     SDL_RenderPresent(renderer);
+    return dst;
+}
+
+
+SDL_Rect afficheImageRectWithoutPresent(const char *file, int x, int y, int xsize, int ysize)
+{
+    tmp = SDL_LoadBMP(file);
+    if (NULL == tmp)
+    {
+        fprintf(stderr, "ERREUR LOADBMP");
+    }
+    image = SDL_CreateTextureFromSurface(renderer, tmp);
+    SDL_Rect dst = {x, y, xsize, ysize};
+    SDL_RenderCopy(renderer, image, NULL, &dst);
     return dst;
 }
 
@@ -435,6 +457,55 @@ int askReshuffleV2(int xs, int ys, int click)
     if (b2&&click) return 0;
     return 2;
 }
+
+
+
+int askReshuffleV3(){
+    
+int run = 1;
+int j = 0;
+SDL_Event events;
+afficheJeu();
+while (run){
+
+    
+    afficheImageWithoutPresent("Cards/askReshuffle.bmp", 600, 100, 702, 419);
+    SDL_Rect rect = afficheImageRectWithoutPresent("Cards/oui0.bmp", 100, 500, 350, 102);
+    SDL_Rect rect2 = afficheImageRectWithoutPresent("Cards/non0.bmp", 1400, 500, 350, 102);
+    
+    while (SDL_PollEvent(&events)) {
+        switch(events.type){
+            case SDL_QUIT:
+                    run = 0;
+                    quitSDL();
+                    break;
+            
+            case SDL_MOUSEBUTTONDOWN:
+            SDL_Log("click");
+                if (mouseOver(renderer, rect, 100, 500, 350, 102)) {
+                    run = 0;
+                    j = 1;
+                }
+                if (mouseOver(renderer, rect2, 1400, 500, 350, 102)) run = 0;
+            
+            default : break;
+        }
+    }
+
+    if (mouseOver(renderer, rect, 100, 500, 350, 102)) {
+            afficheImageWithoutPresent("Cards/oui1.bmp", 100, 500, 350, 102);
+        }
+    
+    if (mouseOver(renderer, rect2, 1400, 500, 350, 102)) {
+            afficheImageWithoutPresent("Cards/non1.bmp", 1400, 500, 350, 102);
+        }
+
+    SDL_RenderPresent(renderer);
+    }
+    return j;
+}
+
+
 
 void showBoard(board b) {
     int xmin,ymin,xmax,ymax;

@@ -66,6 +66,9 @@ void showHandV2(faction f);
 int askReshuffle(faction f);
 
 
+int askReshuffleV3();
+
+
 /**
 * \brief asks the faction \a f which of their cards they want to play.
 * \param f A faction.

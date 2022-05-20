@@ -138,20 +138,19 @@ while (run) {
         drawCards(f1);
         showHandV2(f1);
         sleep(2);
-        askCardWantToPlayV2(f1);
 
-        if (!(hasTheDeckBeenShuffled(f1)) && (askReshuffle(f1)))
+        if (!(hasTheDeckBeenShuffled(f1)) && (askReshuffleV3()))
         {
             discardHand(f1);
             reshuffleDeck(f1);
             drawCards(f1);
-            showHand(f1); sleep(2);
+            showHandV2(f1); sleep(2);
         }
         system("clear");
 
         drawCards(f2);
-        showHand(f2);
-        if (!(hasTheDeckBeenShuffled(f2)) && (askReshuffle(f2)))
+        showHandV2(f2);
+        if (!(hasTheDeckBeenShuffled(f2)) && (askReshuffleV3()))
         {
             discardHand(f2);
             reshuffleDeck(f2);
