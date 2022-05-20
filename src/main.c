@@ -26,24 +26,6 @@ int main(int argc, char *argv[])
 initializeSDL();
 
 
-int mouseOver(SDL_Renderer *renderer, SDL_Rect rect, int x, int y){
-    int xp, yp;
-    SDL_GetMouseState(&xp, &yp);
-    if (xp < x + 100 && xp > x && yp > y && yp < y + 100) {
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        SDL_RenderFillRect(renderer, &rect); 
-        return 1;
-    }
-    return 0;
-}
-
-void clicked(SDL_Renderer *renderer, SDL_Rect rect, int x, int y, int *menu, int *jeu){
-    if (mouseOver(renderer, rect, x, y)){
-        *menu = 0;
-        *jeu = 1;
-    }
-}
-
 
 SDL_Event events;
 int run = 1;
@@ -57,41 +39,13 @@ double y = 50;
 // Boucle
 
 while (run) {
-    SDL_Rect rect = {x, y, 100, 100};
-
-
-
+    
     if (menu) {
-            if(0 != SDL_SetRenderDrawColor(renderer, black.r, black.g, black.b, black.a))
-        {
-            fprintf(stderr, "Erreur SDL_SetRenderDrawColor : %s", SDL_GetError());
-            goto Quit;
-        }
-        
-        if(0 != SDL_RenderClear(renderer))
-        {
-            fprintf(stderr, "Erreur SDL_SetRenderDrawColor : %s", SDL_GetError());
-            goto Quit;
-        }
-
-        SDL_SetRenderDrawColor(renderer, 50, 205, 50, 255);
-        SDL_RenderFillRect(renderer, &rect);
-        mouseOver(renderer, rect, x, y);
-        SDL_RenderPresent(renderer);
+        afficheMenu();
     }
 
     if (jeu) {
-        if(0 != SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255))
-        {
-            fprintf(stderr, "Erreur SDL_SetRenderDrawColor : %s", SDL_GetError());
-            goto Quit;
-        }
-        
-        if(0 != SDL_RenderClear(renderer))
-        {
-            fprintf(stderr, "Erreur SDL_SetRenderDrawColor : %s", SDL_GetError());
-            goto Quit;
-        }
+        afficheJeu();
     }
 
 
@@ -128,7 +82,7 @@ while (run) {
             
             case SDL_MOUSEBUTTONDOWN:
             SDL_Log("click");
-                clicked(renderer, rect, x, y, &menu, &jeu); printf("menu = %i, jeu = %i\n", menu, jeu); break;
+                //clicked(renderer, rect, x, y, &menu, &jeu); printf("menu = %i, jeu = %i\n", menu, jeu); break;
             default : break;
         }
     }

@@ -11,35 +11,15 @@
 #include <SDL2/SDL.h>
 
 
- SDL_Window *window = NULL;
-    SDL_Renderer *renderer = NULL;
-    SDL_Texture *image = NULL;
-    SDL_Surface *tmp = NULL;
-    tmp = SDL_LoadBMP("Cards/carteFC.bmp");
-    int statut = EXIT_FAILURE;
-    SDL_Color black = {0, 0, 0, 255};
+SDL_Window *window = NULL;
+SDL_Renderer *renderer = NULL;
+SDL_Texture *image = NULL;
+SDL_Surface *tmp = NULL;
+//image = SDL_LoadBMP("Cards/carteFC.bmp");
+int statut = EXIT_FAILURE;
+SDL_Color black = {0, 0, 0, 255};
+SDL_Rect playButton = {725, 400, 400, 100};
 
-
-void initializeSDL(){
-    if(0 != SDL_Init(SDL_INIT_VIDEO))
-    {
-        fprintf(stderr, "Erreur SDL_Init : %s", SDL_GetError());
-        goto Quit;
-    }
-    window = SDL_CreateWindow("Oriieflamme", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                              1850, 900, SDL_WINDOW_SHOWN);
-    if(NULL == window)
-    {
-        fprintf(stderr, "Erreur SDL_CreateWindow : %s", SDL_GetError());
-        goto Quit;
-    }
-
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    if(NULL == renderer)
-    {
-        fprintf(stderr, "Erreur SDL_CreateRenderer : %s", SDL_GetError());
-        goto Quit;
-    }
 
 
 void quitSDL(){
@@ -50,12 +30,90 @@ void quitSDL(){
     return statut;
 }
 
+void initializeSDL(){
+    if(0 != SDL_Init(SDL_INIT_VIDEO))
+    {
+        fprintf(stderr, "Erreur SDL_Init : %s", SDL_GetError());
+        quitSDL();;
+    }
+    window = SDL_CreateWindow("Oriieflamme", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                              1850, 900, SDL_WINDOW_SHOWN);
+    if(NULL == window)
+    {
+        fprintf(stderr, "Erreur SDL_CreateWindow : %s", SDL_GetError());
+        quitSDL();
+    }
+
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if(NULL == renderer)
+    {
+        fprintf(stderr, "Erreur SDL_CreateRenderer : %s", SDL_GetError());
+        quitSDL();
+    }
+
+
+
+void afficheMenu(){
+    if(0 != SDL_SetRenderDrawColor(renderer, black.r, black.g, black.b, black.a))
+        {
+            fprintf(stderr, "Erreur SDL_SetRenderDrawColor : %s", SDL_GetError());
+            quitSDL();;
+        }
+        
+        if(0 != SDL_RenderClear(renderer))
+        {
+            fprintf(stderr, "Erreur SDL_SetRenderDrawColor : %s", SDL_GetError());
+            quitSDL();
+        }
+
+        SDL_SetRenderDrawColor(renderer, 50, 205, 50, 255);
+        SDL_RenderFillRect(renderer, &playButton);
+        mouseOver(renderer, playButton, 725, 400);
+        SDL_RenderPresent(renderer);
+}
+
+
+
+void afficheJeu(){
+    if(0 != SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255))
+        {
+            fprintf(stderr, "Erreur SDL_SetRenderDrawColor : %s", SDL_GetError());
+            quitSDL();
+        }
+        
+        if(0 != SDL_RenderClear(renderer))
+        {
+            fprintf(stderr, "Erreur SDL_SetRenderDrawColor : %s", SDL_GetError());
+            quitSDL();
+        }
+}
+
+
+int mouseOver(SDL_Renderer *renderer, SDL_Rect rect, int x, int y){
+    int xp, yp;
+    SDL_GetMouseState(&xp, &yp);
+    if (xp < x + 100 && xp > x && yp > y && yp < y + 100) {
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+        SDL_RenderFillRect(renderer, &rect); 
+        return 1;
+    }
+    return 0;
+}
+
+
+int clicked(SDL_Renderer *renderer, SDL_Rect rect, int x, int y, int *menu, int *jeu){
+    if (mouseOver(renderer, rect, x, y)){
+        *menu = 0;
+        *jeu = 1;
+    }
+}
+
 
 
 
     if (NULL == tmp){
         fprintf(stderr, "Erreur SDL_LoadBMP : %s", SDL_GetError());
-        goto Quit;
+        quitSDL();
     }   
 }
 
