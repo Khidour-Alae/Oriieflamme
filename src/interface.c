@@ -287,7 +287,7 @@ void initializeSDL(){
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if(NULL == renderer)
-    {
+    {   
         fprintf(stderr, "Erreur SDL_CreateRenderer : %s", SDL_GetError());
         quitSDL();
     }
@@ -377,6 +377,7 @@ void afficheImage(const char *file, int x, int y, int xsize, int ysize)
     SDL_Rect dst = {x, y, xsize, ysize};
     SDL_RenderCopy(renderer, image, NULL, &dst);
     SDL_RenderPresent(renderer);
+    SDL_DestroyTexture(image);
 }
 
 void afficheImageWithoutPresent(const char *file, int x, int y, int xsize, int ysize)
@@ -389,6 +390,7 @@ void afficheImageWithoutPresent(const char *file, int x, int y, int xsize, int y
     image = SDL_CreateTextureFromSurface(renderer, tmp);
     SDL_Rect dst = {x, y, xsize, ysize};
     SDL_RenderCopy(renderer, image, NULL, &dst);
+
 }
 
 
@@ -462,16 +464,16 @@ int askReshuffleV2(int xs, int ys, int click)
 
 int askReshuffleV3(){
     
-int run = 1;
-int j = 0;
-SDL_Event events;
-afficheJeu();
-while (run){
-
-    
+    int run = 1;
+    int j = 0;
+    SDL_Event events;
+    afficheJeu();
     afficheImageWithoutPresent("Cards/askReshuffle.bmp", 600, 100, 702, 419);
     SDL_Rect rect = afficheImageRectWithoutPresent("Cards/oui0.bmp", 100, 500, 350, 102);
     SDL_Rect rect2 = afficheImageRectWithoutPresent("Cards/non0.bmp", 1400, 500, 350, 102);
+    SDL_RenderPresent(renderer);
+while (run){
+   
     
     while (SDL_PollEvent(&events)) {
         switch(events.type){
@@ -492,15 +494,7 @@ while (run){
         }
     }
 
-    if (mouseOver(renderer, rect, 100, 500, 350, 102)) {
-            afficheImageWithoutPresent("Cards/oui1.bmp", 100, 500, 350, 102);
-        }
-    
-    if (mouseOver(renderer, rect2, 1400, 500, 350, 102)) {
-            afficheImageWithoutPresent("Cards/non1.bmp", 1400, 500, 350, 102);
-        }
 
-    SDL_RenderPresent(renderer);
     }
     return j;
 }

@@ -150,14 +150,16 @@ while (run) {
 
         drawCards(f2);
         showHandV2(f2);
+        sleep(2);
         if (!(hasTheDeckBeenShuffled(f2)) && (askReshuffleV3()))
         {
             discardHand(f2);
             reshuffleDeck(f2);
             drawCards(f2);
-            showHand(f2); sleep(1);
+            showHand(f2); sleep(2);
         }
         system("clear");
+        
         
         //placing cards
         int x,y; card cardToPlay;
