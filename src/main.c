@@ -40,13 +40,26 @@ double y = 50;
 
 while (run) {
     
+
+
+
+    board b; 
+    faction* f;
+    faction f1; faction f2;
+    b = createBoard();
+    f = listFactions(b);
+    f1 = f[0]; f2 = f[1];
+
+    int roundCounter = 0;
     // if (menu) {
     //     afficheMenu();
     // }
 
     if (jeu) {
         afficheJeu();
-        print_pointsV2();
+        print_pointsV2(f1, f2);
+        sleep(3);
+        showWinnerV2(f1, f2);
     }
 
 
@@ -72,15 +85,6 @@ while (run) {
 
 
 
-
-    board b; 
-    faction* f;
-    faction f1; faction f2;
-    b = createBoard();
-    f = listFactions(b);
-    f1 = f[0]; f2 = f[1];
-
-    int roundCounter = 0;
     while (1)
     {
         clearBoard(b);//gets rid of any cards placed on the board if there are any

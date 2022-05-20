@@ -226,7 +226,7 @@ void printNeuf(int x, int y){
 
 
 void print_score(int n, int x, int y){
-    int chiffre[9];
+    int chiffre[100];
     int i=0;
     int mod = 0;
     while (n != 0){
@@ -359,10 +359,9 @@ int mouseOver(SDL_Renderer *renderer, SDL_Rect rect, int x, int y){
 }
 
 
-int clicked(SDL_Renderer *renderer, SDL_Rect rect, int x, int y, int *menu, int *jeu){
+int clicked(SDL_Renderer *renderer, SDL_Rect rect, int x, int y){
     if (mouseOver(renderer, rect, x, y)){
-        *menu = 0;
-        *jeu = 1;
+        return 1;
     }
 }
 
@@ -377,6 +376,20 @@ void afficheImage(const char *file, int x, int y, int xsize, int ysize)
     SDL_Rect dst = {x, y, xsize, ysize};
     SDL_RenderCopy(renderer, image, NULL, &dst);
     SDL_RenderPresent(renderer);
+}
+
+SDL_Rect afficheImageRect(const char *file, int x, int y, int xsize, int ysize)
+{
+    tmp = SDL_LoadBMP(file);
+    if (NULL == tmp)
+    {
+        fprintf(stderr, "ERREUR LOADBMP");
+    }
+    image = SDL_CreateTextureFromSurface(renderer, tmp);
+    SDL_Rect dst = {x, y, xsize, ysize};
+    SDL_RenderCopy(renderer, image, NULL, &dst);
+    SDL_RenderPresent(renderer);
+    return dst;
 }
 
 
@@ -499,7 +512,12 @@ void print_pts(faction f1, faction f2){
 
 
 void print_pointsV2(faction f1, faction f2){
-    // int f1_pts = getNbRoundWin(f1);
+    printf("helllo\n");
+    int f1_pts = getFactionDdrsPoints(f1);
+    printf("hellsqdfsqdfsqd\n");
+    int f2_pts = getFactionDdrsPoints(f2);
+
+    //  int f1_pts = getNbRoundWin(f1);
     // int f2_pts = getNbRoundWin(f2);
     SDL_Surface *tmp = SDL_LoadBMP("Cards/score.bmp");
     if (NULL == tmp)
@@ -516,14 +534,13 @@ void print_pointsV2(faction f1, faction f2){
         fprintf(stderr, "ERREUR LOADBMP");
     }
     SDL_Texture *image2 = SDL_CreateTextureFromSurface(renderer, tmp2);
-    SDL_Rect dst2 = {1800, 50, 350, 200};
+    SDL_Rect dst2 = {1550, 50, 350, 200};
     SDL_RenderCopy(renderer, image2, NULL, &dst2);
 
 
-    print_score(123, 100, 50);
-    print_score(123, )
-    SDL_RenderPresent(renderer);
-    
+    print_score(f1_pts, 100, 50);
+    print_score(f2_pts, 1775, 50);
+    SDL_RenderPresent(renderer);   
 }
 
 
@@ -578,6 +595,29 @@ void showWinner(faction f1,faction f2) {
         print_pts(f1, f2);
     }
 
+}
+
+
+void showWinnerV2(faction f1, faction f2){
+    int f1_pts = getNbRoundWin(f1);
+    int f2_pts = getNbRoundWin(f2);
+
+    SDL_RenderClear(renderer);
+    afficheJeu();
+
+    // SDL_Surface *tmp = SDL_LoadBMP("Cards/theWinnerIs.bmp");
+    // if (NULL == tmp)
+    // {
+    //     fprintf(stderr, "ERREUR LOADBMP");
+    // }
+    // SDL_Texture *image = SDL_CreateTextureFromSurface(renderer, tmp);
+    // SDL_Rect dst = {555, 225, 702, 415};
+    // SDL_RenderCopy(renderer, image, NULL, &dst);
+
+    // //rajouter le nom de la faction avec un if
+    // SDL_RenderPresent(renderer);
+
+    afficheImage("Cards/theWinnerIs.bmp", 555, 225, 702, 415);
 }
 
 
@@ -646,6 +686,24 @@ card askCardWantToPlay(faction f) {
         }
     }
 }
+
+
+card askCardWantToPlayV2(faction f){
+    SDL_RenderClear(renderer);
+    afficheJeu(); 
+
+    SDL_Rect image1 = afficheImageRect(const char *file, int x, int y, int xsize, int ysize);
+    SDL_Rect image2 = afficheImageRect(const char *file, int x, int y, int xsize, int ysize);
+    SDL_Rect image3 = afficheImageRect(const char *file, int x, int y, int xsize, int ysize);
+    SDL_Rect image4 = afficheImageRect(const char *file, int x, int y, int xsize, int ysize);
+    SDL_Rect image5 = afficheImageRect(const char *file, int x, int y, int xsize, int ysize);
+    SDL_Rect image6 = afficheImageRect(const char *file, int x, int y, int xsize, int ysize);
+    SDL_Rect image7 = afficheImageRect(const char *file, int x, int y, int xsize, int ysize);
+    SDL_Rect image8 = afficheImageRect(const char *file, int x, int y, int xsize, int ysize);
+
+    clicked(SDL_Renderer *renderer, SDL_Rect rect, int x, int y);
+}
+
 
 void askWhereWantToPlaceCard(board b, card c, int *x, int *y) {
     char buffer[150];
