@@ -11,8 +11,7 @@
 #include <SDL2/SDL.h>
 
 
-void initializeSDL(){
-    SDL_Window *window = NULL;
+ SDL_Window *window = NULL;
     SDL_Renderer *renderer = NULL;
     SDL_Texture *image = NULL;
     SDL_Surface *tmp = NULL;
@@ -20,6 +19,8 @@ void initializeSDL(){
     int statut = EXIT_FAILURE;
     SDL_Color black = {0, 0, 0, 255};
 
+
+void initializeSDL(){
     if(0 != SDL_Init(SDL_INIT_VIDEO))
     {
         fprintf(stderr, "Erreur SDL_Init : %s", SDL_GetError());
@@ -39,6 +40,15 @@ void initializeSDL(){
         fprintf(stderr, "Erreur SDL_CreateRenderer : %s", SDL_GetError());
         goto Quit;
     }
+
+
+void quitSDL(){
+    statut = EXIT_SUCCESS;
+    SDL_FreeSurface(tmp);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+    return statut;
+}
 
 
 

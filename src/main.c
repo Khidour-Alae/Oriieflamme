@@ -274,11 +274,6 @@ while (run) {
 
 
 }
-    statut = EXIT_SUCCESS;
-    SDL_FreeSurface(tmp);
-    SDL_DestroyWindow(window);
-Quit:
-    SDL_Quit();
-    return statut;
+quitSDL();
 
 }
