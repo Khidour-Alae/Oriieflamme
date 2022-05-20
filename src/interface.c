@@ -395,7 +395,28 @@ void afficheImage(const char *file, int x, int y, int size)
 // }
  
 
-
+/* 
+0 si rep = non
+1 si rep = oui
+2 sinon
+*/
+int askReshuffleV2(int xs, int ys, int click)
+{
+    int b1 = 0; // Curseur sur bouton 1
+    int b2 = 0; // Curseur sur bouton 2
+    SDL_RenderClear(renderer);
+    afficheJeu();
+    afficheImage("Cards/askReshuffle.bmp", 600, 100, 702, 419);
+    if (xs > 100 && xs < 450 && ys > 500 && ys < 602) b1 = 1;
+    if (b1) afficheImage("Cards/oui1.bmp", 100, 500, 350, 102);
+    else afficheImage("Cards/oui0.bmp", 100, 500, 350, 102);
+    if (xs > 1400 && xs < 1750 && ys > 500 && ys < 602) b2 = 0;
+    if (b2) afficheImage("Cards/non1.bmp", 1400, 500, 350, 102);
+    else afficheImage("Cards/non0.bmp", 1400, 500, 350, 102);
+    if (b1&&click) return 1;
+    if (b2&&click) return 0;
+    return 2;
+}
 
 void showBoard(board b) {
     int xmin,ymin,xmax,ymax;
