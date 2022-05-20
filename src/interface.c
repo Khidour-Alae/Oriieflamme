@@ -22,6 +22,137 @@ SDL_Rect playButton = {725, 400, 400, 100};
 
 
 
+
+// Chiffres //
+
+
+// 0
+void printZero(int x, int y){
+    SDL_SetRenderDrawColor(renderer, 50, 205, 50, 255);
+    SDL_RenderDrawLine(renderer, x+4, y, x+13, y);
+    SDL_RenderDrawLine(renderer, x+4, y+1, x+13, y+1);
+
+    SDL_RenderDrawLine(renderer, x+14, y+2, x+14, y+17);
+    SDL_RenderDrawLine(renderer, x+15, y+2, x+15, y+17);
+
+    SDL_RenderDrawLine(renderer, x+4, y+18, x+13, y+18);
+    SDL_RenderDrawLine(renderer, x+4, y+19, x+13, y+19);
+
+    SDL_RenderDrawLine(renderer, x+2, y+2, x+2, y+17);
+    SDL_RenderDrawLine(renderer, x+3, y+2, x+3, y+17);
+}
+
+
+
+// 1
+void printUn(int x, int y){
+    SDL_SetRenderDrawColor(renderer, 50, 205, 50, 255);
+    SDL_RenderDrawLine(renderer, x+6, y+5, x+14, y);
+    SDL_RenderDrawLine(renderer, x+6, y+6, x+14, y+1);
+
+    SDL_RenderDrawLine(renderer, x+14, y+2, x+14, y+19);
+    SDL_RenderDrawLine(renderer, x+15, y+1, x+15, y+19);
+}
+
+
+
+// 2
+void printDeux(int x, int y){
+    SDL_SetRenderDrawColor(renderer, 50, 205, 50, 255);
+    SDL_RenderDrawLine(renderer, x+4, y, x+13, y);
+    SDL_RenderDrawLine(renderer, x+4, y+1, x+13, y+1);
+
+    SDL_RenderDrawLine(renderer, x+4, y+9, x+13, y+9);
+    SDL_RenderDrawLine(renderer, x+4, y+10, x+13, y+10);
+
+    SDL_RenderDrawLine(renderer, x+14, y+2, x+14, y+8);
+    SDL_RenderDrawLine(renderer, x+15, y+2, x+15, y+8);
+
+    SDL_RenderDrawLine(renderer, x+4, y+18, x+13, y+18);
+    SDL_RenderDrawLine(renderer, x+4, y+19, x+13, y+19);
+
+    SDL_RenderDrawLine(renderer, x+2, y+11, x+2, y+17);
+    SDL_RenderDrawLine(renderer, x+3, y+11, x+3, y+17);
+}
+
+
+
+// 3
+void printTrois(int x, int y){
+    SDL_SetRenderDrawColor(renderer, 50, 205, 50, 255);
+    SDL_RenderDrawLine(renderer, x+4, y, x+13, y);
+    SDL_RenderDrawLine(renderer, x+4, y+1, x+13, y+1);
+
+    SDL_RenderDrawLine(renderer, x+4, y+9, x+13, y+9);
+    SDL_RenderDrawLine(renderer, x+4, y+10, x+13, y+10);
+
+    SDL_RenderDrawLine(renderer, x+14, y+2, x+14, y+8);
+    SDL_RenderDrawLine(renderer, x+15, y+2, x+15, y+8);
+
+    SDL_RenderDrawLine(renderer, x+4, y+18, x+13, y+18);
+    SDL_RenderDrawLine(renderer, x+4, y+19, x+13, y+19);
+
+    SDL_RenderDrawLine(renderer, x+14, y+11, x+14, y+17);
+    SDL_RenderDrawLine(renderer, x+15, y+11, x+15, y+17);
+}
+
+
+
+// 7
+void printSept(int x, int y){
+    SDL_SetRenderDrawColor(renderer, 50, 205, 50, 255);
+    SDL_RenderDrawLine(renderer, x+4, y, x+18, y);
+    SDL_RenderDrawLine(renderer, x+4, y+1, x+18, y+1);
+    // SDL_RenderDrawLine(renderer, x, y+2, x+18, y+2);
+
+    SDL_RenderDrawLine(renderer, x+18, y+2, x+8, y+20);
+    SDL_RenderDrawLine(renderer, x+17, y+2, x+7, y+20);
+    SDL_RenderDrawLine(renderer, x+18, y+2, x+6, y+20);
+    
+}
+
+
+// 8
+void printHuit(int x, int y){
+    SDL_SetRenderDrawColor(renderer, 50, 205, 50, 255);
+    SDL_RenderDrawLine(renderer, x, y, x+12, y);
+    SDL_RenderDrawLine(renderer, x, y+1, x+12, y+1);
+}
+
+
+// print le score
+void print_score(int n, int x, int y){
+    int chiffre[5];
+    int i=0;
+    int mod = 0;
+    while (n != 0){
+        mod = n%10;
+        chiffre[i] = mod;
+        n -= mod;
+        n = n/10;
+        i++;
+    }
+    int j = 0;
+    int l = 0;
+    for (j=i-1; j>=0; j--){
+        switch(chiffre[j]){
+            case 1 : printUn(x + l, y); break;
+            case 2 : printDeux(x + l, y); break;
+            case 3 : printTrois(x + l, y); break;
+            case 7 : printSept(x + l, y); break;
+        }
+        l+=20;
+    }
+}
+
+
+
+
+
+
+
+
+
 void quitSDL(){
     statut = EXIT_SUCCESS;
     //SDL_FreeSurface(tmp);
@@ -91,7 +222,19 @@ void afficheJeu(){
             fprintf(stderr, "Erreur SDL_SetRenderDrawColor : %s", SDL_GetError());
             quitSDL();
         }
-        SDL_RenderPresent(renderer);
+        
+
+    // SDL_Surface *tmp = SDL_LoadBMP("Cards/oriieflamme3.bmp");
+    // if (NULL == tmp)
+    // {
+    //     fprintf(stderr, "ERREUR LOADBMP");
+    // }
+    // SDL_Texture *image = SDL_CreateTextureFromSurface(renderer, tmp);
+    // SDL_Rect dst = {775, -50, 600, 600};
+    // SDL_RenderCopy(renderer, image, NULL, &dst); 
+        
+    SDL_RenderPresent(renderer);
+
 }
 
 
@@ -126,6 +269,21 @@ void afficheImage(const char *file, int x, int y, int size)
     SDL_RenderCopy(renderer, image, NULL, &dst);
     SDL_RenderPresent(renderer);
 }
+
+
+// void reshuffle(){
+//     tmp = SDL_LoadBMP("Cards/askReshuffle.bmp");
+//     SDL_Surface oui1 = 
+//     SDL_Surface oui
+//     if (NULL == tmp)
+//     {
+//         fprintf(stderr, "ERREUR LOADBMP");
+//     }
+//     image = SDL_CreateTextureFromSurface(renderer, tmp);
+//     SDL_Rect dst = {15, 15, 200, 200};
+//     SDL_RenderCopy(renderer, image, NULL, &dst);
+//     SDL_RenderPresent(renderer);
+// }
  
 
 /* 
@@ -198,6 +356,21 @@ void print_nom_faction(faction f){
     }
 }
 
+
+// void print_noms_factionV2(){
+//     SDL_Surface *tmp = SDL_LoadBMP("Cards/oriieflamme3.bmp");
+//     if (NULL == tmp)
+//     {
+//         fprintf(stderr, "ERREUR LOADBMP");
+//     }
+//     SDL_Texture *image = SDL_CreateTextureFromSurface(renderer, tmp);
+//     SDL_Rect dst = {775, -50, 600, 600};
+//     SDL_RenderCopy(renderer, image, NULL, &dst);
+// }
+
+
+
+
 void print_pts(faction f1, faction f2){
     int f1_pts = getNbRoundWin(f1);
     int f2_pts = getNbRoundWin(f2);
@@ -214,6 +387,26 @@ void print_pts(faction f1, faction f2){
     printf("Scores:");
     printf(": %i\n\n", f2_pts);
 }
+
+
+void print_pointsV2(faction f1, faction f2){
+    int f1_pts = getNbRoundWin(f1);
+    // int f2_pts = getNbRoundWin(f2);
+    SDL_Surface *tmp = SDL_LoadBMP("Cards/score.bmp");
+    if (NULL == tmp)
+    {
+        fprintf(stderr, "ERREUR LOADBMP");
+    }
+    SDL_Texture *image = SDL_CreateTextureFromSurface(renderer, tmp);
+    SDL_Rect dst = {-125, 50, 350, 200};
+    SDL_RenderCopy(renderer, image, NULL, &dst);
+    print_score(123, 100, 50);
+    SDL_RenderPresent(renderer);
+    
+}
+
+
+
 
 int askReshuffle(faction f){
 
