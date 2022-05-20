@@ -113,6 +113,8 @@ void showWinnerV2(faction f1, faction f2);
 */
 void printRoundWinner(faction f, int round);
 
+void showCardEffectV2(card c);
+
 
 /**
 * \brief print each faction its DDRS points.

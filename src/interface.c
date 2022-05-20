@@ -798,88 +798,73 @@ card askCardWantToPlayV2(faction f)
     int run = 1;
     SDL_Event events;
     int j = 0;
+
+    afficheJeu();
+    int x = 120;
+    int y = 300;
+    printf("%s\n", getCardName(getCard_hand(getHand(f), 0)));
+    printf("%s\n", getCardName(getCard_hand(getHand(f), 1)));
+    printf("%s\n", getCardName(getCard_hand(getHand(f), 2)));
+    printf("%s\n", getCardName(getCard_hand(getHand(f), 3)));
+    printf("%s\n", getCardName(getCard_hand(getHand(f), 4)));
+    printf("%s\n", getCardName(getCard_hand(getHand(f), 5)));
+    printf("%s\n", getCardName(getCard_hand(getHand(f), 6)));
+    printf("%s\n", getCardName(getCard_hand(getHand(f), 7)));
+
+    SDL_Rect image1 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 0)), x, y, 170, 170);
+    SDL_Rect image2 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 1)), x + 180, y, 170, 170);
+    SDL_Rect image3 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 2)), x + 360, y, 170, 170);
+    SDL_Rect image4 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 3)), x + 540, y, 170, 170);
+    SDL_Rect image5 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 4)), x + 720, y, 170, 170);
+    SDL_Rect image6 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 5)), x + 9000, y, 170, 170);
+    SDL_Rect image7 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 6)), x + 1080, y, 170, 170);
+    SDL_Rect image8 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 7)), x + 1260, y, 170, 170);
+
     while (run)
     {
-        while (SDL_PollEvent(&events))
-        {
-            switch (events.type)
-            {
-            case SDL_QUIT:
-                run = 0;
-                quitSDL();
-                break;
+        while (SDL_PollEvent(&events)) {
+            switch(events.type){
+                case SDL_QUIT:
+                    run = 0;
+                    quitSDL();
+                    break;
 
-            case SDL_MOUSEBUTTONDOWN:
-
-                SDL_Log("click");
-                // clicked(renderer, rect, x, y, &menu, &jeu); printf("menu = %i, jeu = %i\n", menu, jeu); break;
-
-            default:
-                break;
-            }
-        }
-        if (run == 0)
-            quitSDL();
-
-        afficheJeu();
-        int x = 120;
-        int y = 300;
-        printf("%s\n", getCardName(getCard_hand(getHand(f), 0)));
-        printf("%s\n", getCardName(getCard_hand(getHand(f), 1)));
-        printf("%s\n", getCardName(getCard_hand(getHand(f), 2)));
-        printf("%s\n", getCardName(getCard_hand(getHand(f), 3)));
-        printf("%s\n", getCardName(getCard_hand(getHand(f), 4)));
-        printf("%s\n", getCardName(getCard_hand(getHand(f), 5)));
-        printf("%s\n", getCardName(getCard_hand(getHand(f), 6)));
-        printf("%s\n", getCardName(getCard_hand(getHand(f), 7)));
-
-        SDL_Rect image1 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 0)), x, y, 170, 170);
-        SDL_Rect image2 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 1)), x + 180, y, 170, 170);
-        SDL_Rect image3 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 2)), x + 360, y, 170, 170);
-        SDL_Rect image4 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 3)), x + 540, y, 170, 170);
-        SDL_Rect image5 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 4)), x + 720, y, 170, 170);
-        SDL_Rect image6 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 5)), x + 9000, y, 170, 170);
-        SDL_Rect image7 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 6)), x + 1080, y, 170, 170);
-        SDL_Rect image8 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 7)), x + 1260, y, 170, 170);
-
-        while (j == 0)
-        {
-            if (clicked(renderer, image1, x, y, 170, 170))
-                run = 0;
-            if (clicked(renderer, image2, x + 180, y, 170, 170))
-            {
-                j = 1;
-                run = 0;
-            }
-            if (clicked(renderer, image3, x + 360, y, 170, 170))
-            {
-                j = 2;
-                run = 0;
-            }
-            if (clicked(renderer, image4, x + 540, y, 170, 170))
-            {
-                j = 3;
-                run = 0;
-            }
-            if (clicked(renderer, image5, x + 720, y, 170, 170))
-            {
-                j = 4;
-                run = 0;
-            }
-            if (clicked(renderer, image6, x + 900, y, 170, 170))
-            {
-                j = 5;
-                run = 0;
-            }
-            if (clicked(renderer, image7, x + 1080, y, 170, 170))
-            {
-                j = 6;
-                run = 0;
-            }
-            if (clicked(renderer, image8, x + 1260, y, 170, 170))
-            {
-                j = 7;
-                run = 0;
+                case SDL_MOUSEBUTTONDOWN:
+                    SDL_Log("click");
+                    if (mouseOver(renderer, image1, x, y, 170, 170))
+                    {
+                        run = 0;
+                    }
+                    if (mouseOver(renderer, image2, x + 180, y, 170, 170)){
+                        run = 0;
+                        j=1;
+                    }
+                    if (mouseOver(renderer, image3, x + 360, y, 170, 170)){
+                        run = 0;
+                        j=2;
+                    }
+                    if (mouseOver(renderer, image4, x + 540, y, 170, 170)){
+                        run = 0;
+                        j=3;
+                    }
+                    if (mouseOver(renderer, image5, x + 720, y, 170, 170)){
+                        run = 0;
+                        j=4;
+                    }
+                    if (mouseOver(renderer, image6, x + 900, y, 170, 170)){
+                        run = 0;
+                        j=5;
+                    }
+                    if (mouseOver(renderer, image7, x + 1080, y, 170, 170)){
+                        run = 0;
+                        j=6;
+                    }
+                    if (mouseOver(renderer, image8, x + 1260, y, 170, 170)){
+                        run = 0;
+                        j=7;
+                    }
+                default:
+                    break;
             }
         }
     }
@@ -918,6 +903,8 @@ void askWhereWantToPlaceCard(board b, card c, int *x, int *y)
     }
 }
 
+
+
 void showCardEffect(card c)
 {
     printf("Voici l'effet de la carte ");
@@ -934,6 +921,9 @@ void showCardEffect(card c)
     }
     printf("\n\n");
 }
+
+
+
 
 void printRoundWinner(faction f, int round)
 {
@@ -1104,4 +1094,11 @@ const char *cardToBmpEffect(card c)
     default:
         return("Cards/carteCachee.bmp");
     }
+}
+
+
+
+void showCardEffectV2(card c){
+    afficheImage(cardToBmp(c), 350, 0, 120, 120);
+    afficheImage(cardToBmpEffect(c), 500, 0, 500, 90);
 }

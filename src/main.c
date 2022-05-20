@@ -69,7 +69,7 @@ while (run) {
     print_noms_factionV2();
     print_pointsV2(f1, f2);
     showBoardV2(b);  
-    sleep(20);
+    sleep(2);
     afficheJeu();
 
 
@@ -167,12 +167,14 @@ while (run) {
 
         showHandV2(f1); sleep(2);
         cardToPlay = askCardWantToPlayV2(f1);
+        showCardEffectV2(cardToPlay);
+        sleep(5);
         putDownCard(b,cardToPlay,f1,0,0); //the first card is placed in the center of board
         printf("Votre carte a été placé au centre du plateau\n\n"); sleep(2);
 
         system("clear");
-        showHand(f2); sleep(1);
-        cardToPlay = askCardWantToPlay(f2);
+        showHandV2(f2); sleep(1);
+        cardToPlay = askCardWantToPlayV2(f2);
         showBoard(b);
         askWhereWantToPlaceCard(b,cardToPlay,&x,&y);
         putDownCard(b,cardToPlay,f2,x,y);
