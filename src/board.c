@@ -470,6 +470,8 @@ board createBoard(){
     // push_deck(copy(lucienne_pacave),d_f2);
     // push_deck(copy(katrin_salhab),d_f2);
     // push_deck(copy(laurent_prevel),d_f2);
+    free(cards);
+    freeParser(jsP);
     return b;
 }
 
