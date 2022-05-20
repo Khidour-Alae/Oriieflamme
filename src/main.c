@@ -46,6 +46,7 @@ while (run) {
 
     if (jeu) {
         afficheJeu();
+        print_pointsV2();
     }
 
 
@@ -62,6 +63,7 @@ while (run) {
             case SDL_MOUSEBUTTONDOWN:
             SDL_Log("click");
                 //clicked(renderer, rect, x, y, &menu, &jeu); printf("menu = %i, jeu = %i\n", menu, jeu); break;
+            
             default : break;
         }
     }
