@@ -298,24 +298,24 @@ void initializeSDL(){
 }
 
 
-void afficheMenu(){
-    if(0 != SDL_SetRenderDrawColor(renderer, black.r, black.g, black.b, black.a))
-        {
-            fprintf(stderr, "Erreur SDL_SetRenderDrawColor : %s", SDL_GetError());
-            quitSDL();;
-        }
+// void afficheMenu(){
+//     if(0 != SDL_SetRenderDrawColor(renderer, black.r, black.g, black.b, black.a))
+//         {
+//             fprintf(stderr, "Erreur SDL_SetRenderDrawColor : %s", SDL_GetError());
+//             quitSDL();;
+//         }
         
-        if(0 != SDL_RenderClear(renderer))
-        {
-            fprintf(stderr, "Erreur SDL_SetRenderDrawColor : %s", SDL_GetError());
-            quitSDL();
-        }
+//         if(0 != SDL_RenderClear(renderer))
+//         {
+//             fprintf(stderr, "Erreur SDL_SetRenderDrawColor : %s", SDL_GetError());
+//             quitSDL();
+//         }
 
-        SDL_SetRenderDrawColor(renderer, 50, 205, 50, 255);
-        SDL_RenderFillRect(renderer, &playButton);
-        mouseOver(renderer, playButton, 725, 400);
-        SDL_RenderPresent(renderer);
-}
+//         SDL_SetRenderDrawColor(renderer, 50, 205, 50, 255);
+//         SDL_RenderFillRect(renderer, &playButton);
+//         mouseOver(renderer, playButton, 725, 400);
+//         SDL_RenderPresent(renderer);
+// }
 
 
 
@@ -347,10 +347,10 @@ void afficheJeu(){
 }
 
 
-int mouseOver(SDL_Renderer *renderer, SDL_Rect rect, int x, int y){
+int mouseOver(SDL_Renderer *renderer, SDL_Rect rect, int x, int y, int sizeRectX, int sizeRectY){
     int xp, yp;
     SDL_GetMouseState(&xp, &yp);
-    if (xp < x + 100 && xp > x && yp > y && yp < y + 100) {
+    if (xp < x + sizeRectX && xp > x && yp > y && yp < y + sizeRectY) {
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
         SDL_RenderFillRect(renderer, &rect); 
         return 1;
@@ -359,10 +359,12 @@ int mouseOver(SDL_Renderer *renderer, SDL_Rect rect, int x, int y){
 }
 
 
-int clicked(SDL_Renderer *renderer, SDL_Rect rect, int x, int y){
-    if (mouseOver(renderer, rect, x, y)){
+int clicked(SDL_Renderer *renderer, SDL_Rect rect, int x, int y, int sizeRectX, int sizeRectY){
+    // if (*(rect) == NULL) return 0;
+    if (mouseOver(renderer, rect, x, y, sizeRectX, sizeRectY)){
         return 1;
     }
+    return 0;
 }
 
 void afficheImage(const char *file, int x, int y, int xsize, int ysize)
@@ -666,6 +668,12 @@ void showHand(faction f) {
     printf(" ||\n\n");
 }
 
+
+void showHand(faction f){
+
+}
+
+
 card askCardWantToPlay(faction f) {
     printf("Quelle carte souhaitez-vous jouer ? (le numéro) \n");
     int index; char buffer[150];
@@ -691,17 +699,31 @@ card askCardWantToPlay(faction f) {
 card askCardWantToPlayV2(faction f){
     SDL_RenderClear(renderer);
     afficheJeu(); 
+    int x = 100;
+    int y = 100;
+    SDL_Rect image1 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 0)), x,  y, 150, 150);
+    SDL_Rect image2 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 1)), x + 170, y, 150, 150);
+    SDL_Rect image3 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 2)), x + 340, y, 150, 150);
+    SDL_Rect image4 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 3)), x + 510, y, 150, 150);
+    SDL_Rect image5 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 4)), x + 680, y, 150, 150);
+    SDL_Rect image6 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 5)), x + 850, y, 150, 150);
+    SDL_Rect image7 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 6)), x + 1020, y, 150, 150);
+    SDL_Rect image8 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 7)), x + 1190, y, 150, 150);
+    
 
-    SDL_Rect image1 = afficheImageRect(const char *file, int x, int y, int xsize, int ysize);
-    SDL_Rect image2 = afficheImageRect(const char *file, int x, int y, int xsize, int ysize);
-    SDL_Rect image3 = afficheImageRect(const char *file, int x, int y, int xsize, int ysize);
-    SDL_Rect image4 = afficheImageRect(const char *file, int x, int y, int xsize, int ysize);
-    SDL_Rect image5 = afficheImageRect(const char *file, int x, int y, int xsize, int ysize);
-    SDL_Rect image6 = afficheImageRect(const char *file, int x, int y, int xsize, int ysize);
-    SDL_Rect image7 = afficheImageRect(const char *file, int x, int y, int xsize, int ysize);
-    SDL_Rect image8 = afficheImageRect(const char *file, int x, int y, int xsize, int ysize);
+    int j = 0;
+    while (j = 0){
+    if (clicked(renderer, image1, x, y, 150, 150)) j = 1;
+    if (clicked(renderer, image2, x + 170, y, 150, 150)) j = 1;
+    if (clicked(renderer, image3, x + 340, y, 150, 150)) j = 2;
+    if (clicked(renderer, image4, x + 510, y, 150, 150)) j = 3;
+    if (clicked(renderer, image5, x + 680, y, 150, 150)) j = 4;
+    if (clicked(renderer, image6, x + 850, y, 150, 150)) j = 5;
+    if (clicked(renderer, image7, x + 1020, y, 150, 150)) j = 6;
+    if (clicked(renderer, image8, x + 1190, y, 150, 150)) j = 7;
+    }
 
-    clicked(SDL_Renderer *renderer, SDL_Rect rect, int x, int y);
+    return getCard_hand(getHand(f), j);
 }
 
 
