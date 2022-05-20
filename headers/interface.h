@@ -27,7 +27,13 @@ const char *cardToBmp(card c);
 
 int askReshuffleV2(int xs, int ys, int click);
 
+void print_noms_factionV2();
+
 void afficheJeu();
+
+int quitSDL();
+
+void initializeSDL();
 
 void afficheMenu();
 
@@ -39,6 +45,8 @@ void afficheImage(const char *file, int x, int y, int xsize, int ysize);
 */ 
 void showBoard(board b);
 
+void print_pointsV2(faction f1, faction f2);
+
 
 /**
 * \brief prints the hand of the faction \a f
@@ -46,6 +54,8 @@ void showBoard(board b);
 * \return nothing
 */
 void showHand(faction f);
+
+void showHandV2(faction f);
 
 
 /**
@@ -62,6 +72,8 @@ int askReshuffle(faction f);
 * \return The answer of the faction, a card.
 */
 card askCardWantToPlay(faction f);
+
+card askCardWantToPlayV2(faction f);
 
 
 /**
@@ -88,6 +100,8 @@ void showCardEffect(card c);
 * \return nothing.
 */
 void showWinner(faction f1, faction f2);
+
+void showWinnerV2(faction f1, faction f2);
 
 /**
 * \brief print the given faction as the winner of a given round

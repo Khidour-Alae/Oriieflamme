@@ -262,12 +262,13 @@ void print_score(int n, int x, int y){
 
 
 
-void quitSDL(){
+int quitSDL(){
     statut = EXIT_SUCCESS;
     //SDL_FreeSurface(tmp);
+    SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
-    return statut;
+    return statut;  
 }
 
 void initializeSDL(){
@@ -326,11 +327,11 @@ void afficheJeu(){
             quitSDL();
         }
         
-        if(0 != SDL_RenderClear(renderer))
-        {
-            fprintf(stderr, "Erreur SDL_SetRenderDrawColor : %s", SDL_GetError());
-            quitSDL();
-        }
+    if(0 != SDL_RenderClear(renderer))
+    {
+        fprintf(stderr, "Erreur SDL_SetRenderDrawColor : %s", SDL_GetError());
+        quitSDL();
+    }
         
 
     // SDL_Surface *tmp = SDL_LoadBMP("Cards/oriieflamme3.bmp");
@@ -347,10 +348,37 @@ void afficheJeu(){
 }
 
 
+
+// void gestionEvent(SDL_Event events, int run, int cas){
+//     while (SDL_PollEvent(&events)) {
+//         switch(events.type){
+//             case SDL_QUIT:
+//                     run = 0;
+//                     quitSDL();
+//                     break;
+            
+//             case SDL_MOUSEBUTTONDOWN:
+//                 switch(cas){
+//                     case 0 : 
+//                         SDL_Log("click");
+//                             //clicked(renderer, rect, x, y, &menu, &jeu); printf("menu = %i, jeu = %i\n", menu, jeu); break;
+                        
+//                         default : break;
+//                 }
+//             default : break;
+//         }
+//     }
+//     if (run == 0) quitSDL();
+// }
+
+
+
+
 int mouseOver(SDL_Renderer *renderer, SDL_Rect rect, int x, int y, int sizeRectX, int sizeRectY){
     int xp, yp;
     SDL_GetMouseState(&xp, &yp);
     if (xp < x + sizeRectX && xp > x && yp > y && yp < y + sizeRectY) {
+        printf("je suis dessus\n");
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
         SDL_RenderFillRect(renderer, &rect); 
         return 1;
@@ -419,7 +447,6 @@ int askReshuffleV2(int xs, int ys, int click)
 {
     int b1 = 0; // Curseur sur bouton 1
     int b2 = 0; // Curseur sur bouton 2
-    SDL_RenderClear(renderer);
     afficheJeu();
     afficheImage("Cards/askReshuffle.bmp", 600, 100, 702, 419);
     if (xs > 100 && xs < 450 && ys > 500 && ys < 602) b1 = 1;
@@ -481,16 +508,28 @@ void print_nom_faction(faction f){
 }
 
 
-// void print_noms_factionV2(){
-//     SDL_Surface *tmp = SDL_LoadBMP("Cards/oriieflamme3.bmp");
-//     if (NULL == tmp)
-//     {
-//         fprintf(stderr, "ERREUR LOADBMP");
-//     }
-//     SDL_Texture *image = SDL_CreateTextureFromSurface(renderer, tmp);
-//     SDL_Rect dst = {775, -50, 600, 600};
-//     SDL_RenderCopy(renderer, image, NULL, &dst);
-// }
+void print_noms_factionV2(){
+    // SDL_Surface *tmp = SDL_LoadBMP("Cards/faction1.bmp");
+    // if (NULL == tmp)
+    // {
+    //     fprintf(stderr, "ERREUR LOADBMP");
+    // }
+    // SDL_Texture *image = SDL_CreateTextureFromSurface(renderer, tmp);
+    // SDL_Rect dst = {-225, 0, 702, 415};
+    // SDL_RenderCopy(renderer, image, NULL, &dst);
+
+    afficheImage("Cards/faction1.bmp", -235, 0, 702, 415);
+
+    // SDL_Surface *tmp2 = SDL_LoadBMP("Cards/faction1.bmp");
+    // if (NULL == tmp2)
+    // {
+    //     fprintf(stderr, "ERREUR LOADBMP");
+    // }
+    // SDL_Texture *image2 = SDL_CreateTextureFromSurface(renderer, tmp2);
+    // SDL_Rect dst2 = {1200, 0, 702, 415};
+    // SDL_RenderCopy(renderer, image, NULL, &dst2);
+    afficheImage("Cards/faction2.bmp", 1350, 0, 702, 415);
+}
 
 
 
@@ -514,9 +553,7 @@ void print_pts(faction f1, faction f2){
 
 
 void print_pointsV2(faction f1, faction f2){
-    printf("helllo\n");
     int f1_pts = getFactionDdrsPoints(f1);
-    printf("hellsqdfsqdfsqd\n");
     int f2_pts = getFactionDdrsPoints(f2);
 
     //  int f1_pts = getNbRoundWin(f1);
@@ -604,20 +641,7 @@ void showWinnerV2(faction f1, faction f2){
     int f1_pts = getNbRoundWin(f1);
     int f2_pts = getNbRoundWin(f2);
 
-    SDL_RenderClear(renderer);
     afficheJeu();
-
-    // SDL_Surface *tmp = SDL_LoadBMP("Cards/theWinnerIs.bmp");
-    // if (NULL == tmp)
-    // {
-    //     fprintf(stderr, "ERREUR LOADBMP");
-    // }
-    // SDL_Texture *image = SDL_CreateTextureFromSurface(renderer, tmp);
-    // SDL_Rect dst = {555, 225, 702, 415};
-    // SDL_RenderCopy(renderer, image, NULL, &dst);
-
-    // //rajouter le nom de la faction avec un if
-    // SDL_RenderPresent(renderer);
 
     afficheImage("Cards/theWinnerIs.bmp", 555, 225, 702, 415);
 }
@@ -669,8 +693,21 @@ void showHand(faction f) {
 }
 
 
-void showHand(faction f){
-
+void showHandV2(faction f){
+    afficheJeu(); 
+    int x = 120;
+    int y = 300;
+    SDL_Rect image1 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 0)), x,  y, 170, 170);
+    SDL_Rect image2 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 1)), x + 180, y, 170, 170);
+    SDL_Rect image3 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 2)), x + 360, y, 170, 170);
+    SDL_Rect image4 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 3)), x + 540, y, 170, 170);
+    SDL_Rect image5 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 4)), x + 720, y, 170, 170);
+    SDL_Rect image6 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 5)), x + 9000, y, 170, 170);
+    SDL_Rect image7 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 6)), x + 1080, y, 170, 170);
+    SDL_Rect image8 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 7)), x + 1260, y, 170, 170);
+    
+    if (getFactionName(f) == "Communiste") afficheImage("Cards/faction1.bmp", 625, 250, 702, 415);
+    if (getFactionName(f) == "Capitaliste") afficheImage("Cards/faction2.bmp", 625, 250, 702, 415);
 }
 
 
@@ -697,31 +734,65 @@ card askCardWantToPlay(faction f) {
 
 
 card askCardWantToPlayV2(faction f){
-    SDL_RenderClear(renderer);
+
+int run = 1;
+SDL_Event events;
+int j = 0;
+while (run){
+    while (SDL_PollEvent(&events)) {
+        switch(events.type){
+            case SDL_QUIT:
+                    run = 0;
+                    quitSDL();
+                    break;
+            
+            case SDL_MOUSEBUTTONDOWN:
+                
+                SDL_Log("click");
+                    //clicked(renderer, rect, x, y, &menu, &jeu); printf("menu = %i, jeu = %i\n", menu, jeu); break;
+                
+                default : break;
+        }
+    }
+    if (run == 0) quitSDL();
+
+
     afficheJeu(); 
-    int x = 100;
-    int y = 100;
-    SDL_Rect image1 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 0)), x,  y, 150, 150);
-    SDL_Rect image2 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 1)), x + 170, y, 150, 150);
-    SDL_Rect image3 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 2)), x + 340, y, 150, 150);
-    SDL_Rect image4 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 3)), x + 510, y, 150, 150);
-    SDL_Rect image5 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 4)), x + 680, y, 150, 150);
-    SDL_Rect image6 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 5)), x + 850, y, 150, 150);
-    SDL_Rect image7 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 6)), x + 1020, y, 150, 150);
-    SDL_Rect image8 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 7)), x + 1190, y, 150, 150);
+    int x = 120;
+    int y = 300;
+    printf("%s\n", getCardName(getCard_hand(getHand(f), 0)));
+    printf("%s\n", getCardName(getCard_hand(getHand(f), 1)));
+    printf("%s\n", getCardName(getCard_hand(getHand(f), 2)));
+    printf("%s\n", getCardName(getCard_hand(getHand(f), 3)));
+    printf("%s\n", getCardName(getCard_hand(getHand(f), 4)));
+    printf("%s\n", getCardName(getCard_hand(getHand(f), 5)));
+    printf("%s\n", getCardName(getCard_hand(getHand(f), 6)));
+    printf("%s\n", getCardName(getCard_hand(getHand(f), 7)));
+
+    SDL_Rect image1 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 0)), x,  y, 170, 170);
+    SDL_Rect image2 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 1)), x + 180, y, 170, 170);
+    SDL_Rect image3 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 2)), x + 360, y, 170, 170);
+    SDL_Rect image4 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 3)), x + 540, y, 170, 170);
+    SDL_Rect image5 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 4)), x + 720, y, 170, 170);
+    SDL_Rect image6 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 5)), x + 9000, y, 170, 170);
+    SDL_Rect image7 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 6)), x + 1080, y, 170, 170);
+    SDL_Rect image8 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 7)), x + 1260, y, 170, 170);
     
 
-    int j = 0;
-    while (j = 0){
-    if (clicked(renderer, image1, x, y, 150, 150)) j = 1;
-    if (clicked(renderer, image2, x + 170, y, 150, 150)) j = 1;
-    if (clicked(renderer, image3, x + 340, y, 150, 150)) j = 2;
-    if (clicked(renderer, image4, x + 510, y, 150, 150)) j = 3;
-    if (clicked(renderer, image5, x + 680, y, 150, 150)) j = 4;
-    if (clicked(renderer, image6, x + 850, y, 150, 150)) j = 5;
-    if (clicked(renderer, image7, x + 1020, y, 150, 150)) j = 6;
-    if (clicked(renderer, image8, x + 1190, y, 150, 150)) j = 7;
+    
+    while (j == 0){
+    if (clicked(renderer, image1, x, y, 170, 170)) run = 0;
+    if (clicked(renderer, image2, x + 180, y, 170, 170)) { j = 1; run = 0;}
+    if (clicked(renderer, image3, x + 360, y, 170, 170)) { j = 2; run = 0;}
+    if (clicked(renderer, image4, x + 540, y, 170, 170)) { j = 3; run = 0;}
+    if (clicked(renderer, image5, x + 720, y, 170, 170)) { j = 4; run = 0;}
+    if (clicked(renderer, image6, x + 900, y, 170, 170)) { j = 5; run = 0;}
+    if (clicked(renderer, image7, x + 1080, y, 170, 170)) { j = 6; run = 0;}
+    if (clicked(renderer, image8, x + 1260, y, 170, 170)) { j = 7; run = 0;}
     }
+
+    
+} 
 
     return getCard_hand(getHand(f), j);
 }
@@ -811,7 +882,7 @@ const char *cardToBmp(card c)
         case lIIEns:
             return("Cards/carteLiiens.bmp");
         case Soiree_sans_alcool:
-            return("Cards/carteSoriee_sans_alcool.bmp");
+            return("Cards/carteSoiree_sans_alcool.bmp");
         case Alcool:
             return("Cards/carteAlcool.bmp");
         case Cafe:
@@ -833,7 +904,7 @@ const char *cardToBmp(card c)
         case Kevin_Goilard:
             return("Cards/carteKeving_Goilard.bmp");
         case Massinissa_Merabet:
-            return("Cards/carteMassinissaMerabet.bmp");
+            return("Cards/cartaMassinissaMerabet.bmp");
         case Vitera_Y:
             return("Cards/carteVitera_Y.bmp");
         case Jonas_Senizergues:
@@ -851,7 +922,7 @@ const char *cardToBmp(card c)
         case Thomas_Lim:
             return("Cards/carteThomas.bmp");
         case Julien_Forest:
-            return("Cards/carteJullien_Forest.bmp");
+            return("Cards/carteJulien_Forest.bmp");
         case Dimitri_Watel:
             return("Cards/carteDimitri_Watel.bmp");
         case Djibril_Aurelien_Dembele_Cabot:

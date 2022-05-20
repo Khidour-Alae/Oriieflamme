@@ -49,37 +49,44 @@ while (run) {
     b = createBoard();
     f = listFactions(b);
     f1 = f[0]; f2 = f[1];
+    drawCards(f1);
+
+
 
     int roundCounter = 0;
     // if (menu) {
     //     afficheMenu();
     // }
 
-    if (jeu) {
-        afficheJeu();
-        print_pointsV2(f1, f2);
-        sleep(3);
-        showWinnerV2(f1, f2);
-    }
+    // if (jeu) {
+    //     afficheJeu();
+    //     print_pointsV2(f1, f2);
+    //     sleep(3);
+    //     askCardWantToPlayV2(f1);
+    // }
 
+    afficheJeu();
+    print_noms_factionV2();
+    print_pointsV2(f1, f2);
+    sleep(2);
 
 
 
     //gestion des différents events
-    while (SDL_PollEvent(&events)) {
-        switch(events.type){
-            case SDL_QUIT:
-                    run = 0;
-                    quitSDL();
-                    break;
+    // while (SDL_PollEvent(&events)) {
+    //     switch(events.type){
+    //         case SDL_QUIT:
+    //                 run = 0;
+    //                 quitSDL();
+    //                 break;
             
-            case SDL_MOUSEBUTTONDOWN:
-            SDL_Log("click");
-                //clicked(renderer, rect, x, y, &menu, &jeu); printf("menu = %i, jeu = %i\n", menu, jeu); break;
+    //         case SDL_MOUSEBUTTONDOWN:
+    //         SDL_Log("click");
+    //             //clicked(renderer, rect, x, y, &menu, &jeu); printf("menu = %i, jeu = %i\n", menu, jeu); break;
             
-            default : break;
-        }
-    }
+    //         default : break;
+    //     }
+    // }
 
 
 
@@ -129,13 +136,16 @@ while (run) {
 
         //drawphase
         drawCards(f1);
-        showHand(f1);
+        showHandV2(f1);
+        sleep(2);
+        askCardWantToPlayV2(f1);
+
         if (!(hasTheDeckBeenShuffled(f1)) && (askReshuffle(f1)))
         {
             discardHand(f1);
             reshuffleDeck(f1);
             drawCards(f1);
-            showHand(f1); sleep(1);
+            showHand(f1); sleep(2);
         }
         system("clear");
 
@@ -213,6 +223,8 @@ while (run) {
 
 
 }
-quitSDL();
+
+Quit :
+    quitSDL();
 
 }
