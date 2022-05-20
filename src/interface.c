@@ -97,6 +97,66 @@ void printTrois(int x, int y){
 }
 
 
+// 4
+void printQuatre(int x, int y){
+    SDL_SetRenderDrawColor(renderer, 50, 205, 50, 255);
+
+    SDL_RenderDrawLine(renderer, x+4, y+9, x+13, y+9);
+    SDL_RenderDrawLine(renderer, x+4, y+10, x+13, y+10);
+
+    SDL_RenderDrawLine(renderer, x+2, y+2, x+2, y+8);
+    SDL_RenderDrawLine(renderer, x+3, y+2, x+3, y+8);
+
+    SDL_RenderDrawLine(renderer, x+14, y+2, x+14, y+17);
+    SDL_RenderDrawLine(renderer, x+15, y+2, x+15, y+17);
+}
+
+
+
+// 5 
+void printCinq(int x, int y){
+    SDL_SetRenderDrawColor(renderer, 50, 205, 50, 255);
+    SDL_RenderDrawLine(renderer, x+4, y, x+13, y);
+    SDL_RenderDrawLine(renderer, x+4, y+1, x+13, y+1);
+
+    SDL_RenderDrawLine(renderer, x+4, y+9, x+13, y+9);
+    SDL_RenderDrawLine(renderer, x+4, y+10, x+13, y+10);
+
+    SDL_RenderDrawLine(renderer, x+2, y+2, x+2, y+8);
+    SDL_RenderDrawLine(renderer, x+3, y+2, x+3, y+8);
+
+    SDL_RenderDrawLine(renderer, x+4, y+18, x+13, y+18);
+    SDL_RenderDrawLine(renderer, x+4, y+19, x+13, y+19);
+
+    SDL_RenderDrawLine(renderer, x+14, y+11, x+14, y+17);
+    SDL_RenderDrawLine(renderer, x+15, y+11, x+15, y+17);
+}
+
+
+
+// 6
+void printSix(int x, int y)
+{
+    SDL_SetRenderDrawColor(renderer, 50, 205, 50, 255);
+    SDL_RenderDrawLine(renderer, x+4, y, x+13, y);
+    SDL_RenderDrawLine(renderer, x+4, y+1, x+13, y+1);
+
+    SDL_RenderDrawLine(renderer, x+4, y+9, x+13, y+9);
+    SDL_RenderDrawLine(renderer, x+4, y+10, x+13, y+10);
+
+    SDL_RenderDrawLine(renderer, x+2, y+2, x+2, y+8);
+    SDL_RenderDrawLine(renderer, x+3, y+2, x+3, y+8);
+
+    SDL_RenderDrawLine(renderer, x+4, y+18, x+13, y+18);
+    SDL_RenderDrawLine(renderer, x+4, y+19, x+13, y+19);
+
+    SDL_RenderDrawLine(renderer, x+14, y+11, x+14, y+17);
+    SDL_RenderDrawLine(renderer, x+15, y+11, x+15, y+17);
+
+    SDL_RenderDrawLine(renderer, x+2, y+11, x+2, y+17);
+    SDL_RenderDrawLine(renderer, x+3, y+11, x+3, y+17);
+}
+
 
 // 7
 void printSept(int x, int y){
@@ -115,14 +175,58 @@ void printSept(int x, int y){
 // 8
 void printHuit(int x, int y){
     SDL_SetRenderDrawColor(renderer, 50, 205, 50, 255);
-    SDL_RenderDrawLine(renderer, x, y, x+12, y);
-    SDL_RenderDrawLine(renderer, x, y+1, x+12, y+1);
+    SDL_RenderDrawLine(renderer, x+4, y, x+13, y);
+    SDL_RenderDrawLine(renderer, x+4, y+1, x+13, y+1);
+
+    SDL_RenderDrawLine(renderer, x+4, y+9, x+13, y+9);
+    SDL_RenderDrawLine(renderer, x+4, y+10, x+13, y+10);
+
+    SDL_RenderDrawLine(renderer, x+2, y+2, x+2, y+8);
+    SDL_RenderDrawLine(renderer, x+3, y+2, x+3, y+8);
+
+    SDL_RenderDrawLine(renderer, x+4, y+18, x+13, y+18);
+    SDL_RenderDrawLine(renderer, x+4, y+19, x+13, y+19);
+
+    SDL_RenderDrawLine(renderer, x+14, y+11, x+14, y+17);
+    SDL_RenderDrawLine(renderer, x+15, y+11, x+15, y+17);
+
+    SDL_RenderDrawLine(renderer, x+2, y+11, x+2, y+17);
+    SDL_RenderDrawLine(renderer, x+3, y+11, x+3, y+17);
+
+    SDL_RenderDrawLine(renderer, x+14, y+2, x+14, y+8);
+    SDL_RenderDrawLine(renderer, x+15, y+2, x+15, y+8);
 }
 
 
-// print le score
+
+
+// 9
+void printNeuf(int x, int y){
+    SDL_SetRenderDrawColor(renderer, 50, 205, 50, 255);
+    SDL_RenderDrawLine(renderer, x+4, y, x+13, y);
+    SDL_RenderDrawLine(renderer, x+4, y+1, x+13, y+1);
+
+    SDL_RenderDrawLine(renderer, x+4, y+9, x+13, y+9);
+    SDL_RenderDrawLine(renderer, x+4, y+10, x+13, y+10);
+
+    SDL_RenderDrawLine(renderer, x+2, y+2, x+2, y+8);
+    SDL_RenderDrawLine(renderer, x+3, y+2, x+3, y+8);
+
+    SDL_RenderDrawLine(renderer, x+4, y+18, x+13, y+18);
+    SDL_RenderDrawLine(renderer, x+4, y+19, x+13, y+19);
+
+    SDL_RenderDrawLine(renderer, x+14, y+11, x+14, y+17);
+    SDL_RenderDrawLine(renderer, x+15, y+11, x+15, y+17);
+
+    SDL_RenderDrawLine(renderer, x+14, y+2, x+14, y+8);
+    SDL_RenderDrawLine(renderer, x+15, y+2, x+15, y+8);
+}
+
+
+
+
 void print_score(int n, int x, int y){
-    int chiffre[5];
+    int chiffre[9];
     int i=0;
     int mod = 0;
     while (n != 0){
@@ -139,7 +243,12 @@ void print_score(int n, int x, int y){
             case 1 : printUn(x + l, y); break;
             case 2 : printDeux(x + l, y); break;
             case 3 : printTrois(x + l, y); break;
+            case 4 : printQuatre(x + l, y); break;
+            case 5 : printCinq(x + l, y); break;
+            case 6 : printSix(x + l, y); break;
             case 7 : printSept(x + l, y); break;
+            case 8 : printHuit(x + l, y); break;
+            case 9 : printNeuf(x + l, y); break;
         }
         l+=20;
     }
