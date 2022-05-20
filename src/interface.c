@@ -773,3 +773,76 @@ void printDdrsPts(faction f1, faction f2){
     printf("Score:");
     printf(": %i\n\n", f2_pts);
 }
+
+const char *cardToBmp(card c)
+{
+    switch(getCardEnumName(c))
+    {
+        case FISE:
+            return("Cards/carteFise.bmp");
+        case FISA:
+            return("Cards/carteFisa.bmp");
+        case FC:
+            return("Cards/carteFC.bmp");
+        case EcologIIE:
+            return("Cards/carteEcologiie.bmp");
+        case lIIEns:
+            return("Cards/carteLiiens.bmp");
+        case Soiree_sans_alcool:
+            return("Cards/carteSoriee_sans_alcool.bmp");
+        case Alcool:
+            return("Cards/carteAlcool.bmp");
+        case Cafe:
+            return("Cards/carteCafe.bmp");
+        case The:
+            return("Cards/carteThe.bmp");
+        case Ecocup:
+            return("Cards/carteEcocup.bmp");
+        case Reprographie:
+            return("Cards/carteReprographie.bmp");
+        case Isolation_du_batiment:
+            return("Cards/carteIsolation_du_batiment.bmp");
+        case Parcours_sobriete_numerique:
+            return("Cards/carteParcours_sobriete_numerique.bmp");
+        case Heures_supplementaires:
+            return("Cards/carteHeures_Sup.bmp");
+        case Kahina_Bouchama:
+            return("Cards/carteKahina_Bouchama.bmp");
+        case Kevin_Goilard:
+            return("Cards/carteKeving_Goilard.bmp");
+        case Massinissa_Merabet:
+            return("Cards/carteMassinissaMerabet.bmp");
+        case Vitera_Y:
+            return("Cards/carteVitera_Y.bmp");
+        case Jonas_Senizergues:
+            return("Cards/carteJonas.bmp");
+        case Fetia_Bannour:
+            return("Cards/carteFetia.bmp");
+        case Catherine_Dubois:
+            return("Cards/carteCatherine.bmp");
+        case Anne_Laure_Ligozat:
+            return("Cards/carteAnne-Laure.bmp");
+        case Guillaume_Burel:
+            return("Cards/carteGuillaume.bmp");
+        case Christophe_Mouilleron:
+            return("Cards/carteChristophe.bmp");
+        case Thomas_Lim:
+            return("Cards/carteThomas.bmp");
+        case Julien_Forest:
+            return("Cards/carteJullien_Forest.bmp");
+        case Dimitri_Watel:
+            return("Cards/carteDimitri_Watel.bmp");
+        case Djibril_Aurelien_Dembele_Cabot:
+            return("Cards/carteDjibril.bmp");
+        case Eric_Lejeune:
+            return("Cards/carteEric.bmp");
+        case Lucienne_Pacave:
+            return("Cards/carteLucienne.bmp");
+        case Katrin_Salhab:
+            return("Cards/carteKatrin.bmp");
+        case Laurent_Prevel:
+            return("Cards/carteLaurent_Prevel.bmp");
+        default:
+            return("Cards/carteCachee.bmp");
+    }
+}
