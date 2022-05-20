@@ -69,8 +69,8 @@ while (run) {
     print_noms_factionV2();
     print_pointsV2(f1, f2);
     showBoardV2(b);  
-    sleep(2);
-
+    sleep(20);
+    afficheJeu();
 
 
     //gestion des différents events

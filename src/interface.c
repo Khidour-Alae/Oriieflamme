@@ -291,11 +291,6 @@ void initializeSDL()
         fprintf(stderr, "Erreur SDL_CreateRenderer : %s", SDL_GetError());
         quitSDL();
     }
-
-    //  if (NULL == tmp){
-    //     fprintf(stderr, "Erreur SDL_LoadBMP : %s", SDL_GetError());
-    //     quitSDL();
-    // }
 }
 
 // void afficheMenu(){
@@ -329,17 +324,7 @@ void afficheJeu()
     {
         fprintf(stderr, "Erreur SDL_SetRenderDrawColor : %s", SDL_GetError());
         quitSDL();
-    }
-
-    // SDL_Surface *tmp = SDL_LoadBMP("Cards/oriieflamme3.bmp");
-    // if (NULL == tmp)
-    // {
-    //     fprintf(stderr, "ERREUR LOADBMP");
-    // }
-    // SDL_Texture *image = SDL_CreateTextureFromSurface(renderer, tmp);
-    // SDL_Rect dst = {775, -50, 600, 600};
-    // SDL_RenderCopy(renderer, image, NULL, &dst); 
-    // afficheImage("Cards/oriieflamme3.bmp", 650, -50, 600, 600);    
+    }   
 
     SDL_RenderPresent(renderer);
 }
@@ -553,16 +538,27 @@ void showBoard(board b)
 
 
 void showBoardV2(board b){
-    // int xmin,ymin,xmax,ymax;
-    // getBoundingBoxOfTheBoardToPrint(b,&xmin,&ymin,&xmax,&ymax);
+    int xmin,ymin,xmax,ymax;
+    getBoundingBoxOfTheBoardToPrint(b,&xmin,&ymin,&xmax,&ymax);
 
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 250);
-    SDL_RenderDrawLine(renderer, 100, 80, 1750, 50);
-    SDL_RenderDrawLine(renderer, 100, 230, 1750, 230);
+    int i = 0;
+    for (i=0; i<xmax; i++){
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 250);
+        SDL_RenderDrawLine(renderer, 100, 100, 1750, 100);
+        SDL_RenderDrawLine(renderer, 100, 126, 1750, 126);
+        SDL_RenderDrawLine(renderer, 100, 152, 1750, 152);
+        SDL_RenderDrawLine(renderer, 100, 610, 1750, 610);
+        SDL_RenderDrawLine(renderer, 100, 780, 1750, 780);
+        SDL_RenderDrawLine(renderer, 100, 950, 1750, 950);
+    }
 
-    SDL_RenderDrawLine(renderer, 100, 80, 100, 230);
-    SDL_RenderDrawLine(renderer, 270, 80, 270, 230);
-    // SDL_RenderPresent(renderer);
+    SDL_RenderDrawLine(renderer, 100, 100, 100, 1750);
+    SDL_RenderDrawLine(renderer, 126, 100, 126, 1750);
+    SDL_RenderDrawLine(renderer, 152, 100, 152, 1750);
+    SDL_RenderDrawLine(renderer, 610, 100, 610, 1750);
+    SDL_RenderDrawLine(renderer, 780, 100, 780, 1750);
+    SDL_RenderDrawLine(renderer, 950, 100, 950, 1750);
+    SDL_RenderPresent(renderer);
 }
 
 
@@ -647,7 +643,7 @@ void print_pointsV2(faction f1, faction f2)
 
     print_score(f1_pts, 100, 50);
     print_score(f2_pts, 1775, 50);
-    SDL_RenderPresent(renderer);
+    // SDL_RenderPresent(renderer);
 }
 
 int askReshuffle(faction f)
