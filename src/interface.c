@@ -499,7 +499,7 @@ void print_pts(faction f1, faction f2){
 
 
 void print_pointsV2(faction f1, faction f2){
-    int f1_pts = getNbRoundWin(f1);
+    // int f1_pts = getNbRoundWin(f1);
     // int f2_pts = getNbRoundWin(f2);
     SDL_Surface *tmp = SDL_LoadBMP("Cards/score.bmp");
     if (NULL == tmp)
@@ -509,7 +509,19 @@ void print_pointsV2(faction f1, faction f2){
     SDL_Texture *image = SDL_CreateTextureFromSurface(renderer, tmp);
     SDL_Rect dst = {-125, 50, 350, 200};
     SDL_RenderCopy(renderer, image, NULL, &dst);
+
+    SDL_Surface *tmp2 = SDL_LoadBMP("Cards/score.bmp");
+    if (NULL == tmp2)
+    {
+        fprintf(stderr, "ERREUR LOADBMP");
+    }
+    SDL_Texture *image2 = SDL_CreateTextureFromSurface(renderer, tmp2);
+    SDL_Rect dst2 = {1800, 50, 350, 200};
+    SDL_RenderCopy(renderer, image2, NULL, &dst2);
+
+
     print_score(123, 100, 50);
+    print_score(123, )
     SDL_RenderPresent(renderer);
     
 }
