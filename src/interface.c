@@ -329,7 +329,7 @@ void afficheJeu()
     SDL_RenderPresent(renderer);
 }
 
-int mouseOver(SDL_Renderer *renderer, SDL_Rect rect, int x, int y, int sizeRectX, int sizeRectY)
+int mouseOver(int x, int y, int sizeRectX, int sizeRectY)
 {
     int xp, yp;
     SDL_GetMouseState(&xp, &yp);
@@ -340,15 +340,15 @@ int mouseOver(SDL_Renderer *renderer, SDL_Rect rect, int x, int y, int sizeRectX
     return 0;
 }
 
-int clicked(SDL_Renderer *renderer, SDL_Rect rect, int x, int y, int sizeRectX, int sizeRectY)
-{
-    // if (*(rect) == NULL) return 0;
-    if (mouseOver(renderer, rect, x, y, sizeRectX, sizeRectY))
-    {
-        return 1;
-    }
-    return 0;
-}
+// int clicked(SDL_Renderer *renderer, SDL_Rect rect, int x, int y, int sizeRectX, int sizeRectY)
+// {
+//     // if (*(rect) == NULL) return 0;
+//     if (mouseOver(rect, x, y, sizeRectX, sizeRectY))
+//     {
+//         return 1;
+//     }
+//     return 0;
+// }
 
 void afficheImage(const char *file, int x, int y, int xsize, int ysize)
 {
@@ -456,19 +456,19 @@ int askReshuffleV3(faction f){
     SDL_Event events;
     afficheJeu();
     afficheImageWithoutPresent("Cards/askReshuffle.bmp", 600, 100, 702, 419);
-    SDL_Rect rect = afficheImageRectWithoutPresent("Cards/oui0.bmp", 100, 500, 350, 102);
-    SDL_Rect rect2 = afficheImageRectWithoutPresent("Cards/non0.bmp", 1400, 500, 350, 102);
-    SDL_RenderPresent(renderer);
+    afficheImage("Cards/oui0.bmp", 100, 500, 350, 102);
+    afficheImage("Cards/non0.bmp", 1400, 500, 350, 102);
+    // SDL_RenderPresent(renderer);
     int x = 120;
     int y = 650;
-    SDL_Rect image1 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 0)), x,  y, 170, 170);
-    SDL_Rect image2 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 1)), x + 180, y, 170, 170);
-    SDL_Rect image3 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 2)), x + 360, y, 170, 170);
-    SDL_Rect image4 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 3)), x + 540, y, 170, 170);
-    SDL_Rect image5 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 4)), x + 720, y, 170, 170);
-    SDL_Rect image6 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 5)), x + 900, y, 170, 170);
-    SDL_Rect image7 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 6)), x + 1080, y, 170, 170);
-    SDL_Rect image8 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 7)), x + 1260, y, 170, 170);
+    afficheImage(cardToBmp(getCard_hand(getHand(f), 0)), x,  y, 170, 170);
+    afficheImage(cardToBmp(getCard_hand(getHand(f), 1)), x + 180, y, 170, 170);
+    afficheImage(cardToBmp(getCard_hand(getHand(f), 2)), x + 360, y, 170, 170);
+    afficheImage(cardToBmp(getCard_hand(getHand(f), 3)), x + 540, y, 170, 170);
+    afficheImage(cardToBmp(getCard_hand(getHand(f), 4)), x + 720, y, 170, 170);
+    afficheImage(cardToBmp(getCard_hand(getHand(f), 5)), x + 900, y, 170, 170);
+    afficheImage(cardToBmp(getCard_hand(getHand(f), 6)), x + 1080, y, 170, 170);
+    afficheImage(cardToBmp(getCard_hand(getHand(f), 7)), x + 1260, y, 170, 170);
     
 
 while (run){
@@ -483,12 +483,12 @@ while (run){
 
             case SDL_MOUSEBUTTONDOWN:
                 SDL_Log("click");
-                if (mouseOver(renderer, rect, 100, 500, 350, 102))
+                if (mouseOver(100, 500, 350, 102))
                 {
                     run = 0;
                     j = 1;
                 }
-                if (mouseOver(renderer, rect2, 1400, 500, 350, 102))
+                if (mouseOver(1400, 500, 350, 102))
                     run = 0;
 
             default:
@@ -833,35 +833,35 @@ card askCardWantToPlayV2(faction f)
 
                 case SDL_MOUSEBUTTONDOWN:
                     SDL_Log("click");
-                    if (mouseOver(renderer, image1, x, y, 170, 170))
+                    if (mouseOver(x, y, 170, 170))
                     {
                         run = 0;
                     }
-                    if (mouseOver(renderer, image2, x + 180, y, 170, 170)){
+                    if (mouseOver(x + 180, y, 170, 170)){
                         run = 0;
                         j=1;
                     }
-                    if (mouseOver(renderer, image3, x + 360, y, 170, 170)){
+                    if (mouseOver(x + 360, y, 170, 170)){
                         run = 0;
                         j=2;
                     }
-                    if (mouseOver(renderer, image4, x + 540, y, 170, 170)){
+                    if (mouseOver(x + 540, y, 170, 170)){
                         run = 0;
                         j=3;
                     }
-                    if (mouseOver(renderer, image5, x + 720, y, 170, 170)){
+                    if (mouseOver(x + 720, y, 170, 170)){
                         run = 0;
                         j=4;
                     }
-                    if (mouseOver(renderer, image6, x + 900, y, 170, 170)){
+                    if (mouseOver(x + 900, y, 170, 170)){
                         run = 0;
                         j=5;
                     }
-                    if (mouseOver(renderer, image7, x + 1080, y, 170, 170)){
+                    if (mouseOver(x + 1080, y, 170, 170)){
                         run = 0;
                         j=6;
                     }
-                    if (mouseOver(renderer, image8, x + 1260, y, 170, 170)){
+                    if (mouseOver(x + 1260, y, 170, 170)){
                         run = 0;
                         j=7;
                     }

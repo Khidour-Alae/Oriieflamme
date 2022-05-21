@@ -17,7 +17,7 @@
 #include <SDL2/SDL.h>
 
 
-int main(int argc, char *argv[])
+int main()
 {
     //init
     system("clear");
@@ -27,12 +27,12 @@ initializeSDL();
 
 
 
-SDL_Event events;
+// SDL_Event events;
 int run = 1;
 //int menu = 1;
-int jeu = 1;
-double x = 50;
-double y = 50;
+// int jeu = 1;
+// double x = 50;
+// double y = 50;
 
 
 
