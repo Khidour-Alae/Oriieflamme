@@ -465,7 +465,7 @@ int askReshuffleV3(faction f){
     SDL_Rect image3 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 2)), x + 360, y, 170, 170);
     SDL_Rect image4 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 3)), x + 540, y, 170, 170);
     SDL_Rect image5 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 4)), x + 720, y, 170, 170);
-    SDL_Rect image6 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 5)), x + 9000, y, 170, 170);
+    SDL_Rect image6 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 5)), x + 900, y, 170, 170);
     SDL_Rect image7 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 6)), x + 1080, y, 170, 170);
     SDL_Rect image8 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 7)), x + 1260, y, 170, 170);
     
@@ -759,7 +759,7 @@ void showHandV2(faction f)
     SDL_Rect image3 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 2)), x + 360, y, 170, 170);
     SDL_Rect image4 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 3)), x + 540, y, 170, 170);
     SDL_Rect image5 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 4)), x + 720, y, 170, 170);
-    SDL_Rect image6 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 5)), x + 9000, y, 170, 170);
+    SDL_Rect image6 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 5)), x + 900, y, 170, 170);
     SDL_Rect image7 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 6)), x + 1080, y, 170, 170);
     SDL_Rect image8 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 7)), x + 1260, y, 170, 170);
 
@@ -816,7 +816,7 @@ card askCardWantToPlayV2(faction f)
     SDL_Rect image3 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 2)), x + 360, y, 170, 170);
     SDL_Rect image4 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 3)), x + 540, y, 170, 170);
     SDL_Rect image5 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 4)), x + 720, y, 170, 170);
-    SDL_Rect image6 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 5)), x + 9000, y, 170, 170);
+    SDL_Rect image6 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 5)), x + 900, y, 170, 170);
     SDL_Rect image7 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 6)), x + 1080, y, 170, 170);
     SDL_Rect image8 = afficheImageRect(cardToBmp(getCard_hand(getHand(f), 7)), x + 1260, y, 170, 170);
 
