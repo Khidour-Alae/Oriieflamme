@@ -37,6 +37,8 @@ void initializeSDL();
 
 void afficheMenu();
 
+void showBoardV2(board b);
+
 void afficheImage(const char *file, int x, int y, int xsize, int ysize);
 /**
 * \brief prints the board \a b
