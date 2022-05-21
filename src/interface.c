@@ -11,8 +11,8 @@
 
 SDL_Window *window = NULL;
 SDL_Renderer *renderer = NULL;
-SDL_Texture *image = NULL;
-SDL_Surface *tmp = NULL;
+// SDL_Texture *image = NULL;
+// SDL_Surface *tmp = NULL;
 // image = SDL_LoadBMP("Cards/carteFC.bmp");
 int statut = EXIT_FAILURE;
 SDL_Color black = {0, 0, 0, 255};
@@ -352,12 +352,12 @@ int clicked(SDL_Renderer *renderer, SDL_Rect rect, int x, int y, int sizeRectX, 
 
 void afficheImage(const char *file, int x, int y, int xsize, int ysize)
 {
-    tmp = SDL_LoadBMP(file);
+    SDL_Surface *tmp = SDL_LoadBMP(file);
     if (NULL == tmp)
     {
         fprintf(stderr, "ERREUR LOADBMP");
     }
-    image = SDL_CreateTextureFromSurface(renderer, tmp);
+    SDL_Texture *image = SDL_CreateTextureFromSurface(renderer, tmp);
     SDL_Rect dst = {x, y, xsize, ysize};
     SDL_RenderCopy(renderer, image, NULL, &dst);
     SDL_RenderPresent(renderer);
@@ -366,38 +366,39 @@ void afficheImage(const char *file, int x, int y, int xsize, int ysize)
 
 void afficheImageWithoutPresent(const char *file, int x, int y, int xsize, int ysize)
 {
-    tmp = SDL_LoadBMP(file);
+    SDL_Surface *tmp = SDL_LoadBMP(file);
     if (NULL == tmp)
     {
         fprintf(stderr, "ERREUR LOADBMP");
     }
-    image = SDL_CreateTextureFromSurface(renderer, tmp);
+    SDL_Texture *image = SDL_CreateTextureFromSurface(renderer, tmp);
     SDL_Rect dst = {x, y, xsize, ysize};
     SDL_RenderCopy(renderer, image, NULL, &dst);
 }
 
 SDL_Rect afficheImageRect(const char *file, int x, int y, int xsize, int ysize)
 {
-    tmp = SDL_LoadBMP(file);
+    SDL_Surface *tmp = SDL_LoadBMP(file);
     if (NULL == tmp)
     {
         fprintf(stderr, "ERREUR LOADBMP");
     }
-    image = SDL_CreateTextureFromSurface(renderer, tmp);
+    SDL_Texture *image = SDL_CreateTextureFromSurface(renderer, tmp);
     SDL_Rect dst = {x, y, xsize, ysize};
     SDL_RenderCopy(renderer, image, NULL, &dst);
     SDL_RenderPresent(renderer);
+    SDL_DestroyTexture(image);
     return dst;
 }
 
 SDL_Rect afficheImageRectWithoutPresent(const char *file, int x, int y, int xsize, int ysize)
 {
-    tmp = SDL_LoadBMP(file);
+    SDL_Surface *tmp = SDL_LoadBMP(file);
     if (NULL == tmp)
     {
         fprintf(stderr, "ERREUR LOADBMP");
     }
-    image = SDL_CreateTextureFromSurface(renderer, tmp);
+    SDL_Texture *image = SDL_CreateTextureFromSurface(renderer, tmp);
     SDL_Rect dst = {x, y, xsize, ysize};
     SDL_RenderCopy(renderer, image, NULL, &dst);
     return dst;
@@ -751,6 +752,7 @@ void showHand(faction f)
 
 void showHandV2(faction f)
 {
+    SDL_RenderClear(renderer);
     afficheJeu();
     int x = 120;
     int y = 300;
