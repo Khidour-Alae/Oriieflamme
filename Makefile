@@ -4,7 +4,7 @@ BIN=bin
 OBJ=obj
 
 CC=gcc
-FLAGS=-Wall -Wextra -std=c99
+FLAGS=-Wall -Wextra -std=c99 -pg
 OBJECTS=$(OBJ)/main.o $(OBJ)/board.o $(OBJ)/cards.o $(OBJ)/faction.o $(OBJ)/interface.o $(OBJ)/jsonParser.o $(OBJ)/structure.o
 
 
